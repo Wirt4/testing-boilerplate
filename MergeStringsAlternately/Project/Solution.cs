@@ -15,7 +15,7 @@ public class Solution
             j++;
         }
 
-        if (i< word1.Length){
+        if (i < word1.Length){
             merged += word1.Substring(i);
         }
 
