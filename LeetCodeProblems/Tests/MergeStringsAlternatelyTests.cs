@@ -3,7 +3,7 @@ namespace Tests;
 using Project;
 using static Project.Solution;
 
-public class UnitTest1
+public class MergeStringsAlternatelyTests
 {
     [Fact]
     public void Test1()
