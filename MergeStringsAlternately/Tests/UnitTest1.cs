@@ -13,4 +13,13 @@ public class UnitTest1
 
         Assert.Equal("apbqcr", result);
     }
+
+    [Fact]
+    public void Test2()
+    {
+        Solution solution = new Solution();
+        string result = solution.MergeAlternately("ab", "pqrs");
+
+        Assert.Equal("apbqrs", result);
+    }
 }
