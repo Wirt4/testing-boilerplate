@@ -1,6 +1,6 @@
 ﻿namespace Project;
 
-public class Solution
+public class MergeAlternatively
 {
  public string MergeAlternately(string word1, string word2) {
         string merged = "";
