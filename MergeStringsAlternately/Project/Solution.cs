@@ -6,13 +6,11 @@ public class Solution
         string merged = "";
 
         int i = 0;
-        int j = 0;
 
-        while (i < word1.Length && j < word2.Length){
+        while (i < word1.Length && i < word2.Length){
             merged += word1[i];
-            merged += word2[j];
+            merged += word2[i];
             i++;
-            j++;
         }
 
         if (i < word1.Length){
@@ -20,7 +18,7 @@ public class Solution
         }
 
         if (i < word2.Length){
-            merged += word2.Substring(j);
+            merged += word2.Substring(i);
         }
 
         return merged;
