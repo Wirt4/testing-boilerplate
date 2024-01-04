@@ -14,4 +14,13 @@ public class GreatestCommonDivisorTests
         Assert.Equal("ABC", result);
     }
 
+    [Fact]
+    public void Test2()
+    {
+        GreatestCommonDivisor solution = new GreatestCommonDivisor();
+        string result = solution.GcdOfStrings("LEET", "CODE");
+
+        Assert.Equal("", result);
+    }
+
 }
