@@ -1,7 +1,7 @@
 namespace Tests;
 
-using Project;
-using static Project.MergeAlternatively;
+using LeetCodeSolutions;
+using static LeetCodeSolutions.MergeAlternatively;
 
 public class MergeStringsAlternatelyTests
 {
