@@ -23,4 +23,13 @@ public class GreatestCommonDivisorTests
         Assert.Equal("", result);
     }
 
+    [Fact]
+    public void Test3()
+    {
+    GreatestCommonDivisor solution = new GreatestCommonDivisor();
+        string result = solution.GcdOfStrings("ABABAB", "ABAB");
+
+        Assert.Equal("AB", result);
+    }
+
 }
