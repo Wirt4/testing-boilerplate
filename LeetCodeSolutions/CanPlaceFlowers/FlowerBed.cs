@@ -9,7 +9,11 @@ public class FlowerBed{
     private bool isFree(ref int[] flowerbed, long ndx){
         return flowerbed[ndx] == 0;
     }
+
      public bool CanPlaceFlowers(int[] flowerbed, int n) {
+        if (n == 0){
+            return true;
+        }
 
         bool oneFlowerAndFirstFree = n == 1 && isFree(ref flowerbed, 0);
 

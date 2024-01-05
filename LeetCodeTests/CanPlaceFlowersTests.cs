@@ -46,4 +46,15 @@ public class CanPlaceFlowersTests
         Assert.True(result);
 
     }
+
+    [Fact]
+     public void failingCase1()
+    {
+        FlowerBed bed = new FlowerBed();
+
+        bool result = bed.CanPlaceFlowers([1], 0);
+
+        Assert.True(result);
+
+    }
 }
