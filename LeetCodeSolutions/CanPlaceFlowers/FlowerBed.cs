@@ -15,7 +15,7 @@ public class FlowerBed{
 
         long len = flowerbed.LongLength;
 
-        if (len== 1){
+        if (len == 1){
             return oneFlowerAndFirstFree;
         }
         
@@ -23,27 +23,27 @@ public class FlowerBed{
             return oneFlowerAndFirstFree && isFree(ref flowerbed, 1);
         }
 
-        for(long i = 0; i<len; i++){
+        for(long i = 0; i < len; i++){
 
             if (!isFree (ref flowerbed, i)){
                 continue;
             }
 
             if (i == 0){
-                if (isFree(ref flowerbed, i+1)){
+                if (isFree(ref flowerbed, i + 1)){
                     markAndDeprecate(ref flowerbed, i, ref n);
                 }
                 continue;
             }
 
             if (i == len - 1){
-                if (isFree(ref flowerbed, i-1)){
+                if (isFree(ref flowerbed, i - 1)){
                     markAndDeprecate(ref flowerbed, i, ref n);
                 }
                 continue;
             }
 
-            if (isFree(ref flowerbed, i-1) && isFree(ref flowerbed, i+1)){
+            if (isFree(ref flowerbed, i - 1) && isFree(ref flowerbed, i + 1)){
                 markAndDeprecate(ref flowerbed, i, ref n);
             }
 
