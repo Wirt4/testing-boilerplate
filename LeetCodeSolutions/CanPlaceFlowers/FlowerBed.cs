@@ -1,27 +1,29 @@
 namespace LeetCodeSolutions;
 public class FlowerBed{
     
-    private void markAndDeprecate(ref int[] flowerbed, int ndx, ref int n){
+    private void markAndDeprecate(ref int[] flowerbed, long ndx, ref int n){
         flowerbed[ndx] = 1;
         n--;
     }
 
-    private bool isFree(ref int[] flowerbed, int ndx){
+    private bool isFree(ref int[] flowerbed, long ndx){
         return flowerbed[ndx] == 0;
     }
      public bool CanPlaceFlowers(int[] flowerbed, int n) {
 
         bool oneFlowerAndFirstFree = n == 1 && isFree(ref flowerbed, 0);
-        
-        if (flowerbed.Length == 1){
+
+        long len = flowerbed.LongLength;
+
+        if (len== 1){
             return oneFlowerAndFirstFree;
         }
         
-        if(flowerbed.Length == 2){
+        if(len == 2){
             return oneFlowerAndFirstFree && isFree(ref flowerbed, 1);
         }
 
-        for(int i = 0; i<flowerbed.Length; i++){
+        for(long i = 0; i<len; i++){
 
             if (!isFree (ref flowerbed, i)){
                 continue;
@@ -34,7 +36,7 @@ public class FlowerBed{
                 continue;
             }
 
-            if (i == flowerbed.Length - 1){
+            if (i == len - 1){
                 if (isFree(ref flowerbed, i-1)){
                     markAndDeprecate(ref flowerbed, i, ref n);
                 }
