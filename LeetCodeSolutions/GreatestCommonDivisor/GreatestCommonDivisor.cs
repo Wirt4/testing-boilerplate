@@ -1,7 +1,4 @@
-﻿using System.Reflection.Emit;
-using System.Runtime.Serialization;
-
-namespace LeetCodeSolutions;
+﻿namespace LeetCodeSolutions;
 
 public class GreatestCommonDivisor
 {
