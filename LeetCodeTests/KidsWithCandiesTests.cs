@@ -9,4 +9,19 @@ public class KidsWithCandiesTests{
         IList<bool> answer = solution.KidsWithCandies([2,3,5,1,3],3);
          Assert.Equal([true,true,true,false,true] , answer);
     }
+
+    [Fact]
+    public void smallestSeriesOfCandies(){
+        Candies solution = new Candies();
+        IList<bool> answer = solution.KidsWithCandies([1,1],1);
+        Assert.Equal([true, true] , answer);
+    }
+
+    [Fact]
+
+    public void Example2(){
+          Candies solution = new Candies();
+        IList<bool> answer = solution.KidsWithCandies([4,2,1,1,2],1);
+         Assert.Equal([true,false,false,false,false], answer);
+    }
 }
