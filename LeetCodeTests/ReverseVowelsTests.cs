@@ -16,6 +16,12 @@ public class ReverseVowelsTests{
     }
 
     [Fact]
+    public void AllVowelsCapitalized(){
+        Vowels solution = new Vowels();
+        Assert.Equal("UOIEA", solution.ReverseVowels("AEIOU"));
+    }
+
+    [Fact]
     public void Example2(){
         Vowels solution = new Vowels();
         Assert.Equal("leotcede", solution.ReverseVowels("leetcode"));
