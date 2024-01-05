@@ -1,13 +1,15 @@
 namespace LeetCodeSolutions;
 
 public class Vowels{
+
+    private readonly HashSet<char> vowells = ['a', 'e', 'i', 'o', 'u'];
     private void swap( ref char[] chArray, int leftNdx, int rightNdx){
         char temp = chArray[leftNdx];
         chArray[leftNdx] = chArray[rightNdx];
         chArray[rightNdx] = temp;
     }
     private bool isVowell(char ch){
-        return ch == 'a' || ch =='i'|| ch =='o' || ch == 'u' || ch =='e';
+        return vowells.Contains(ch);
     }
     public string ReverseVowels(string s){
         char[] chArray = s.ToCharArray();
