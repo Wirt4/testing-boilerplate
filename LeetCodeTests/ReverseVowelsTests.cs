@@ -8,4 +8,10 @@ public class ReverseVowelsTests{
         Vowels solution = new Vowels();
         Assert.Equal("holle", solution.ReverseVowels("hello"));
     }
+
+    [Fact]
+    public void AllVowels(){
+        Vowels solution = new Vowels();
+        Assert.Equal("uoiea", solution.ReverseVowels("aeiou"));
+    }
 }
