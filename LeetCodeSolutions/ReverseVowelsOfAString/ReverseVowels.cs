@@ -12,23 +12,26 @@ public class Vowels{
     public string ReverseVowels(string s){
         char[] chArray = s.ToCharArray();
         int leftNdx = 0;
-        int rightNdx =chArray.Length -1;
+        int rightNdx = chArray.Length -1;
+
         while (leftNdx < rightNdx){
             bool leftIsVowell = isVowell(chArray[leftNdx]);
             bool rightIsVowell = isVowell(chArray[rightNdx]);
-
-            if (!leftIsVowell && !rightIsVowell){
+            if (leftIsVowell && rightIsVowell){
+                 swap(ref chArray, leftNdx, rightNdx);
                 leftNdx++;
                 rightNdx--;
-            }else if (!leftIsVowell && rightIsVowell){
+                continue;
+            }
+
+            if (!leftIsVowell){
                 leftNdx++;
-            }else if (leftIsVowell && !rightIsVowell){
-                rightNdx --;
-            }else if (leftIsVowell && rightIsVowell){
-                swap(ref chArray, leftNdx, rightNdx);
-                leftNdx++;
+            }
+
+            if (!rightIsVowell){
                 rightNdx--;
             }
+
         }
       
         return new string(chArray);
