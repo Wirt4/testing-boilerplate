@@ -11,10 +11,21 @@ public class Vowels{
         chArray[leftNdx] = chArray[rightNdx];
         chArray[rightNdx] = temp;
     }
+
+    private bool hasVowells(ref string s){
+        
+        foreach(char ch in s){
+            if (isVowell(ch)){
+                return true;
+            }
+        }
+
+        return false;
+    }
     public string ReverseVowels(string s){
         int arrLength = s.Length;
-        
-        if (arrLength <= 1){
+
+        if (arrLength <= 1 || !hasVowells(ref s)){
             return s;
         }
 
