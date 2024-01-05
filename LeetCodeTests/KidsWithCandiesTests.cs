@@ -20,8 +20,15 @@ public class KidsWithCandiesTests{
     [Fact]
 
     public void Example2(){
-          Candies solution = new Candies();
+        Candies solution = new Candies();
         IList<bool> answer = solution.KidsWithCandies([4,2,1,1,2],1);
-         Assert.Equal([true,false,false,false,false], answer);
+        Assert.Equal([true,false,false,false,false], answer);
+    }
+
+    [Fact]
+    public void Example3(){
+        Candies solution = new Candies();
+        IList<bool> answer = solution.KidsWithCandies([12, 1, 2],10);
+        Assert.Equal([true,false,true], answer);
     }
 }
