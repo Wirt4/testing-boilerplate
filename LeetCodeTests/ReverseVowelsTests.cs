@@ -14,4 +14,10 @@ public class ReverseVowelsTests{
         Vowels solution = new Vowels();
         Assert.Equal("uoiea", solution.ReverseVowels("aeiou"));
     }
+
+    [Fact]
+    public void Example2(){
+        Vowels solution = new Vowels();
+        Assert.Equal("leotcede", solution.ReverseVowels("leetcode"));
+    }
 }
