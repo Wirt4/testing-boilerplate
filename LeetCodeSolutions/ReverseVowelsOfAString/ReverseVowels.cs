@@ -3,9 +3,11 @@ namespace LeetCodeSolutions;
 public class Vowels{
 
     private readonly HashSet<char> vowells = ['a', 'e', 'i', 'o', 'u', 'A','E', 'I','O','U'];
+
     private bool isVowell(char ch){
         return vowells.Contains(ch);
     }
+    
      private void swap( ref char[] chArray, int leftNdx, int rightNdx){
         char temp = chArray[leftNdx];
         chArray[leftNdx] = chArray[rightNdx];
@@ -13,7 +15,7 @@ public class Vowels{
     }
 
     private bool hasVowells(ref string s){
-        
+
         foreach(char ch in s){
             if (isVowell(ch)){
                 return true;
@@ -22,6 +24,7 @@ public class Vowels{
 
         return false;
     }
+
     public string ReverseVowels(string s){
         int arrLength = s.Length;
 
