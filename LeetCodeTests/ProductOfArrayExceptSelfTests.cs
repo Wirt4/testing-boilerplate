@@ -28,4 +28,11 @@ public class ProductOfArrayExceptSelfTests{
         int[] answer = solution.ProductExceptSelf([0,0]);
         Assert.Equal([0, 0], answer);
     }
+
+    [Fact]
+    public void HiddenTestCase2(){
+        ArrayProduct solution = new ArrayProduct();
+        int[] answer = solution.ProductExceptSelf([0,4,0]);
+        Assert.Equal([0, 0, 0], answer);
+    }
 }
