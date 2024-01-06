@@ -8,4 +8,10 @@ public class ReverseWordsTests{
         ReverseWordsSolution rWords = new ReverseWordsSolution();
         Assert.Equal("hello", rWords.ReverseWords("hello"));
     }
+
+    [Fact]
+    public void oneWord2(){
+        ReverseWordsSolution rWords = new ReverseWordsSolution();
+        Assert.Equal("goodbye", rWords.ReverseWords("goodbye"));
+    }
 }
