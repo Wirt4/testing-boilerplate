@@ -13,4 +13,17 @@ public class TripletSubsequenceTests{
         TripletSubsequence solution = new TripletSubsequence();
         Assert.True(solution.IncreasingTriplet([1, 2, 3]));
     }
+
+    [Fact]
+    public void Example1(){
+        TripletSubsequence solution = new TripletSubsequence();
+        Assert.True(solution.IncreasingTriplet([1,2,3,4,5]));
+    }
+
+    [Fact]
+
+    public void Example2(){
+        TripletSubsequence solution = new TripletSubsequence();
+        Assert.False(solution.IncreasingTriplet([5, 4, 3, 2, 1]));
+    }
 }
