@@ -26,4 +26,24 @@ public class TripletSubsequenceTests{
         TripletSubsequence solution = new TripletSubsequence();
         Assert.False(solution.IncreasingTriplet([5, 4, 3, 2, 1]));
     }
+
+    [Fact]
+    public void TripletsNotContiguous(){
+        TripletSubsequence solution = new TripletSubsequence();
+        Assert.True(solution.IncreasingTriplet([1,1000,3,1000,5]));
+    }
+
+     [Fact]
+
+    public void FalseNotStriclyDescending(){
+        TripletSubsequence solution = new TripletSubsequence();
+        Assert.False(solution.IncreasingTriplet([5, 4, 3, 2, 1, 1000]));
+    }
+
+    [Fact]
+
+    public void TryToBreakAntithesisOfDescending(){
+        TripletSubsequence solution = new TripletSubsequence();
+        Assert.True(solution.IncreasingTriplet([5, 7, 2, 3, 4]));
+    }
 }
