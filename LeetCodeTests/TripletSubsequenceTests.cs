@@ -46,4 +46,18 @@ public class TripletSubsequenceTests{
         TripletSubsequence solution = new TripletSubsequence();
         Assert.True(solution.IncreasingTriplet([5, 7, 2, 3, 4]));
     }
+
+    [Fact]
+
+    public void BreakingCase1(){
+        TripletSubsequence solution = new TripletSubsequence();
+        Assert.False(solution.IncreasingTriplet([6,7,1,2]));
+    }
+
+     [Fact]
+
+    public void BreakingCase2(){
+        TripletSubsequence solution = new TripletSubsequence();
+        Assert.True(solution.IncreasingTriplet([1,5,0,4,1,3]));
+    }
 }
