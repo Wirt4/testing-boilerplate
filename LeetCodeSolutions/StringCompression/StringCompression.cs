@@ -5,64 +5,70 @@ using System.Globalization;
 namespace LeetCodeSolutions;
 
 public class StringCompression{
-    private class Clicker{
-        private int count;
-        private int length;
+       
+       
+    public int Compress( char [] chars){
+        char lastChar= 'z';
+        int readIndex = 0;
+        int writeIndex = 1;
+        int initialLength = chars.Length;
+        int count = 0;
 
-        public Clicker(){
-            length = 0;
-        }
-        public void initiateNewChar(){
+
+      
+
+        while (readIndex < initialLength){
+            bool isStart = readIndex == 0;
+            bool isEnd = readIndex == initialLength -1;
+
+            if (isStart && isEnd){
+                return 1;
+            }
+
+            if (isStart){
+                lastChar = chars[readIndex];
+                count = 1;
+                readIndex++;
+                continue;
+            }
+
+            if (isEnd){
+                if (count > 1){
+                   foreach(char digit in count.ToString()){
+                    chars[writeIndex] = digit;
+                    writeIndex++;
+                   }
+
+
+                }
+                break;
+            }
+
+            if (lastChar == chars[readIndex]){
+                count ++;
+                readIndex++;
+                continue;
+            }
+            char temp = chars[readIndex];
+            chars[writeIndex] = lastChar;
+            lastChar = temp;
+            writeIndex++;
+
+            if (count > 1){
+                   foreach(char digit in count.ToString()){
+                    chars[writeIndex] = digit;
+                    writeIndex++;
+                   }
+
+
+            }
             count = 1;
+            readIndex++;
         }
 
-        public void click(){
-            count++;
-        }
+        return writeIndex;
 
-        public void finish(){
-            updateLength();
-        }
-
-        public void updateLength(){
-            length++;
-
-            if (count ==1 ){
-                return;
-            }
-
-            do{
-                length++;
-                count /=10;
-            }while(count >10);
-        }
-        public int Length{
-            get{return length;}
-        }
-    }
-    public int Compress(char [] chars){
-        Clicker c = new Clicker();
-        for (int i=0; i< chars.Length; i++){
-            if (i==0){
-                c.initiateNewChar();
-                continue;
-            }
-
-            if (i == chars.Length-1){
-                c.finish();
-                continue;
-            }
-
-            if (chars[i] == chars[i-1]){
-                c.click();
-                continue;
-            }
-            
-            c.updateLength();
-            c.initiateNewChar();
         
-        }
-       return c.Length;
     }
        
 }
