@@ -9,15 +9,11 @@ public class StringCompression{
        
     public int Compress( char [] chars){
         char lastChar= 'z';
-        int readIndex = 0;
         int writeIndex = 1;
         int initialLength = chars.Length;
         int count = 0;
 
-
-      
-
-        while (readIndex < initialLength){
+        for  (int readIndex=0;readIndex < initialLength; readIndex++){
             bool isStart = readIndex == 0;
             bool isEnd = readIndex == initialLength -1;
 
@@ -28,7 +24,6 @@ public class StringCompression{
             if (isStart){
                 lastChar = chars[readIndex];
                 count = 1;
-                readIndex++;
                 continue;
             }
 
@@ -46,9 +41,9 @@ public class StringCompression{
 
             if (lastChar == chars[readIndex]){
                 count ++;
-                readIndex++;
                 continue;
             }
+
             char temp = chars[readIndex];
             chars[writeIndex] = lastChar;
             lastChar = temp;
@@ -62,8 +57,8 @@ public class StringCompression{
 
 
             }
+
             count = 1;
-            readIndex++;
         }
 
         return writeIndex;
