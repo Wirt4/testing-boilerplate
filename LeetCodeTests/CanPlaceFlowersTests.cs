@@ -1,7 +1,7 @@
 namespace Tests;
 
 using LeetCodeSolutions;
-using static LeetCodeSolutions.FlowerBed;
+
 public class CanPlaceFlowersTests
 {
     [Fact]
