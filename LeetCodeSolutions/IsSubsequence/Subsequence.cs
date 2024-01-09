@@ -10,6 +10,7 @@ public class Subsequence{
             if (j>= s.Length){
                 return true;
             }
+            
             if (s[j] == t[i]){
                 if (j == s.Length-1){
                     return true;
