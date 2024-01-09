@@ -19,13 +19,13 @@ public class StringCompression{
             return initialLength;
         }
 
+        int writeIndex = 0;
         char lastChar = ' ';
-        int j = 0;
-        int count= -1;
+        int count = - 1;
 
         for (int i=0; i< initialLength; i++){
-            bool firstIndex = i ==0;
-            bool lastIndex = i == initialLength -1;
+            bool firstIndex = i == 0;
+            bool lastIndex = i == initialLength - 1;
 
             if (firstIndex){
                 lastChar = chars[i];
@@ -35,16 +35,16 @@ public class StringCompression{
             if(lastIndex){
                 count++;
 
-                writeCountToArray(count, ref chars, ref j);
+                writeCountToArray(count, ref chars, ref writeIndex);
                 break;
             }
 
             if (lastChar != chars[i]){
                 char temp = chars[i];
-                chars[j] = lastChar;
+                chars[writeIndex] = lastChar;
                 lastChar = temp;
 
-                writeCountToArray(count, ref chars, ref j);
+                writeCountToArray(count, ref chars, ref writeIndex);
 
                 count = 1;
                 continue;
@@ -53,8 +53,8 @@ public class StringCompression{
             count ++;
         }
 
-        Array.Resize(ref chars, j);
-        return j;
+        Array.Resize(ref chars, writeIndex);
+        return writeIndex;
     }
     public int Compress( char [] chars){
         return CompressString(ref chars);
