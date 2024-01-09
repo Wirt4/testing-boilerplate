@@ -1,51 +1,55 @@
 namespace LeetCodeSolutions;
 
 public class StringCompression{
-       //TODO: split into a void that edits the array directly, then return the length with "Compress"
+
+    private void writeCountToArray(int count, ref char[] chars, ref int writeIndex){
+        writeIndex++;
+        if (count > 1){
+            foreach (char digit in count.ToString()){
+                chars[writeIndex] = digit;
+                writeIndex++;
+                }
+            }
+    }
     public int CompressString(ref char[] chars){
-        
-        if (chars.Length==1){
-            return 1;
+        int initialLength = chars.Length;
+
+        if (initialLength==1){
+            //array of one, no change
+            return initialLength;
         }
 
         char lastChar = ' ';
         int j = 0;
         int count= -1;
 
-        for (int i=0; i< chars.Length; i++){
-            if (i == 0){
+        for (int i=0; i< initialLength; i++){
+            bool firstIndex = i ==0;
+            bool lastIndex = i == initialLength -1;
+
+            if (firstIndex){
                 lastChar = chars[i];
                 count = 0;
             }
 
-            if(i == chars.Length - 1){
+            if(lastIndex){
                 count++;
-                j++;
-                if (count > 1){
-                    foreach (char digit in count.ToString()){
-                        chars[j] = digit;
-                        j++;
-                    }
-                }
+
+                writeCountToArray(count, ref chars, ref j);
                 break;
             }
 
             if (lastChar != chars[i]){
                 char temp = chars[i];
                 chars[j] = lastChar;
-                j++;
 
-                if (count > 1){
-                    foreach (char digit in count.ToString()){
-                        chars[j] = digit;
-                        j++;
-                    }
-                }
+                writeCountToArray(count, ref chars, ref j);
 
                 lastChar = temp;
                 count = 1;
                 continue;
             }
+
             count ++;
         }
 
