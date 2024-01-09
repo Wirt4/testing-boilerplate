@@ -41,13 +41,19 @@ public class StringCompression{
             }
 
             if(lastIndex){
+                char temp = chars[i];
+                chars[writeIndex] = lastChar;
+
                 if (sameCharAsPrevious){
-                    count ++;
-                    chars[writeIndex] = lastChar;
-                    writeCountToArray(count, ref chars, ref writeIndex);
+                    count++;
+                }
+
+                writeCountToArray(count, ref chars, ref writeIndex);
+                if (sameCharAsPrevious){
                     break;
                 }
 
+                chars[writeIndex] = temp;
                 writeIndex++;
                 break;
             }
