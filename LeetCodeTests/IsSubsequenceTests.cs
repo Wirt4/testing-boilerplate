@@ -7,4 +7,10 @@ public class IsSubsequenceTests{
         Subsequence soultion = new Subsequence();
         Assert.True(soultion.IsSubsequence("a", "a"));
     }
+
+    [Fact]
+    public void Example2(){
+        Subsequence soultion = new Subsequence();
+        Assert.False(soultion.IsSubsequence("axc", "ahbgdc"));
+    }
 }
