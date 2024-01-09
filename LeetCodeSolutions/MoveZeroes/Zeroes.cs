@@ -11,6 +11,13 @@ public class Zeroes{
         while (i<arr.Length){
             while(arr[i] == 0){
                 i++;
+                if (i == arr.Length){
+                    break;
+                }
+            }
+            
+            if (i==arr.Length){
+                break;
             }
 
             arr[j] = arr[i];
