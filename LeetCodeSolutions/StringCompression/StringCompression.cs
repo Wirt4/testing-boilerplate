@@ -42,10 +42,10 @@ public class StringCompression{
             if (lastChar != chars[i]){
                 char temp = chars[i];
                 chars[j] = lastChar;
+                lastChar = temp;
 
                 writeCountToArray(count, ref chars, ref j);
 
-                lastChar = temp;
                 count = 1;
                 continue;
             }
