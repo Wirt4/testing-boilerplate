@@ -1,69 +1,60 @@
-using System.ComponentModel.DataAnnotations;
-using System.Dynamic;
-using System.Globalization;
-
 namespace LeetCodeSolutions;
 
 public class StringCompression{
-       
-       
-    public int Compress( char [] chars){
-        char lastChar= 'z';
-        int writeIndex = 1;
-        int initialLength = chars.Length;
-        int count = 0;
+       //TODO: split into a void that edits the array directly, then return the length with "Compress"
+    public void CompressString(ref char[] chars){
+        if (chars.Length==1){
+            return;
+        }
 
-        for  (int readIndex=0;readIndex < initialLength; readIndex++){
-            bool isStart = readIndex == 0;
-            bool isEnd = readIndex == initialLength -1;
+        char lastChar = ' ';
+        int j = 0;
+        int count= -1;
 
-            if (isStart && isEnd){
-                return 1;
+        for (int i=0; i< chars.Length; i++){
+            if (i == 0){
+                lastChar = chars[i];
+                count = 0;
             }
 
-            if (isStart){
-                lastChar = chars[readIndex];
+            if(i == chars.Length - 1){
+                count++;
+                j++;
+                if (count > 1){
+                    foreach (char digit in count.ToString()){
+                        chars[j] = digit;
+                        j++;
+                    }
+                }
+                 Array.Resize(ref chars, j);
+                 break;
+
+            }
+
+            if (lastChar != chars[i]){
+                char temp = chars[i];
+                chars[j] = lastChar;
+                j++;
+
+                if (count > 1){
+                    foreach (char digit in count.ToString()){
+                        chars[j] = digit;
+                        j++;
+                    }
+                }
+
+                lastChar = temp;
                 count = 1;
                 continue;
             }
 
-            if (isEnd){
-                if (count > 1){
-                   foreach(char digit in count.ToString()){
-                    chars[writeIndex] = digit;
-                    writeIndex++;
-                   }
+            count ++;
 
-
-                }
-                break;
-            }
-
-            if (lastChar == chars[readIndex]){
-                count ++;
-                continue;
-            }
-
-            char temp = chars[readIndex];
-            chars[writeIndex] = lastChar;
-            lastChar = temp;
-            writeIndex++;
-
-            if (count > 1){
-                   foreach(char digit in count.ToString()){
-                    chars[writeIndex] = digit;
-                    writeIndex++;
-                   }
-
-
-            }
-
-            count = 1;
         }
-
-        return writeIndex;
-
-        
+    }
+    public int Compress( char [] chars){
+        CompressString(ref chars);
+        return chars.Length;
     }
        
 }
