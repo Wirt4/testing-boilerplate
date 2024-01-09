@@ -1,22 +1,29 @@
 namespace LeetCodeSolutions;
 public class Zeroes{
+
+//return -1 if out of bounds
+    private int nextIndexOfZero(int ndx, ref int[] arr){
+        while(arr[ndx] == 0){
+                ndx++;
+                if (ndx >= arr.Length){
+                    return -1;
+                }
+            }
+            return ndx; 
+    }
     public void MoveZeroesByRef(ref int[] arr){
-        if (arr.Length == 1){
+        int lengthOfArr = arr.Length;
+        if (lengthOfArr == 1){
             return;
         }
 
         int i = 0;
         int j = 0;
 
-        while (i<arr.Length){
-            while(arr[i] == 0){
-                i++;
-                if (i == arr.Length){
-                    break;
-                }
-            }
-            
-            if (i==arr.Length){
+        while (i<lengthOfArr){
+            i = nextIndexOfZero(i, ref arr);
+
+            if (i < 0 ){
                 break;
             }
 
@@ -25,7 +32,7 @@ public class Zeroes{
             i++;
         }
 
-        while (j < arr.Length){
+        while (j < lengthOfArr){
             arr[j] = 0;
             j++;
         }
