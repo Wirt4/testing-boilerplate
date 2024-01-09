@@ -2,9 +2,10 @@ namespace LeetCodeSolutions;
 
 public class StringCompression{
        //TODO: split into a void that edits the array directly, then return the length with "Compress"
-    public void CompressString(ref char[] chars){
+    public int CompressString(ref char[] chars){
+        
         if (chars.Length==1){
-            return;
+            return 1;
         }
 
         char lastChar = ' ';
@@ -26,9 +27,7 @@ public class StringCompression{
                         j++;
                     }
                 }
-                 Array.Resize(ref chars, j);
-                 break;
-
+                break;
             }
 
             if (lastChar != chars[i]){
@@ -47,14 +46,14 @@ public class StringCompression{
                 count = 1;
                 continue;
             }
-
             count ++;
-
         }
+
+        Array.Resize(ref chars, j);
+        return j;
     }
     public int Compress( char [] chars){
-        CompressString(ref chars);
-        return chars.Length;
+        return CompressString(ref chars);
     }
        
 }
