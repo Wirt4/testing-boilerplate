@@ -5,19 +5,6 @@ public class Zeroes{
             return;
         }
 
-        bool hasZeroes = false;
-
-        foreach (int digit in arr){
-            if(digit==0){
-                hasZeroes = true;
-                break;
-            }
-        }
-
-        if (!hasZeroes){
-            return;
-        }
-
         int i = 0;
         int j = 0;
 
@@ -25,7 +12,7 @@ public class Zeroes{
             while(arr[i] == 0){
                 i++;
             }
-            
+
             arr[j] = arr[i];
             j++;
             i++;
