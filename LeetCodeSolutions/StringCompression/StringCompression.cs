@@ -3,22 +3,23 @@ namespace LeetCodeSolutions;
 public class StringCompression{
 
     private void writeCountToArray(int count, ref char[] chars, ref int writeIndex){
-        writeIndex++;
+        writeIndex ++;
         if (count > 1){
             foreach (char digit in count.ToString()){
                 chars[writeIndex] = digit;
-                writeIndex++;
+                writeIndex ++;
                 }
             }
     }
     public int CompressString(ref char[] chars){
         int initialLength = chars.Length;
 
-        if (initialLength==1){
+        if (initialLength == 1){
             //array of one, no change
             return initialLength;
         }
 
+        //will also be used for final length
         int writeIndex = 0;
         char lastChar = ' ';
         int count = - 1;
@@ -33,7 +34,7 @@ public class StringCompression{
             }
 
             if(lastIndex){
-                count++;
+                count ++;
 
                 writeCountToArray(count, ref chars, ref writeIndex);
                 break;
@@ -57,6 +58,8 @@ public class StringCompression{
         return writeIndex;
     }
     public int Compress( char [] chars){
+        // pass by ref here to make the tester for Leetcode work
+        // the signature of the wrapper function itself may not be tested
         return CompressString(ref chars);
     }
        
