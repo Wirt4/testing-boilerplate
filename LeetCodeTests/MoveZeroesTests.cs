@@ -52,4 +52,13 @@ public class MoveZeroesTests{
         Assert.Equal([0], argument);
     }
 
+    [Fact]
+
+    public void indexOutOfBounds(){
+         Zeroes solution = new Zeroes();
+        int[] argument = [0,0]; 
+        solution.MoveZeroesByRef(ref argument);
+        Assert.Equal([0,0], argument);
+    }
+
 }
