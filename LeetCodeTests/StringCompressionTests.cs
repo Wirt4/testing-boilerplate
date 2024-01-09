@@ -55,5 +55,23 @@
          Assert.Equal(6, solution.Compress(argument));
        
     }
+
+      [Fact]
+    public void SecondFailingTest(){
+         StringCompression solution = new StringCompression();
+         char [] argument = ['a','a','a','b','b','a','a'];
+        solution.CompressString(ref argument);
+        Assert.Equal(['a', '3', 'b', '2', 'a', '2'], argument);
+       
+    }
+
+    [Fact]
+     public void ThirdFailingTest(){
+         StringCompression solution = new StringCompression();
+         char [] argument = ['a', 'b', 'c'];
+        solution.CompressString(ref argument);
+        Assert.Equal(['a','b', 'c'], argument);
+       
+    }
     
 }

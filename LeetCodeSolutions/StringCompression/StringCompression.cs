@@ -13,12 +13,18 @@ public class StringCompression{
     }
     public int CompressString(ref char[] chars){
         int initialLength = chars.Length;
+        bool requiresCompression = false;
 
-        if (initialLength == 1){
-            //array of one, no change
-            return initialLength;
+        for (int i = 1;  i < initialLength; i++){
+            if (chars[i] == chars[i-1]){
+                requiresCompression = true;
+                break;
+            }
         }
 
+        if (!requiresCompression){
+            return initialLength;
+        }
         //will also be used for final length
         int writeIndex = 0;
         char lastChar = ' ';
@@ -27,6 +33,7 @@ public class StringCompression{
         for (int i=0; i< initialLength; i++){
             bool firstIndex = i == 0;
             bool lastIndex = i == initialLength - 1;
+            bool sameCharAsPrevious = chars[i] == lastChar;
 
             if (firstIndex){
                 lastChar = chars[i];
@@ -34,13 +41,18 @@ public class StringCompression{
             }
 
             if(lastIndex){
-                count ++;
+                if (sameCharAsPrevious){
+                    count ++;
+                    chars[writeIndex] = lastChar;
+                    writeCountToArray(count, ref chars, ref writeIndex);
+                    break;
+                }
 
-                writeCountToArray(count, ref chars, ref writeIndex);
+                writeIndex++;
                 break;
             }
 
-            if (lastChar != chars[i]){
+            if (!sameCharAsPrevious && !firstIndex){
                 char temp = chars[i];
                 chars[writeIndex] = lastChar;
                 lastChar = temp;
