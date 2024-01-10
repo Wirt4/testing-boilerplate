@@ -12,6 +12,8 @@ public class Subsequence{
             return true;
         }
 
+        List<int>[] inputTable = createLookup(input);
+
         int trackingIndex = 0;
 
         foreach (char ch in input){
@@ -19,13 +21,13 @@ public class Subsequence{
                 return false;
             }
 
-            if (trackingIndex > indeces[ch][indeces[ch].Count -1]){
+            if (trackingIndex > indeces[ch][indeces[ch].Count -1] || inputTable[ch].Count > indeces[ch].Count){
                 return false;
             }
 
             int  i = 0;
             
-            while (trackingIndex >= indeces[ch][i]){
+            while (trackingIndex > indeces[ch][i]){
                 i++;
                 if (i>=indeces[ch].Count){
                     return false;
@@ -36,6 +38,19 @@ public class Subsequence{
         }
 
         return true;
+    }
+
+    private List<int>[] createLookup(string str){
+     List<int> [] indeces =  new List<int>[(int)'z' + 1];
+       int i = 0;
+       foreach(char ch in str){
+        if (indeces[(int)ch] is null){
+            indeces[(int)ch] = new List<int>();
+        }
+        indeces[(int) ch].Add(i);
+        i++;
+       }
+       return indeces;
     }
    
     public bool[] IsSubsequence(string[] s, string t){

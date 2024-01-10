@@ -32,7 +32,7 @@ public class IsSubsequenceTests{
 
      [Fact]
     public void BreakingCaseForRefactor2(){
-         Subsequence soultion = new Subsequence();
+        Subsequence soultion = new Subsequence();
         Assert.False(soultion.IsSubsequence("aaaaaa", "bbaaaa"));
     }
 }
