@@ -23,4 +23,16 @@ public class IsSubsequenceTests{
         Subsequence soultion = new Subsequence();
         Assert.True(soultion.IsSubsequence("", ""));
     }
+
+    [Fact]
+    public void BreakingCaseForRefactor1(){
+         Subsequence soultion = new Subsequence();
+        Assert.False(soultion.IsSubsequence("acb", "ahbgdc"));
+    }
+
+     [Fact]
+    public void BreakingCaseForRefactor2(){
+         Subsequence soultion = new Subsequence();
+        Assert.False(soultion.IsSubsequence("aaaaaa", "bbaaaa"));
+    }
 }
