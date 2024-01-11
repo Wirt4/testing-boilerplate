@@ -1,5 +1,6 @@
 namespace LeetCodeSolutions;
 
+
 public class Vowels{
 
     private readonly HashSet<char> vowells = ['a', 'e', 'i', 'o', 'u', 'A','E', 'I','O','U'];
