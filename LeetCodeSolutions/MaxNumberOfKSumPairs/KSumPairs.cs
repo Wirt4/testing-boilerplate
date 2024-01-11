@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.VisualBasic;
 
 namespace LeetCodeSolutions;
 
@@ -17,9 +18,8 @@ public class KSumPairs{
         lookupTable[key] -= numPairs;
 
     }
-    public int MaxOperations(int[] nums, int k){
+    private Dictionary<int, int> createFrequencyTable(ref int[] nums){
         Dictionary <int, int> valueFrequency = new Dictionary<int, int>();
-
         foreach(int num in nums ){
             if (valueFrequency.ContainsKey(num)){
                 valueFrequency[num] += 1;
@@ -27,27 +27,27 @@ public class KSumPairs{
             }
             valueFrequency.Add(num, 1);
         }
+        return valueFrequency;
+    }
+    public int MaxOperations(int[] nums, int k){
+        Dictionary <int, int> valueFrequency = createFrequencyTable(ref nums);
 
         int pairs = 0;
 
         foreach(int x in nums){
             int diff = k-x;
-            
+
             if (!valueFrequency.ContainsKey(diff)){
                 continue;
             }
 
             int min = valueFrequency[x];
 
-            if (valueFrequency[diff]< valueFrequency[x]){
+            if (valueFrequency[diff] < valueFrequency[x]){
                 min = valueFrequency[diff];
             }
 
-            if (diff == x){
-                pairs += min/2;
-            }else{
-                  pairs += min;
-            }
+            pairs += diff == x ? min / 2 : min;
 
             decreaseOrRemove(x, min, ref valueFrequency);
             decreaseOrRemove(diff, min, ref valueFrequency);
