@@ -6,7 +6,6 @@ using Microsoft.VisualBasic;
 namespace LeetCodeSolutions;
 
 public class Subsequence{
-
     private bool InLookupTable(string input, List<int>[] indeces){
         if (input.Length == 0){
             return true;
