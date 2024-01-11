@@ -37,7 +37,7 @@ public class KSumPairs{
         foreach(int x in nums){
             int diff = k-x;
 
-            if (!valueFrequency.ContainsKey(diff)){
+            if (!valueFrequency.ContainsKey(diff) || !valueFrequency.ContainsKey(x)){
                 continue;
             }
 
