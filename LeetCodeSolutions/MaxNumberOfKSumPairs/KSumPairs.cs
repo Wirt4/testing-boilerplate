@@ -5,19 +5,6 @@ namespace LeetCodeSolutions;
 
 public class KSumPairs{
 
-    private void decreaseOrRemove(int key, int numPairs, ref Dictionary<int, int> lookupTable){
-        if (!lookupTable.ContainsKey(key)){
-            return;
-        }
-
-        if(lookupTable[key] - numPairs <= 0){
-            lookupTable.Remove(key);
-            return;
-        }
-
-        lookupTable[key] -= numPairs;
-
-    }
     private Dictionary<int, int> createFrequencyTable(ref int[] nums){
         Dictionary <int, int> valueFrequency = new Dictionary<int, int>();
         foreach(int num in nums ){
@@ -34,14 +21,14 @@ public class KSumPairs{
 
         int pairs = 0;
 
-        foreach(int x in nums){
-            if (!valueFrequency.ContainsKey(x)){
+        foreach(int x in valueFrequency.Keys){
+            if (valueFrequency[x] <=0){
                 continue;
             }
 
             int diff = k-x;
 
-            if (!valueFrequency.ContainsKey(diff)){
+            if (!valueFrequency.ContainsKey(diff) || valueFrequency[diff] <=0){
                 continue;
             }
 
@@ -53,9 +40,10 @@ public class KSumPairs{
 
             pairs += diff == x ? min / 2 : min;
 
-            decreaseOrRemove(x, min, ref valueFrequency);
-            decreaseOrRemove(diff, min, ref valueFrequency);
+            valueFrequency[x] -= min;
+            valueFrequency[diff] -= min;
         }
+        
         return pairs;
     }
 }
