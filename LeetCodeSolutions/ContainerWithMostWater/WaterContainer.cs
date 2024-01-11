@@ -5,26 +5,38 @@ namespace LeetCodeSolutions;
 public class WaterContainer{
     public int MaxArea(int[] height){
         int maxArea = 0;
-        int i =0;
-        int j =  height.Length -1;
-        while (i<j){
-            //TODO: reduce duplicated work
-            int h = height[i] < height[j]? height[i] : height[j];
-            int currentArea =  h * (j-i);
+        int leftIndex = 0;
+        int rightIndex =  height.Length -1;
+
+        while (leftIndex < rightIndex){
+            int leftHeight = height[leftIndex];
+            int rightHeight = height[rightIndex];
+            int currentHeight = leftHeight;
+
+            bool rightHeightIsLower = rightHeight < leftHeight;
+
+            if (rightHeightIsLower){
+                currentHeight = rightHeight;
+            }
+
+            int currentArea =  currentHeight * (rightIndex-leftIndex);
+            
             if (currentArea > maxArea){
                 maxArea = currentArea;
             }
 
-           if (height[i]== height[j]){
-            i++;
-            j--;
-           }else if (
-            height[i] < height[j]
-           ){
-            i++;
-           }else{
-            j--;
+           if (leftHeight == rightHeight){
+            leftIndex++;
+            rightIndex--;
+            continue;
            }
+           
+            if (rightHeightIsLower){
+                rightIndex--;
+                continue;
+           }
+
+           leftIndex++;
 
         }
     
