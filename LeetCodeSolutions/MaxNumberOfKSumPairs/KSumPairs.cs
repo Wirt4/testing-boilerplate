@@ -5,6 +5,7 @@ namespace LeetCodeSolutions;
 public class KSumPairs{
     public int MaxOperations(int[] nums, int k){
         Dictionary <int, int> valueFrequency = new Dictionary<int, int>();
+
         foreach(int num in nums ){
             if (valueFrequency.ContainsKey(num)){
                 valueFrequency[num] += 1;
@@ -15,28 +16,37 @@ public class KSumPairs{
 
         int pairs = 0;
 
-        foreach(int num in nums){
-            int diff = k-num;
-            if (!valueFrequency.ContainsKey(diff) || valueFrequency[diff] <=0){
+        foreach(int x in nums){
+            int diff = k-x;
+            if (!valueFrequency.ContainsKey(diff)){
                 continue;
             }
 
-            int min = valueFrequency[num];
+            int min = valueFrequency[x];
 
-            if (valueFrequency[diff]< valueFrequency[num]){
+            if (valueFrequency[diff]< valueFrequency[x]){
                 min = valueFrequency[diff];
             }
 
-            if (valueFrequency[diff] ==valueFrequency[min]){
+            if (diff == x){
                 pairs += min/2;
             }else{
                   pairs += min;
             }
 
-            valueFrequency[num] -= min;
-            valueFrequency[diff] -= min;
-
-
+            if (valueFrequency[x] - min == 0){
+                valueFrequency.Remove(x);
+            }else{
+                valueFrequency[x] -= min;
+            }
+          
+          if (valueFrequency.ContainsKey(diff)){
+             if (valueFrequency[diff] - min == 0){
+                valueFrequency.Remove(diff);
+                }else{
+                valueFrequency[diff] -= min;
+                }
+            }
         }
         return pairs;
     }
