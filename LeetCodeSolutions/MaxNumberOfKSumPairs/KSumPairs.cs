@@ -3,6 +3,20 @@ using System.Globalization;
 namespace LeetCodeSolutions;
 
 public class KSumPairs{
+
+    private void decreaseOrRemove(int key, int numPairs, ref Dictionary<int, int> lookupTable){
+        if (!lookupTable.ContainsKey(key)){
+            return;
+        }
+
+        if(lookupTable[key] - numPairs <= 0){
+            lookupTable.Remove(key);
+            return;
+        }
+
+        lookupTable[key] -= numPairs;
+
+    }
     public int MaxOperations(int[] nums, int k){
         Dictionary <int, int> valueFrequency = new Dictionary<int, int>();
 
@@ -18,6 +32,7 @@ public class KSumPairs{
 
         foreach(int x in nums){
             int diff = k-x;
+            
             if (!valueFrequency.ContainsKey(diff)){
                 continue;
             }
@@ -34,19 +49,8 @@ public class KSumPairs{
                   pairs += min;
             }
 
-            if (valueFrequency[x] - min == 0){
-                valueFrequency.Remove(x);
-            }else{
-                valueFrequency[x] -= min;
-            }
-          
-          if (valueFrequency.ContainsKey(diff)){
-             if (valueFrequency[diff] - min == 0){
-                valueFrequency.Remove(diff);
-                }else{
-                valueFrequency[diff] -= min;
-                }
-            }
+            decreaseOrRemove(x, min, ref valueFrequency);
+            decreaseOrRemove(diff, min, ref valueFrequency);
         }
         return pairs;
     }
