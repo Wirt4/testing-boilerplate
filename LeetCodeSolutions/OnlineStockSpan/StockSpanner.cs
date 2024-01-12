@@ -7,6 +7,6 @@ public class StockSpanner {
     }
     
     public int Next(int price) {
-        return -1;
+        return 1;
     }
 }
