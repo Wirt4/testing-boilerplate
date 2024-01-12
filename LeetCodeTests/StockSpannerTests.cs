@@ -10,5 +10,6 @@ public class StockSpannerTests{
         Assert.Equal(1, stockSpanner.Next(80));
         Assert.Equal(1, stockSpanner.Next(60));
         Assert.Equal(2, stockSpanner.Next(70));
+        Assert.Equal(1, stockSpanner.Next(60));
     }
 }
