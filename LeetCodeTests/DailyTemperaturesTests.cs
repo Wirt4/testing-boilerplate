@@ -8,4 +8,10 @@ public class DailyTemperaturesTests{
         Temperatures solution = new Temperatures();
         Assert.Equal([1,1,4,2,1,1,0,0], solution.DailyTemperatures([73,74,75,71,69,72,76,73]));
     }
+
+     [Fact]
+    public void Example2(){
+        Temperatures solution = new Temperatures();
+        Assert.Equal([1,1,1,0], solution.DailyTemperatures([30,40,50,60]));
+    }
 }
