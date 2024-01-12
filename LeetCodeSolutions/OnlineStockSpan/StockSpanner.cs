@@ -1,29 +1,29 @@
 namespace LeetCodeSolutions;
 
 public class StockSpanner {
-    private Stack<int> allPrices;
-    private int smallest;
+    private Stack<int> priceRecord;
+    private Stack<int> secondStack;
 
     public StockSpanner() {
-        allPrices = new Stack<int>();
-        smallest = int.MaxValue;
+        priceRecord = new Stack<int>();
+        secondStack = new Stack<int>();
     }
     
     public int Next(int price) {
-       
-       int count = 0;
+       priceRecord.Push(price);
 
-       Stack<int> temp = new Stack<int>();
-       
-       allPrices.Push(price);
+       if (priceRecord.Count == 1){
+        return 1;
+       } 
+        int count = 0;
 
-        while(allPrices.Count > 0 && allPrices.Peek() <= price){
+        while(priceRecord.Count > 0 && priceRecord.Peek() <= price){
             count ++;
-            temp.Push(allPrices.Pop());
+            secondStack.Push(priceRecord.Pop());
         }
 
-        while(temp.Count > 0){
-            allPrices.Push(temp.Pop());
+        while(secondStack.Count > 0){
+            priceRecord.Push(secondStack.Pop());
         }
 
         return count;
