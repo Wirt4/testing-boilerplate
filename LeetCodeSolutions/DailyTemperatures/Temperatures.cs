@@ -35,14 +35,17 @@ public class Temperatures{
             left.Push(right.Pop());
         }
 
+        left.Pop();
+
         bool indexFound =  false;
         int searchIndex = j;
+
         while(!indexFound && searchIndex < temperatures.Length){
             searchIndex++;
             indexFound =  right.Contains(searchIndex);
         }
 
-        counts[j] = indexFound ? searchIndex-j: 0;
+        counts[j] = indexFound ? searchIndex - j: 0;
     }
 
     return counts;

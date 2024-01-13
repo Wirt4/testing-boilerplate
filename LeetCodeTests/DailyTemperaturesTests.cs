@@ -14,4 +14,10 @@ public class DailyTemperaturesTests{
         Temperatures solution = new Temperatures();
         Assert.Equal([1,1,1,0], solution.DailyTemperatures([30,40,50,60]));
     }
+
+    [Fact]
+    public void BreakingCase1(){
+        Temperatures solution = new Temperatures();
+        Assert.Equal([1,0,0,0,1,0,0,0,0,0], solution.DailyTemperatures([34,80,80,80,34,80,80,80,34,34]));
+    }
 }
