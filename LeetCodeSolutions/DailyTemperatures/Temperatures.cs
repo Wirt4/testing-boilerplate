@@ -1,7 +1,3 @@
-using System.Collections.Concurrent;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.AccessControl;
-
 namespace LeetCodeSolutions;
 public class Temperatures{
     private class TemperatureOnDate{
@@ -31,7 +27,7 @@ public class Temperatures{
         for(int i= lastIndex-1; i>=0; i--){
             int currentTemp = temperatures[i];
             int daysToHigherTemperature = 1;
-            
+
             while (ascendingTemperatures.Count  > 0 && ascendingTemperatures.Peek().Temperature <= currentTemp){
                 TemperatureOnDate temp = ascendingTemperatures.Pop();
                 daysToHigherTemperature += temp.DaysToHigherValue;
