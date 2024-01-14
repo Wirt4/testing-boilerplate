@@ -14,8 +14,21 @@ public class TribonacciTests{
     }
 
     [Fact]
+    public void TOf3(){
+        TribonacciNumber solution = new TribonacciNumber();
+        Assert.Equal(2, solution.Tribonacci(3));
+    }
+
+    [Fact]
+    public void TOf4(){
+        TribonacciNumber solution = new TribonacciNumber();
+        Assert.Equal(4, solution.Tribonacci(4));
+    }
+
+
+    [Fact]
     public void TOf25(){
-         TribonacciNumber solution = new TribonacciNumber();
+        TribonacciNumber solution = new TribonacciNumber();
         Assert.Equal(1389537, solution.Tribonacci(25));
     }
     
