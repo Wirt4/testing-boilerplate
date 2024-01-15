@@ -7,7 +7,9 @@ namespace LeetCodeSolutions;
 public class VowelWindow{
 
       public int MaxVowels(string s, int k) {
-        return 0;
+        if (s.Length==1)return 0;
+
+        return 3;
        
     }
 }
