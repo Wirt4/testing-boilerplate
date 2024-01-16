@@ -8,25 +8,25 @@ public class VowelWindow{
     private class Window{
         private int _NumberOfVowels;
         private int _endNdx;
-        private int _windowLength;
-        private int _offset;
-        private HashSet<char> _vowels;
-        private char [] _charArr;
+        private readonly int _windowLength;
+        private readonly int _offset;
+        private readonly HashSet<char> _vowels;
+        private readonly string  _str;
 
-        private bool isVowel(int ndx){
-            return _vowels.Contains(_charArr[ndx]);
+        private bool IsVowel(int ndx){
+            return _vowels.Contains(_str[ndx]);
 
         }
         public Window(string s, int k){
             _NumberOfVowels = 0;
-            _charArr = s.ToCharArray();
+            _str = s;
             _windowLength = s.Length;
             _offset = k;
             _endNdx = _offset;
             _vowels = new HashSet<char>(['a', 'e', 'i', 'o', 'u']);
 
             for (int i=0; i< k; i++){
-                if (isVowel(i)){
+                if (IsVowel(i)){
                     _NumberOfVowels++;
                 }
             }
@@ -38,15 +38,15 @@ public class VowelWindow{
         public bool HasAdditionalSpace => _endNdx < _windowLength;
 
         
-/** 
-moves the "window" one index to the right and updates the vowell count accordingly
-*/
+    /** 
+        moves the "window" one index to the right and updates the vowell count accordingly
+    */
         public void Shift(){
-            if (isVowel(_endNdx - _offset)){
+            if (IsVowel(_endNdx - _offset)){
                 _NumberOfVowels--;
             }
 
-            if(isVowel(_endNdx)){
+            if(IsVowel(_endNdx)){
                 _NumberOfVowels++;
             }
 
