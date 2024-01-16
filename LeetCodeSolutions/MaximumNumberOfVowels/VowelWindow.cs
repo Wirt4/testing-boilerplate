@@ -20,6 +20,10 @@ public class VowelWindow{
         private void UptickIfVowel(int ndx){
             if (IsVowel(ndx)) _NumberOfVowels++;
         }
+
+        private void DowntickIfVowel(int ndx){
+             if (IsVowel(ndx)) _NumberOfVowels--;
+        }
         public Window(string s, int k){
             _NumberOfVowels = 0;
             _str = s;
@@ -42,10 +46,7 @@ public class VowelWindow{
         moves the "window" one index to the right and updates the vowell count accordingly
     */
         public void Shift(){
-            if (IsVowel(_endNdx - _offset)){
-                _NumberOfVowels--;
-            }
-
+            DowntickIfVowel(_endNdx - _offset);
             UptickIfVowel(_endNdx);
 
             _endNdx++;
