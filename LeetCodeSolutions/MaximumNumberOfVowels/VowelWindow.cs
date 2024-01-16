@@ -8,7 +8,6 @@ public class VowelWindow{
     private class Window{
         private int _NumberOfVowels;
         private int _endNdx;
-        private readonly int _windowLength;
         private readonly int _offset;
         private readonly HashSet<char> _vowels;
         private readonly string  _str;
@@ -17,25 +16,26 @@ public class VowelWindow{
             return _vowels.Contains(_str[ndx]);
 
         }
+
+        private void UptickIfVowel(int ndx){
+            if (IsVowel(ndx)) _NumberOfVowels++;
+        }
         public Window(string s, int k){
             _NumberOfVowels = 0;
             _str = s;
-            _windowLength = s.Length;
             _offset = k;
             _endNdx = _offset;
             _vowels = new HashSet<char>(['a', 'e', 'i', 'o', 'u']);
 
             for (int i=0; i< k; i++){
-                if (IsVowel(i)){
-                    _NumberOfVowels++;
-                }
+                UptickIfVowel(i);
             }
         }
        /// current number of values in window 
         public int NumberOfVowels => _NumberOfVowels;
 
         /// Returns whether the shift operation can be peformed without throwing
-        public bool HasAdditionalSpace => _endNdx < _windowLength;
+        public bool HasAdditionalSpace => _endNdx < _str.Length;
 
         
     /** 
@@ -46,9 +46,7 @@ public class VowelWindow{
                 _NumberOfVowels--;
             }
 
-            if(IsVowel(_endNdx)){
-                _NumberOfVowels++;
-            }
+            UptickIfVowel(_endNdx);
 
             _endNdx++;
         }
