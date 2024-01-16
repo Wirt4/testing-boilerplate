@@ -1,8 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-
 namespace LeetCodeSolutions;
 public class VowelWindow{
     private class Window{
@@ -17,12 +12,15 @@ public class VowelWindow{
 
         }
 
+        private void AdjustIfVowel(int ndx, int increment){
+            if (IsVowel(ndx)) _NumberOfVowels += increment;
+        }
         private void UptickIfVowel(int ndx){
-            if (IsVowel(ndx)) _NumberOfVowels++;
+            AdjustIfVowel(ndx, 1);
         }
 
         private void DowntickIfVowel(int ndx){
-             if (IsVowel(ndx)) _NumberOfVowels--;
+            AdjustIfVowel(ndx, -1);
         }
         public Window(string s, int k){
             _NumberOfVowels = 0;
