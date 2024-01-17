@@ -31,4 +31,9 @@ public class MaxConsecutiveOnesIIITests{
     public void HaveToTraversBackwards(){
             Assert.Equal(4, _maxOnes.LongestOnes([0,0,1,1],2));
     }
+
+    [Fact]
+    public void BreakingCase1(){
+        Assert.Equal(1, _maxOnes.LongestOnes([0],1));
+    }
 }

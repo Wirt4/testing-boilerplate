@@ -9,9 +9,8 @@ public class MaxConsecutiveOnes{
         private int[] _binaryArr;
         public Window(int[] binaryArr){
             _binaryArr = binaryArr;
-            int startNdx = 0;
-            moveToFirstNonValue(ref startNdx, 0);
-            _Shift(startNdx);
+            _startNdx = 0;
+            _endNdx = 0;
         }
 
         private void moveToFirstNonValue (ref int ndx, int value){
