@@ -15,4 +15,9 @@ public class LongestSubarrayAfterDeletionTests{
     public void Example2(){
         Assert.Equal(5, _solution.LongestSubarray([0,1,1,1,0,1,1,0,1]));
     }
+
+    [Fact]
+    public void NoSuchArray(){
+          Assert.Equal(0, _solution.LongestSubarray([0,0,0,0,0,0,0,0,0]));
+    }
 }
