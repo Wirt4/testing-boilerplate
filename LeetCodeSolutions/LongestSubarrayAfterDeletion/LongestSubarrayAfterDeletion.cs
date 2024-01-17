@@ -12,10 +12,14 @@ public class LongestSubarrayAfterDeletion{
             return _nums[ndx] == 1;
         }
 
+        private bool validIndex(int ndx){
+            return ndx < _nums.Length;
+        }
+
         public int getNextSpan(){
             int startNdx = _endNdx;
 
-            while(startNdx < _nums.Length && !valueOfOne(startNdx)){
+            while(validIndex(startNdx) && !valueOfOne(startNdx)){
                 startNdx ++;
             }
 
@@ -30,7 +34,7 @@ public class LongestSubarrayAfterDeletion{
             return _endNdx - startNdx - 1;
         }
 
-        public bool HasNextSpan => _endNdx < _nums.Length;
+        public bool HasNextSpan =>validIndex(_endNdx);
     }
      public int LongestSubarray(int[] nums) {
         Window window = new Window(nums);
