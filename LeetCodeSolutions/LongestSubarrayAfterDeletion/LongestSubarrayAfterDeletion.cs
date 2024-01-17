@@ -6,6 +6,7 @@ public class LongestSubarrayAfterDeletion{
         public Window(int []nums){
             _nums = nums;
             _endNdx = 0;
+            
             while (validIndex(_endNdx) && !valueOfOne(_endNdx)){
                 _endNdx++;
             }
