@@ -21,4 +21,9 @@ public class MaxConsecutiveOnesIIITests{
     public void Example1(){
             Assert.Equal(6, _maxOnes.LongestOnes([1,1,1,0,0,0,1,1,1,1,0],2));
     }
+
+    [Fact]
+    public void Example2(){
+            Assert.Equal(10, _maxOnes.LongestOnes([0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1],3));
+    }
 }
