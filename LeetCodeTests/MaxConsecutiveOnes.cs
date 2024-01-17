@@ -8,7 +8,7 @@ public class MaxConsecutiveOnesIIITests{
         _maxOnes = new MaxConsecutiveOnes();
     }
     [Fact]
-    public void LengthOneKisZero(){
+    public void LengthOneKIsZero(){
         Assert.Equal(0, _maxOnes.LongestOnes([0],0));
     }
 
