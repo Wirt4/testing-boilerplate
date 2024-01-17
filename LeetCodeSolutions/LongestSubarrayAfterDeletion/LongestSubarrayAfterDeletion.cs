@@ -23,11 +23,7 @@ public class LongestSubarrayAfterDeletion{
             _endNdx = startNdx + 1;
 
             while(HasNextSpan && (valueOfOne(_endNdx)|| noDeletionsMade)){
-
-                if (!valueOfOne(_endNdx)){
-                    noDeletionsMade = false;
-                }
-
+                noDeletionsMade = noDeletionsMade && valueOfOne(_endNdx);
                 _endNdx ++;
             }
 
