@@ -74,10 +74,6 @@ public class LongestSubarrayAfterDeletion{
 
         public bool HasNextSpan =>validIndex(_endNdx);
 
-        public void Reverse(){
-            Array.Reverse(_nums);
-            initiateEndNdx();
-        }
     }
      public int LongestSubarray(int[] nums) {
         Window window = new Window(nums);
