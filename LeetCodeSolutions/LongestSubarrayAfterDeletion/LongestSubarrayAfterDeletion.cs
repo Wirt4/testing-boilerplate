@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace LeetCodeSolutions;
 public class LongestSubarrayAfterDeletion{
     private class Window{
@@ -44,21 +46,30 @@ public class LongestSubarrayAfterDeletion{
 
             bool noDeletionsMade = true;
             _endNdx = startNdx + 1;
+            int temp =-1;
 
             while(HasNextSpan && (valueOfOne(_endNdx)|| noDeletionsMade)){
-                noDeletionsMade = noDeletionsMade && valueOfOne(_endNdx);
+                if (!valueOfOne(_endNdx)){
+                    temp = _endNdx;
+                    noDeletionsMade = false;
+                } 
+              
                 _endNdx ++;
             }
+
+            int span =  _endNdx - startNdx;
+
             // case is all ones
             if (_endNdx == _nums.Length && startNdx==0 && noDeletionsMade){
-                return _nums.Length -1;
+                return span -1;
             }
 
             if (!noDeletionsMade){
-                 return _endNdx - startNdx - 1;
+                _endNdx = temp;
+                 return span - 1;
             }
 
-            return _endNdx - startNdx;
+            return span;
         }
 
         public bool HasNextSpan =>validIndex(_endNdx);
