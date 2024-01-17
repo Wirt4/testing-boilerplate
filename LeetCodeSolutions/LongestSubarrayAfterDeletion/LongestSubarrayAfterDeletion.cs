@@ -7,6 +7,10 @@ public class LongestSubarrayAfterDeletion{
         int _endNdx;
         public Window(int []nums){
             _nums = nums;
+           initiateEndNdx();
+        }
+
+        private void initiateEndNdx(){
             _endNdx = 0;
             
             while (validIndex(_endNdx) && !valueOfOne(_endNdx)){
@@ -15,7 +19,7 @@ public class LongestSubarrayAfterDeletion{
         }
 
         public bool AllZeroes(){
-            
+
             for (int i=0; i < _nums.Length; i++){
                 if (valueOfOne(i)){
                     return false;
@@ -63,11 +67,7 @@ public class LongestSubarrayAfterDeletion{
 
         public void Reverse(){
             Array.Reverse(_nums);
-            _endNdx = 0;
-            
-            while (validIndex(_endNdx) && !valueOfOne(_endNdx)){
-                _endNdx++;
-            }
+            initiateEndNdx();
         }
     }
      public int LongestSubarray(int[] nums) {
