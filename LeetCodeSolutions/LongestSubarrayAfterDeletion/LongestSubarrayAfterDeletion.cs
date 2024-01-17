@@ -94,17 +94,6 @@ public class LongestSubarrayAfterDeletion{
             }
         }
 
-        window.Reverse();
-
-        do{
-            int currentSpan = window.getNextSpan();
-            if (currentSpan > longestSpan){
-                longestSpan = currentSpan;
-            }
-        }while (window.HasNextSpan);
-
-
-
         return longestSpan;
     }
 }
