@@ -17,6 +17,12 @@ public class LongestSubarrayAfterDeletionTests{
     }
 
     [Fact]
+    public void Example2Modfied(){
+        //can't contaenate two subs with one deletion
+        Assert.Equal(3, _solution.LongestSubarray([0,1,1,1,0,0,1,1,0,1]));
+    }
+
+    [Fact]
     public void NoSuchArray(){
           Assert.Equal(0, _solution.LongestSubarray([0,0,0,0,0,0,0,0,0]));
     }
