@@ -35,4 +35,9 @@ public class LongestSubarrayAfterDeletionTests{
     public void BreakingCase1(){
          Assert.Equal(2, _solution.LongestSubarray([0,0,1,1]));
     }
+
+    [Fact]
+    public void BreakingCase2(){
+        Assert.Equal(11, _solution.LongestSubarray([1,0,1,1,1,1,1,1,0,1,1,1,1,1]));
+    }
 }

@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace LeetCodeSolutions;
 public class LongestSubarrayAfterDeletion{
     private class Window{
@@ -10,6 +12,17 @@ public class LongestSubarrayAfterDeletion{
             while (validIndex(_endNdx) && !valueOfOne(_endNdx)){
                 _endNdx++;
             }
+        }
+
+        public bool AllZeroes(){
+            
+            for (int i=0; i < _nums.Length; i++){
+                if (valueOfOne(i)){
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private bool valueOfOne(int ndx){
@@ -47,10 +60,23 @@ public class LongestSubarrayAfterDeletion{
         }
 
         public bool HasNextSpan =>validIndex(_endNdx);
+
+        public void Reverse(){
+            Array.Reverse(_nums);
+            _endNdx = 0;
+            
+            while (validIndex(_endNdx) && !valueOfOne(_endNdx)){
+                _endNdx++;
+            }
+        }
     }
      public int LongestSubarray(int[] nums) {
         Window window = new Window(nums);
         int longestSpan = 0;
+
+        if (window.AllZeroes()){
+            return 0;
+        }
 
         while (window.HasNextSpan){
             int currentSpan = window.getNextSpan();
@@ -58,6 +84,17 @@ public class LongestSubarrayAfterDeletion{
                 longestSpan = currentSpan;
             }
         }
+
+        window.Reverse();
+
+        do{
+            int currentSpan = window.getNextSpan();
+            if (currentSpan > longestSpan){
+                longestSpan = currentSpan;
+            }
+        }while (window.HasNextSpan);
+
+
 
         return longestSpan;
     }
