@@ -7,16 +7,13 @@ public class LongestSubarrayAfterDeletion{
         int _endNdx;
         public Window(int []nums){
             _nums = nums;
-           initiateEndNdx();
-        }
-
-        private void initiateEndNdx(){
-            _endNdx = 0;
+           _endNdx = 0;
             
             while (validIndex(_endNdx) && !valueOfOne(_endNdx)){
                 _endNdx++;
             }
         }
+
 
         public bool AllZeroes(){
 
@@ -85,9 +82,11 @@ public class LongestSubarrayAfterDeletion{
 
         while (window.HasNextSpan){
             int currentSpan = window.getNextSpan();
+
             if (currentSpan > longestSpan){
                 longestSpan = currentSpan;
             }
+            
         }
 
         return longestSpan;
