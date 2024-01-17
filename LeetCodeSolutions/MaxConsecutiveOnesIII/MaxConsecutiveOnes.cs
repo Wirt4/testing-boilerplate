@@ -56,15 +56,40 @@ public class MaxConsecutiveOnes{
             _Shift(_endNdx +1);
         }
 
+        public void Reverse(){
+            Array.Reverse(_binaryArr);
+            int startNdx = 0;
+            moveToFirstNonValue(ref startNdx, 0);
+            _Shift(startNdx);
+        }
+
     }
      public int LongestOnes(int[] nums, int k) {
         Window window = new Window(nums);
 
         int longestOnes = window.GetAdjustedSpan(k);
+        int cur;
+        while (window.HasRemainingOnes){
+            window.Shift();
+            cur = window.GetAdjustedSpan(k);
+
+            if (cur > longestOnes){
+                longestOnes = cur;
+            }
+
+        }
+        //do it backwards
+
+        window.Reverse();
+        
+        cur = window.GetAdjustedSpan(k);
+        if (cur > longestOnes){
+            longestOnes = cur;
+        }
 
         while (window.HasRemainingOnes){
             window.Shift();
-            int cur = window.GetAdjustedSpan(k);
+            cur = window.GetAdjustedSpan(k);
 
             if (cur > longestOnes){
                 longestOnes = cur;
