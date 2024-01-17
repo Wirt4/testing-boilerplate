@@ -10,4 +10,9 @@ public class LongestSubarrayAfterDeletionTests{
     public void Example1(){
         Assert.Equal(3, _solution.LongestSubarray([1,1,0,1]));
     }
+
+      [Fact]
+    public void Example2(){
+        Assert.Equal(5, _solution.LongestSubarray([0,1,1,1,0,1,1,0,1]));
+    }
 }
