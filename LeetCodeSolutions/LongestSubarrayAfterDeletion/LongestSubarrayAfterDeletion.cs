@@ -6,6 +6,9 @@ public class LongestSubarrayAfterDeletion{
         public Window(int []nums){
             _nums = nums;
             _endNdx = 0;
+            while (validIndex(_endNdx) && !valueOfOne(_endNdx)){
+                _endNdx++;
+            }
         }
 
         private bool valueOfOne(int ndx){
@@ -30,8 +33,16 @@ public class LongestSubarrayAfterDeletion{
                 noDeletionsMade = noDeletionsMade && valueOfOne(_endNdx);
                 _endNdx ++;
             }
+            // case is all ones
+            if (_endNdx == _nums.Length && startNdx==0 && noDeletionsMade){
+                return _nums.Length -1;
+            }
 
-            return _endNdx - startNdx - 1;
+            if (!noDeletionsMade){
+                 return _endNdx - startNdx - 1;
+            }
+
+            return _endNdx - startNdx;
         }
 
         public bool HasNextSpan =>validIndex(_endNdx);
