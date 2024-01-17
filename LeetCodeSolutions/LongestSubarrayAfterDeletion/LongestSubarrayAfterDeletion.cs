@@ -10,7 +10,7 @@ public class LongestSubarrayAfterDeletion{
 
         public int getNextSpan(){
             int startNdx = _endNdx;
-            while(_nums[startNdx]==0){
+            while(startNdx< _nums.Length && _nums[startNdx]==0){
                 startNdx++;
             }
 
