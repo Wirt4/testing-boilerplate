@@ -10,23 +10,23 @@ public class LongestSubarrayAfterDeletion{
 
         public int getNextSpan(){
             int startNdx = _endNdx;
-            while(startNdx< _nums.Length && _nums[startNdx]==0){
-                startNdx++;
+            while(startNdx < _nums.Length && _nums[startNdx] == 0){
+                startNdx ++;
             }
 
             bool zeroDeleted = false;
-            _endNdx = startNdx +1;
+            _endNdx = startNdx + 1;
 
-            while(HasNextSpan && (_nums[_endNdx]==1 || !zeroDeleted)){
-                if (_nums[_endNdx]==0){
+            while(HasNextSpan && (_nums[_endNdx] == 1 || !zeroDeleted)){
+                if (_nums[_endNdx] == 0){
                     zeroDeleted = true;
                 }
                 _endNdx ++;
             }
-            return _endNdx - startNdx -1;
+            return _endNdx - startNdx - 1;
         }
 
-        public bool HasNextSpan=> _endNdx < _nums.Length;
+        public bool HasNextSpan => _endNdx < _nums.Length;
     }
      public int LongestSubarray(int[] nums) {
         Window window = new Window(nums);
