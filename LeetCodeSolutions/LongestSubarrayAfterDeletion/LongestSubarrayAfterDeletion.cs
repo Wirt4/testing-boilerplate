@@ -8,20 +8,23 @@ public class LongestSubarrayAfterDeletion{
             _endNdx = 0;
         }
 
+        private bool valueOfOne(int ndx){
+            return _nums[ndx] == 1;
+        }
 
         public int getNextSpan(){
             int startNdx = _endNdx;
 
-            while(startNdx < _nums.Length && _nums[startNdx] == 0){
+            while(startNdx < _nums.Length && !valueOfOne(startNdx)){
                 startNdx ++;
             }
 
             bool noDeletionsMade = true;
             _endNdx = startNdx + 1;
 
-            while(HasNextSpan && (_nums[_endNdx] == 1 || noDeletionsMade)){
+            while(HasNextSpan && (valueOfOne(_endNdx)|| noDeletionsMade)){
 
-                if (_nums[_endNdx] == 0){
+                if (!valueOfOne(_endNdx)){
                     noDeletionsMade = false;
                 }
 
