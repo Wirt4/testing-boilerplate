@@ -9,13 +9,15 @@ public class MaxConsecutiveOnes{
         private int[] _binaryArr;
         public Window(int[] binaryArr){
             _binaryArr = binaryArr;
-            int startNdx =0;
-
-            while (startNdx < _binaryArr.Length && _binaryArr[startNdx] ==0){
-                startNdx ++;
-            }
-
+            int startNdx = 0;
+            moveToFirstNonValue(ref startNdx, 0);
             _Shift(startNdx);
+        }
+
+        private void moveToFirstNonValue (ref int ndx, int value){
+            while(ndx < _binaryArr.Length && _binaryArr[ndx] == value){
+                ndx++;
+            }
         }
         /// <summary>
         /// measures the longest span of ones, provided up to a set amount of Zeroes may be flipped
@@ -32,9 +34,7 @@ public class MaxConsecutiveOnes{
                 extendedNdx++;
             }
 
-            while(extendedNdx < _binaryArr.Length && _binaryArr[extendedNdx] ==1){
-                extendedNdx++;
-            }
+            moveToFirstNonValue(ref extendedNdx, 1);
 
             return extendedNdx - _startNdx;
         }
@@ -46,10 +46,7 @@ public class MaxConsecutiveOnes{
         private void _Shift(int startNdx){
             _startNdx = startNdx;
             _endNdx = _startNdx;
-
-             while (_endNdx < _binaryArr.Length && _binaryArr[_endNdx] == 1){
-                _endNdx++;
-            }
+            moveToFirstNonValue(ref _endNdx, 1);
         }
 
         /// <summary>
