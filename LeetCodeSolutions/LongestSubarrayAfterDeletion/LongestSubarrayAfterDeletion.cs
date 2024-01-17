@@ -1,5 +1,3 @@
-using System.Globalization;
-
 namespace LeetCodeSolutions;
 public class LongestSubarrayAfterDeletion{
     private class Window{
