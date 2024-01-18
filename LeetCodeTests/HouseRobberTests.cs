@@ -23,4 +23,9 @@ public class HouseRobberTests{
     public void Example2(){
         Assert.Equal(12, _solution.Rob([2,7,9,3,1]));
     }
+
+    [Fact]
+    public void BuckTheRythym(){
+        Assert.Equal(200, _solution.Rob([100,0,0,100]));
+    }
 }
