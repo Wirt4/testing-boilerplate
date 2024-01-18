@@ -1,5 +1,3 @@
-using System.Data;
-
 namespace LeetCodeSolutions;
 
 public class HouseRobber{
@@ -34,6 +32,7 @@ public class HouseRobber{
             stack.Push(a);
             return;
         }
+
         stack.Push(a);
         stack.Push(b);
         }
@@ -64,6 +63,7 @@ public class HouseRobber{
 
         int lastIndex =  nums.Length -1;
         House last = new House(nums[lastIndex], lastIndex);
+        
         int penultimateIndex = lastIndex - 1;
         House penultimate = new House(nums[penultimateIndex], penultimateIndex);
 
