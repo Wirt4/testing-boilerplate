@@ -28,6 +28,10 @@ public class HouseRobber{
         stack.Push(a);
         stack.Push(b);
      }
+
+     private HouseValue createCurrent(ref int[] nums, int index, ref Stack<HouseValue> houseStack){
+        return new HouseValue(index, houseStack.Peek().Value + nums[index]);
+     }
      public int Rob(int[] nums) {
         if (nums.Length ==1){
             return nums[0];
@@ -46,20 +50,16 @@ public class HouseRobber{
         
         for (int i = penultimateIndex - 1; i>= 0; i--){
             HouseValue current;
-            int lootValue;
-
             if (highestRoutes.Peek().IsAdjacentTo(i)){
                 HouseValue temp = highestRoutes.Pop();
-                
-                lootValue =  highestRoutes.Peek().Value + nums[i];
-                current = new HouseValue(i, lootValue);
+
+                current = createCurrent(ref nums, i, ref highestRoutes);
 
                 PushinSequnce(temp, current, ref highestRoutes);
                 continue;
             }
 
-            lootValue =  highestRoutes.Peek().Value + nums[i];
-            current = new HouseValue(i, lootValue);
+            current = createCurrent(ref nums, i, ref highestRoutes);;
             highestRoutes.Push(current);
             
         }
