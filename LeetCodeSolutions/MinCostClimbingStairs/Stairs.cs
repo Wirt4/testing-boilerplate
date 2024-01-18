@@ -1,13 +1,26 @@
 namespace LeetCodeSolutions;
 public class Stairs{
      public int MinCostClimbingStairs(int[] cost) {
-        if (cost.Length == 2){
-            if (cost[0] < cost[1]){
-                return cost[0];
+        int[] minCostFromPosition = new int[cost.Length];
+        for (int i = cost.Length -1; i >=0; i--){
+            if (i >= cost.Length -2){
+                minCostFromPosition[i] = cost[i];
+                continue;
             }
-                return cost[1];
+            
+            if (minCostFromPosition[i+1] < minCostFromPosition[i+2]){
+                minCostFromPosition[i] = cost[i] + minCostFromPosition[i+1];
+                continue;
+            }
+
+             minCostFromPosition[i] = cost[i] + minCostFromPosition[i+2];
+
         }
 
-        return 15;
+        if (minCostFromPosition[0] < minCostFromPosition[1]){
+            return minCostFromPosition[0];
+        }
+
+        return minCostFromPosition[1];
     }
 }

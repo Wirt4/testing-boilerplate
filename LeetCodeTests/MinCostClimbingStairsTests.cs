@@ -21,4 +21,9 @@ private Stairs _solution;
     public void ArrayOfTwoStartOnIndexOne(){
         Assert.Equal(0, _solution.MinCostClimbingStairs([10,0]));
     }
+
+    [Fact]
+    public void Example2(){
+         Assert.Equal(6, _solution.MinCostClimbingStairs([1,100,1,1,1,100,1,1,100,1]));
+    }
 }
