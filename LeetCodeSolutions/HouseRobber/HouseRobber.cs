@@ -19,19 +19,39 @@ public class HouseRobber{
         }
     }
      
-     private void PushinSequnce(HouseValue a, HouseValue b, ref Stack<HouseValue> stack){
-        if (a.Value > b.Value){
+    private class SortedHouseValues{
+        private Stack<HouseValue> stack;
+        public SortedHouseValues(){
+            stack = new Stack<HouseValue>();
+        }
+
+        public void PushinSequnce(HouseValue a, HouseValue b){
+            if (a.Value > b.Value){
             stack.Push(b);
             stack.Push(a);
             return;
         }
         stack.Push(a);
         stack.Push(b);
-     }
+        }
 
-     private HouseValue createCurrent(ref int[] nums, int index, ref Stack<HouseValue> houseStack){
-        return new HouseValue(index, houseStack.Peek().Value + nums[index]);
-     }
+        public HouseValue createCurrent(int value, int index ){
+            return new HouseValue(index, value + stack.Peek().Value );
+        }
+
+        public bool TopIsAdjacent(int index){
+            return stack.Peek().IsAdjacentTo(index);
+        }
+
+        public HouseValue Pop(){
+            return stack.Pop();
+        }
+
+        public void Push(HouseValue v){
+            stack.Push(v);
+        }
+    }
+
      public int Rob(int[] nums) {
         if (nums.Length ==1){
             return nums[0];
@@ -42,28 +62,26 @@ public class HouseRobber{
 
         int penultimateIndex = lastIndex -1;
         HouseValue penultimate = new HouseValue(penultimateIndex, nums[penultimateIndex]);
-        Stack <HouseValue> highestRoutes = new Stack<HouseValue>();
-        PushinSequnce(last,penultimate, ref highestRoutes);
+        SortedHouseValues houseValues = new SortedHouseValues();
+        houseValues.PushinSequnce(last,penultimate);
        
 
         //create a sorted stack that we never have to check if it's empty
         
         for (int i = penultimateIndex - 1; i>= 0; i--){
             HouseValue current;
-            if (highestRoutes.Peek().IsAdjacentTo(i)){
-                HouseValue temp = highestRoutes.Pop();
-
-                current = createCurrent(ref nums, i, ref highestRoutes);
-
-                PushinSequnce(temp, current, ref highestRoutes);
+            if (houseValues.TopIsAdjacent(i)){
+                HouseValue temp = houseValues.Pop();
+                current = houseValues.createCurrent(nums[i], i);
+                houseValues.PushinSequnce(temp, current);
                 continue;
             }
 
-            current = createCurrent(ref nums, i, ref highestRoutes);;
-            highestRoutes.Push(current);
+            current = houseValues.createCurrent(nums[i], i);
+            houseValues.Push(current);
             
         }
         
-        return highestRoutes.Pop().Value;
+        return houseValues.Pop().Value;
     }
 }
