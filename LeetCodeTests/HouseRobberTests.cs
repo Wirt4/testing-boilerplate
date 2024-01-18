@@ -16,6 +16,6 @@ public class HouseRobberTests{
     [Fact]
     public void Example1(){
          Assert.Equal(4, _solution.Rob([1,2,3,1]));
-
+         Assert.Equal(5, _solution.Rob([1,2,4,1]));
     }
 }
