@@ -46,16 +46,22 @@ public class HouseRobber{
         
         for (int i = penultimateIndex - 1; i>= 0; i--){
             HouseValue current;
+            int lootValue;
+
             if (highestRoutes.Peek().IsAdjacentTo(i)){
                 HouseValue temp = highestRoutes.Pop();
-                int lootValue =  highestRoutes.Peek().Value + nums[i];
+                
+                lootValue =  highestRoutes.Peek().Value + nums[i];
                 current = new HouseValue(i, lootValue);
+
                 PushinSequnce(temp, current, ref highestRoutes);
-            }else{
-                int lootValue =  highestRoutes.Peek().Value + nums[i];
-                current = new HouseValue(i, lootValue);
-                highestRoutes.Push(current);
+                continue;
             }
+
+            lootValue =  highestRoutes.Peek().Value + nums[i];
+            current = new HouseValue(i, lootValue);
+            highestRoutes.Push(current);
+            
         }
         
         return highestRoutes.Pop().Value;
