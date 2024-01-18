@@ -24,8 +24,12 @@ public class HouseRobber{
         }
 
         Stack <HouseValue> highestRoutes = new Stack<HouseValue>();
-        HouseValue last = new HouseValue(nums.Length-1, nums[nums.Length-1]);
-        HouseValue penultimate = new HouseValue(nums.Length -2, nums[nums.Length-2]);
+        int lastIndex =  nums.Length -1;
+        HouseValue last = new HouseValue(lastIndex, nums[lastIndex]);
+
+        int penultimateIndex = lastIndex -1;
+        HouseValue penultimate = new HouseValue(penultimateIndex, nums[penultimateIndex]);
+
         if (last.Value > penultimate.Value){
             highestRoutes.Push(penultimate);
             highestRoutes.Push(last);
@@ -36,12 +40,13 @@ public class HouseRobber{
 
         //create a sorted stack that we never have to check if it's empty
         
-        for (int i = nums.Length -3; i>= 0; i--){
+        for (int i = penultimateIndex - 1; i>= 0; i--){
             HouseValue current;
             if (highestRoutes.Peek().IsAdjacentTo(i)){
                 HouseValue temp = highestRoutes.Pop();
                 int lootValue =  highestRoutes.Peek().Value + nums[i];
                 current = new HouseValue(i, lootValue);
+                
                 if (current.Value > temp.Value){
                     highestRoutes.Push(temp);
                     highestRoutes.Push(current);
@@ -56,11 +61,6 @@ public class HouseRobber{
                 highestRoutes.Push(current);
             }
         }
-
-          
-
-            
-    
         
         return highestRoutes.Pop().Value;
     }
