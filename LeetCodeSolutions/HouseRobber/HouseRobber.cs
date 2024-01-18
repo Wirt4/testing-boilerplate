@@ -20,13 +20,13 @@ public class HouseRobber{
         }
     }
      
-    private class SortedHouseValues{
+    private class MostValuableHouses{
         private readonly Stack<House> stack;
-        public SortedHouseValues(){
+        public MostValuableHouses(){
             stack = new Stack<House>();
         }
 
-        public void PushinSequnce(House a, House b){
+        public void Add(House a, House b){
             if (a.Value > b.Value){
             stack.Push(b);
             stack.Push(a);
@@ -36,9 +36,7 @@ public class HouseRobber{
         stack.Push(a);
         stack.Push(b);
         }
-
-        //can this take a House Argument as a thing?
-        public bool TopIsNextDoor(House house){
+        public bool HighestIsAdjacent(House house){
             return stack.Peek().IsNextDoor(house);
         }
 
@@ -46,11 +44,11 @@ public class HouseRobber{
             return stack.Pop();
         }
 
-        public void Push(House v){
+        public void Add(House v){
             stack.Push(v);
         }
 
-        public int TopValue(){
+        public int HighestValue(){
             return stack.Peek().Value;
         }
 
@@ -63,27 +61,27 @@ public class HouseRobber{
 
         int lastIndex =  nums.Length -1;
         House last = new House(nums[lastIndex], lastIndex);
-        
+
         int penultimateIndex = lastIndex - 1;
         House penultimate = new House(nums[penultimateIndex], penultimateIndex);
 
-        SortedHouseValues houseValues = new SortedHouseValues();
-        houseValues.PushinSequnce(last, penultimate);
+        MostValuableHouses houseValues = new MostValuableHouses();
+        houseValues.Add(last, penultimate);
        
         for (int i = penultimateIndex - 1; i >= 0; i--){
             House current = new House(nums[i], i);
-            if (houseValues.TopIsNextDoor(current)){
+            if (houseValues.HighestIsAdjacent(current)){
                 House temp = houseValues.Pop();
-                current.AddValue(houseValues.TopValue());
-                houseValues.PushinSequnce(temp, current);
+                current.AddValue(houseValues.HighestValue());
+                houseValues.Add(temp, current);
                 continue;
             }
 
-            current.AddValue(houseValues.TopValue());
-            houseValues.Push(current);
+            current.AddValue(houseValues.HighestValue());
+            houseValues.Add(current);
             
         }
         
-        return houseValues.TopValue();
+        return houseValues.HighestValue();
     }
 }
