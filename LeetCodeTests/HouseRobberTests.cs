@@ -10,5 +10,6 @@ public class HouseRobberTests{
     [Fact]
     public void MinimumLength(){
         Assert.Equal(4, _solution.Rob([4]));
+        Assert.Equal(1, _solution.Rob([1]));
     }
 }
