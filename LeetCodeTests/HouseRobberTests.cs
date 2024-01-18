@@ -12,4 +12,10 @@ public class HouseRobberTests{
         Assert.Equal(4, _solution.Rob([4]));
         Assert.Equal(1, _solution.Rob([1]));
     }
+
+    [Fact]
+    public void Example1(){
+         Assert.Equal(4, _solution.Rob([1,2,3,1]));
+
+    }
 }
