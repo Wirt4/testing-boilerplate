@@ -2,20 +2,23 @@ namespace Tests;
 using LeetCodeSolutions;
 
 public class MaximumNumberOfVowelsTests{
+
+    VowelWindow _solution;
+    public MaximumNumberOfVowelsTests(){
+        _solution = new VowelWindow();
+    }
+
     [Fact]
     public void Example1(){
-        VowelWindow solution = new VowelWindow();
-        Assert.Equal(3, solution.MaxVowels("abciiidef", 3));
+        Assert.Equal(3, _solution.MaxVowels("abciiidef", 3));
     }
 
     [Fact] public void Example2(){
-        VowelWindow solution = new VowelWindow();
-        Assert.Equal(2, solution.MaxVowels("leetcode", 3));
+        Assert.Equal(2, _solution.MaxVowels("leetcode", 3));
     }
 
     [Fact]
     public void NoVowels1(){
-        VowelWindow solution = new VowelWindow();
-        Assert.Equal(0, solution.MaxVowels("d", 1));
+        Assert.Equal(0, _solution.MaxVowels("d", 1));
     }
 }
