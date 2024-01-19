@@ -5,11 +5,15 @@ public class MaxConsecutiveOnes{
         private int _startNdx;
         private int _endNdx;
         private int[] _binaryArr;
+        private int _flippableZeroes;
+        private int _longestOnes;
         
-        public Window(int[] binaryArr){
+        public Window(int[] binaryArr, int fippableZeroes){
             _binaryArr = binaryArr;
             _startNdx = 0;
             _endNdx = 0;
+            _longestOnes = 0;
+            _flippableZeroes = fippableZeroes;
         }
 
         private void moveToFirstNonValue (ref int ndx, int value){
@@ -18,13 +22,14 @@ public class MaxConsecutiveOnes{
             }
         }
 
-        public int GetAdjustedSpan(int fippableZeroes){
+        public int GetHighestSpan(){
+            int k = _flippableZeroes;
             int extendedNdx = _endNdx;
 
-            while (fippableZeroes > 0 && extendedNdx < _binaryArr.Length ){
+            while (k > 0 && extendedNdx < _binaryArr.Length ){
 
                 if (_binaryArr[extendedNdx] == 0){
-                    fippableZeroes--;
+                    k--;
                 }
 
                 extendedNdx++;
@@ -32,7 +37,13 @@ public class MaxConsecutiveOnes{
 
             moveToFirstNonValue(ref extendedNdx, 1);
 
-            return extendedNdx - _startNdx;
+            int span = extendedNdx - _startNdx;
+
+            if (span > _longestOnes){
+                _longestOnes =  span;
+            }
+
+            return _longestOnes;
         }
 
         public bool HasRemainingOnes => _endNdx < _binaryArr.Length;
@@ -54,30 +65,23 @@ public class MaxConsecutiveOnes{
             _Shift(startNdx);
         }
 
+
     }
 
-    private int upateCurrent( int longestOnes, int index, ref Window window){
-        int current = window.GetAdjustedSpan(index);
-
-        if (current > longestOnes){
-            return current;
-        }
-
-        return longestOnes;
-    }
      public int LongestOnes(int[] nums, int k) {
-        Window window = new Window(nums);
-        int longestOnes = window.GetAdjustedSpan(k);
+        Window window = new Window(nums, k);
+        int longestOnes = window.GetHighestSpan();
 
         while (window.HasRemainingOnes){
             window.Shift();
-            longestOnes = upateCurrent(longestOnes, k, ref window);
+            longestOnes = window.GetHighestSpan();
+         
         }
 
         window.Reverse();
 
         do{
-            longestOnes = upateCurrent(longestOnes, k, ref window);
+            longestOnes = window.GetHighestSpan();
             window.Shift();
         }while(window.HasRemainingOnes);
 
