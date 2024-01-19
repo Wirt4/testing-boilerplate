@@ -15,11 +15,15 @@ public class LongestSubarrayAfterDeletion{
 
 
         public bool AllZeroes(){
+            int i=0;
 
-            for (int i=0; i < _nums.Length; i++){
+            while (ValidIndex(i)){
+
                 if (ValueOfOne(i)){
                     return false;
                 }
+
+                i++;
             }
 
             return true;
@@ -46,7 +50,7 @@ public class LongestSubarrayAfterDeletion{
 
             bool noDeletionsMade = true;
             _endNdx = startNdx + 1;
-            int temp =-1;
+            int temp =- 1;
 
             while(HasNextSpan && (ValueOfOne(_endNdx)|| noDeletionsMade)){
                 if (!ValueOfOne(_endNdx)){
@@ -60,7 +64,7 @@ public class LongestSubarrayAfterDeletion{
             int span =  _endNdx - startNdx;
 
             if (AllOnes(startNdx, noDeletionsMade)){
-                return span -1;
+                return span - 1;
             }
 
             if (!noDeletionsMade){
@@ -71,7 +75,7 @@ public class LongestSubarrayAfterDeletion{
             return span;
         }
 
-        public bool HasNextSpan =>ValidIndex(_endNdx);
+        public bool HasNextSpan => ValidIndex(_endNdx);
 
     }
 
