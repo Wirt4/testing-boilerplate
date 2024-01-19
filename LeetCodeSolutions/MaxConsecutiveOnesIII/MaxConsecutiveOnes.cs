@@ -68,7 +68,6 @@ public class MaxConsecutiveOnes{
      public int LongestOnes(int[] nums, int k) {
         Window window = new Window(nums);
         int longestOnes = window.GetAdjustedSpan(k);
-        int cur;
 
         while (window.HasRemainingOnes){
             window.Shift();
