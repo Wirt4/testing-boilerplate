@@ -4,9 +4,11 @@ namespace Tests;
 
 public class MaxConsecutiveOnesIIITests{
     private MaxConsecutiveOnes _maxOnes;
+    
     public MaxConsecutiveOnesIIITests(){
         _maxOnes = new MaxConsecutiveOnes();
     }
+
     [Fact]
     public void LengthOneKIsZero(){
         Assert.Equal(0, _maxOnes.LongestOnes([0],0));
