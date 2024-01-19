@@ -55,6 +55,16 @@ public class MaxConsecutiveOnes{
         }
 
     }
+
+    private int upateCurrent( int longestOnes, int index, ref Window window){
+        int current = window.GetAdjustedSpan(index);
+
+        if (current > longestOnes){
+            return current;
+        }
+
+        return longestOnes;
+    }
      public int LongestOnes(int[] nums, int k) {
         Window window = new Window(nums);
         int longestOnes = window.GetAdjustedSpan(k);
@@ -62,23 +72,13 @@ public class MaxConsecutiveOnes{
 
         while (window.HasRemainingOnes){
             window.Shift();
-            cur = window.GetAdjustedSpan(k);
-
-            if (cur > longestOnes){
-                longestOnes = cur;
-            }
-
+            longestOnes = upateCurrent(longestOnes, k, ref window);
         }
 
         window.Reverse();
 
         do{
-            cur = window.GetAdjustedSpan(k);
-
-            if (cur > longestOnes){
-                longestOnes = cur;
-            }
-
+            longestOnes = upateCurrent(longestOnes, k, ref window);
             window.Shift();
         }while(window.HasRemainingOnes);
 
