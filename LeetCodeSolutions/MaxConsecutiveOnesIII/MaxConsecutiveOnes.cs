@@ -16,8 +16,12 @@ public class MaxConsecutiveOnes{
             _flippableZeroes = fippableZeroes;
         }
 
-        private void moveToFirstNonValue (ref int ndx, int value){
-            while(ndx < _binaryArr.Length && _binaryArr[ndx] == value){
+        private bool ValidIndex(int ndx){
+            return ndx < _binaryArr.Length;
+        }
+
+        private void MoveToFirstNonValue (ref int ndx, int value){
+            while(ValidIndex(ndx) && _binaryArr[ndx] == value){
                 ndx++;
             }
         }
@@ -26,7 +30,7 @@ public class MaxConsecutiveOnes{
             int k = _flippableZeroes;
             int extendedNdx = _endNdx;
 
-            while (k > 0 && extendedNdx < _binaryArr.Length ){
+            while (k > 0 && ValidIndex(extendedNdx) ){
 
                 if (_binaryArr[extendedNdx] == 0){
                     k--;
@@ -35,7 +39,7 @@ public class MaxConsecutiveOnes{
                 extendedNdx++;
             }
 
-            moveToFirstNonValue(ref extendedNdx, 1);
+            MoveToFirstNonValue(ref extendedNdx, 1);
 
             int span = extendedNdx - _startNdx;
 
@@ -51,7 +55,7 @@ public class MaxConsecutiveOnes{
         private void _Shift(int startNdx){
             _startNdx = startNdx;
             _endNdx = _startNdx;
-            moveToFirstNonValue(ref _endNdx, 1);
+            MoveToFirstNonValue(ref _endNdx, 1);
         }
         
         public void Shift(){
@@ -61,7 +65,7 @@ public class MaxConsecutiveOnes{
         public void Reverse(){
             Array.Reverse(_binaryArr);
             int startNdx = 0;
-            moveToFirstNonValue(ref startNdx, 0);
+            MoveToFirstNonValue(ref startNdx, 0);
             _Shift(startNdx);
         }
 
