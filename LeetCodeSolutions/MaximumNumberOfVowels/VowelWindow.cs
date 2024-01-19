@@ -33,16 +33,10 @@ public class VowelWindow{
                 UptickIfVowel(i);
             }
         }
-       /// current number of values in window 
         public int NumberOfVowels => _NumberOfVowels;
 
-        /// Returns whether the shift operation can be peformed without throwing
         public bool HasAdditionalSpace => _endNdx < _str.Length;
 
-        
-    /** 
-        moves the "window" one index to the right and updates the vowell count accordingly
-    */
         public void Shift(){
             DowntickIfVowel(_endNdx - _offset);
             UptickIfVowel(_endNdx);
@@ -57,6 +51,7 @@ public class VowelWindow{
 
         while (window.HasAdditionalSpace){
             window.Shift();
+            
             if (window.NumberOfVowels > maxVowels){
                 maxVowels = window.NumberOfVowels;
             }
