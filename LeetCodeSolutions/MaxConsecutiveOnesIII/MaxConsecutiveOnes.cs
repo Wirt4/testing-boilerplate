@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace LeetCodeSolutions;
 
 public class MaxConsecutiveOnes{
@@ -24,9 +22,11 @@ public class MaxConsecutiveOnes{
             int extendedNdx = _endNdx;
 
             while (fippableZeroes > 0 && extendedNdx < _binaryArr.Length ){
+
                 if (_binaryArr[extendedNdx] == 0){
                     fippableZeroes--;
                 }
+
                 extendedNdx++;
             }
 
