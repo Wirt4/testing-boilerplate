@@ -4,12 +4,12 @@ namespace LeetCodeSolutions;
 
 public class MaximumAverageSubarrayI{
    
-    private class RangeFinder{
+    private class SpanWindow{
         private int sum;
         private int[] nums;
         private int segmentLength;
         
-        public RangeFinder(int []nums, int k){
+        public SpanWindow(int []nums, int k){
             segmentLength = k;
             this.nums = nums;
             for (int i = 0; i< k; i++){
@@ -29,7 +29,7 @@ public class MaximumAverageSubarrayI{
 
     
      public double FindMaxAverage(int[] nums, int k) {
-        RangeFinder rangeFinder = new RangeFinder(nums, k);
+        SpanWindow rangeFinder = new SpanWindow(nums, k);
 
         double highestAverage = rangeFinder.Average;
         for(int i = k; i< nums.Length; i++){
