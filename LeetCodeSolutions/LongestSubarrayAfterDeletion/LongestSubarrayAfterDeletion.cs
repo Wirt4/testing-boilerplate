@@ -72,12 +72,11 @@ public class LongestSubarrayAfterDeletion{
 
             int span =  _endNdx - startNdx;
 
-            if (AllOnes(startNdx, deletionsMade)){
-                return span - 1;
+            if (deletionsMade){
+                 _endNdx = temp;
             }
 
-            if (deletionsMade){
-                _endNdx = temp;
+            if (deletionsMade || AllOnes(startNdx, deletionsMade)){
                 return span - 1;
             }
 
