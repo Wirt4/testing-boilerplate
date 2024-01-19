@@ -8,7 +8,6 @@ public class MaximumAverageSubarrayI{
         private int sum;
         private int[] nums;
         private int segmentLength;
-        public double Average => 1.0 * sum / segmentLength;
         
         public RangeFinder(int []nums, int k){
             segmentLength = k;
@@ -17,6 +16,8 @@ public class MaximumAverageSubarrayI{
                 sum += nums[i];
             }
         }
+
+        public double Average => 1.0 * sum / segmentLength;
 
         public double windowAverage(int lastNdx){
             sum -= nums[lastNdx - segmentLength];
