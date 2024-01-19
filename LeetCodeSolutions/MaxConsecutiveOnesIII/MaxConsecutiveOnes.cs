@@ -40,7 +40,6 @@ public class MaxConsecutiveOnes{
             }
 
             MoveToFirstNonValue(ref extendedNdx, 1);
-
             int span = extendedNdx - _startNdx;
 
             if (span > _longestOnes){
