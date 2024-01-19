@@ -3,6 +3,7 @@ public class LongestSubarrayAfterDeletion{
     private class Window{
         int[] _nums;
         int _endNdx;
+        
         public Window(int []nums){
             _nums = nums;
            _endNdx = 0;
