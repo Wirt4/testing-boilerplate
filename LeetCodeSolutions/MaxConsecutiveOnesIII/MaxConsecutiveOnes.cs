@@ -7,6 +7,7 @@ public class MaxConsecutiveOnes{
         private int _startNdx;
         private int _endNdx;
         private int[] _binaryArr;
+        
         public Window(int[] binaryArr){
             _binaryArr = binaryArr;
             _startNdx = 0;
@@ -18,7 +19,7 @@ public class MaxConsecutiveOnes{
                 ndx++;
             }
         }
-        
+
         public int GetAdjustedSpan(int fippableZeroes){
             int extendedNdx = _endNdx;
 
