@@ -19,9 +19,9 @@ public class MaximumAverageSubarrayI{
 
         public double Average => 1.0 * sum / segmentLength;
 
-        public double windowAverage(int lastNdx){
-            sum -= nums[lastNdx - segmentLength];
-            sum += nums[lastNdx];
+        public double windowAverage(int endNdx){
+            sum -= nums[endNdx - segmentLength];
+            sum += nums[endNdx];
             return Average;
         }
     }
@@ -29,15 +29,17 @@ public class MaximumAverageSubarrayI{
 
     
      public double FindMaxAverage(int[] nums, int k) {
-        SpanWindow rangeFinder = new SpanWindow(nums, k);
+        SpanWindow window = new SpanWindow(nums, k);
 
-        double highestAverage = rangeFinder.Average;
+        double highestAverage = window.Average;
+
         for(int i = k; i< nums.Length; i++){
-            double windowAverage = rangeFinder.windowAverage(i);
+            double windowAverage = window.windowAverage(i);
             if (windowAverage > highestAverage){
                 highestAverage = windowAverage;
             } 
         }
+
         return highestAverage;
     }
 }
