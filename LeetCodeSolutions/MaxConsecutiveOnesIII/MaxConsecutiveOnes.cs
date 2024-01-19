@@ -78,7 +78,6 @@ public class MaxConsecutiveOnes{
         while (window.HasRemainingOnes){
             window.Shift();
             longestOnes = window.GetHighestSpan();
-         
         }
 
         window.Reverse();
