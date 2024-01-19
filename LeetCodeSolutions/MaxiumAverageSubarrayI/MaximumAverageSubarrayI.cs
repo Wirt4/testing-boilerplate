@@ -30,7 +30,6 @@ public class MaximumAverageSubarrayI{
     
      public double FindMaxAverage(int[] nums, int k) {
         SpanWindow window = new SpanWindow(nums, k);
-
         double highestAverage = window.Average;
 
         for(int i = k; i< nums.Length; i++){
@@ -39,7 +38,7 @@ public class MaximumAverageSubarrayI{
             if (windowAverage > highestAverage){
                 highestAverage = windowAverage;
             } 
-            
+
         }
 
         return highestAverage;
