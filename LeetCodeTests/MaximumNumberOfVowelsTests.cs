@@ -4,6 +4,7 @@ using LeetCodeSolutions;
 public class MaximumNumberOfVowelsTests{
 
     VowelWindow _solution;
+    
     public MaximumNumberOfVowelsTests(){
         _solution = new VowelWindow();
     }
