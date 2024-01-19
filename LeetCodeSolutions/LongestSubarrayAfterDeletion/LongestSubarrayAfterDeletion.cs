@@ -15,7 +15,7 @@ public class LongestSubarrayAfterDeletion{
 
 
         public bool AllZeroes(){
-            int i=0;
+            int i = 0;
 
             while (ValidIndex(i)){
 
@@ -37,8 +37,16 @@ public class LongestSubarrayAfterDeletion{
             return ndx < _nums.Length;
         }
 
-        private bool AllOnes(int ndx, bool noDeletionsMade){
-            return _endNdx == _nums.Length && ndx ==0 && noDeletionsMade;
+        private bool AllOnes(int ndx, bool deletionsMade){
+            return _endNdx == _nums.Length && ndx == 0 && !deletionsMade;
+        }
+
+        private bool CanIterateIndex(bool deletionsMade){
+            if (HasNextSpan){
+                return ValueOfOne(_endNdx) || !deletionsMade;
+            }
+
+            return false;
         }
 
         public int GetNextSpan(){
@@ -48,14 +56,15 @@ public class LongestSubarrayAfterDeletion{
                 startNdx ++;
             }
 
-            bool noDeletionsMade = true;
+            bool deletionsMade = false;
             _endNdx = startNdx + 1;
             int temp =- 1;
 
-            while(HasNextSpan && (ValueOfOne(_endNdx)|| noDeletionsMade)){
+            while(CanIterateIndex(deletionsMade)){
+
                 if (!ValueOfOne(_endNdx)){
                     temp = _endNdx;
-                    noDeletionsMade = false;
+                    deletionsMade = true;
                 } 
               
                 _endNdx ++;
@@ -63,11 +72,11 @@ public class LongestSubarrayAfterDeletion{
 
             int span =  _endNdx - startNdx;
 
-            if (AllOnes(startNdx, noDeletionsMade)){
+            if (AllOnes(startNdx, deletionsMade)){
                 return span - 1;
             }
 
-            if (!noDeletionsMade){
+            if (deletionsMade){
                 _endNdx = temp;
                 return span - 1;
             }
