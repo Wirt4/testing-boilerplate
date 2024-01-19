@@ -18,11 +18,7 @@ public class MaxConsecutiveOnes{
                 ndx++;
             }
         }
-        /// <summary>
-        /// measures the longest span of ones, provided up to a set amount of Zeroes may be flipped
-        /// </summary>
-        /// <param name="fippableZeroes"></param>
-        /// <returns></returns>
+        
         public int GetAdjustedSpan(int fippableZeroes){
             int extendedNdx = _endNdx;
 
@@ -37,9 +33,7 @@ public class MaxConsecutiveOnes{
 
             return extendedNdx - _startNdx;
         }
-/// <summary>
-/// indicates if another window shift is possible
-/// </summary>
+
         public bool HasRemainingOnes => _endNdx < _binaryArr.Length;
 
         private void _Shift(int startNdx){
@@ -47,10 +41,7 @@ public class MaxConsecutiveOnes{
             _endNdx = _startNdx;
             moveToFirstNonValue(ref _endNdx, 1);
         }
-
-        /// <summary>
-        ///  shifts the window state to the right
-        /// </summary>
+        
         public void Shift(){
             _Shift(_endNdx +1);
         }
