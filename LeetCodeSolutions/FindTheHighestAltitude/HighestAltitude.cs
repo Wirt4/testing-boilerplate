@@ -8,6 +8,7 @@ public class HighestAltitude{
 
         foreach(int slope in gain ){
             currentAltitude += slope;
+            
             if (currentAltitude > highestAltitude){
                 highestAltitude = currentAltitude;
             }
