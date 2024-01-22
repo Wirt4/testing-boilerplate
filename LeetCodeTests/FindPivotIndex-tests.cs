@@ -1,4 +1,6 @@
 namespace Tests;
+
+using System.Runtime.CompilerServices;
 using LeetCodeSolutions;
 public class FindPivotIndexTests{
     private PivotSolution solution;
@@ -16,7 +18,12 @@ public class FindPivotIndexTests{
     }
 
     [Fact]
-    public void Example3(){
+    public void Example2(){
         Assert.Equal(-1, solution.PivotIndex([1,2,3]));
+    }
+
+    [Fact]
+    public void Example3(){
+        Assert.Equal(0, solution.PivotIndex([2,1, -1]));
     }
 }
