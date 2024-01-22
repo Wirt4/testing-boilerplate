@@ -9,4 +9,9 @@ public class FindPivotIndexTests{
     public void NumsLengthOfOne(){
         Assert.Equal(0,solution.PivotIndex([2]));
     }
+
+    [Fact]
+    public void Example1(){
+        Assert.Equal(3, solution.PivotIndex([1,7,3,6,5,6]));
+    }
 }
