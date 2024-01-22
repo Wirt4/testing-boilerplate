@@ -1,31 +1,51 @@
+using System.Drawing;
+
 namespace LeetCodeSolutions;
 public class PivotSolution{
+    private class NumSums{
+        private readonly int size;
+        private int leftSum;
+        private int rightSum;
+        private readonly int[] leftSums;
+        private readonly int[] rightSums;
+        private int [] InitializeArray(){
+            return new int[size];
+        }
+        public NumSums(ref int[] nums){
+            size = nums.Length;
+            leftSum = nums[0];
+            rightSum = nums[LastIndex];
+            leftSums = InitializeArray();
+            rightSums = InitializeArray();
+        }
+
+        public int Size => size;
+        public int LastIndex => size - 1;
+
+        public void SetLeft(int index, int numValue){
+            leftSums[index] = leftSum;
+            leftSum += numValue;
+        }
+
+        public void SetRight(int index, int numValue){
+            rightSums[index] = rightSum;
+            rightSum += numValue;
+        }
+
+        public bool LeftSumEqualsRightSum(int index){
+            return leftSums[index] == rightSums[index];
+        }
+    }
      public int PivotIndex(int[] nums) {
-
-        if (nums.Length == 1){
-            return 0;
+        NumSums numSum = new NumSums(ref nums);
+        for (int i = 1; i< numSum.Size; i++){
+            int j = numSum.LastIndex - i;
+            numSum.SetLeft(i, nums[i]);
+            numSum.SetRight(j, nums[j]);
         }
 
-        int[] leftHandSums = new int[nums.Length];
-        int leftHandSum = nums[0];
-        int[] rightHandSums = new int[nums.Length];
-        int rightHandSum = nums[nums.Length -1];
-
-        for (int i=1; i<nums.Length; i++){
-            leftHandSums[i] = leftHandSum;
-            leftHandSum += nums[i];
-
-            int j = nums.Length- 1- i;
-            rightHandSums[j] = rightHandSum;
-            rightHandSum += nums[j];
-        }
-
-        for (int k =0; k < nums.Length; k++){
-
-            if (leftHandSums[k] == rightHandSums[k]){
-                return k;
-            }
-
+        for (int k = 0; k< numSum.Size; k++){
+            if (numSum.LeftSumEqualsRightSum(k))return k;
         }
 
         return -1;
