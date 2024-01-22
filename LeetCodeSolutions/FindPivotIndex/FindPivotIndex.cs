@@ -1,7 +1,11 @@
 namespace LeetCodeSolutions;
 public class PivotSolution{
      public int PivotIndex(int[] nums) {
-        if (nums.Length==1)return 0;
+
+        if (nums.Length==1){
+            return 0;
+        }
+
         int[] leftHandSums = new int[nums.Length];
         int leftHandSum = nums[0];
 
@@ -21,7 +25,11 @@ public class PivotSolution{
         }
 
         for (int k =0; k < nums.Length; k++){
-            if (leftHandSums[k] == rightHandSums[k]) return k;
+
+            if (leftHandSums[k] == rightHandSums[k]){
+                return k;
+            }
+            
         }
 
         return -1;
