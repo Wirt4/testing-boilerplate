@@ -33,7 +33,9 @@ public class CloseStringsSolution{
 
         public bool HasSameDistinctChars(WordHandler handler){
             foreach (char k in charFrequencyTable.Keys){
-                if (! handler.charFrequencyTable.ContainsKey(k)) return false;
+                if (! handler.charFrequencyTable.ContainsKey(k)){
+                    return false;
+                }
             }
 
             return true;
@@ -41,7 +43,9 @@ public class CloseStringsSolution{
 
         public bool HasSameCharacterFrequencies(WordHandler handler){
             foreach( KeyValuePair<char, int> pair in charFrequencyTable){
-                if (handler.charFrequencyTable[pair.Key] != pair.Value) return false;
+                if (handler.charFrequencyTable[pair.Key] != pair.Value){
+                    return false;
+                }
             }
 
             return true;
@@ -53,7 +57,9 @@ public class CloseStringsSolution{
 
         public bool HasSameCountFrequencies(WordHandler handler){
              foreach( KeyValuePair<int, int> pair in countFrequencyTable){
-                if (!(handler.countFrequencyTable.TryGetValue(pair.Key, out int value) && value == pair.Value)) return false;
+                if (!(handler.countFrequencyTable.TryGetValue(pair.Key, out int value) && value == pair.Value)){
+                    return false;
+                }
             }
 
             return true;
