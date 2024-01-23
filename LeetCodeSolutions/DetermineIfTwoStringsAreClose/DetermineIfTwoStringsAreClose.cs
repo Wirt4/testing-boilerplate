@@ -6,17 +6,28 @@ public class CloseStringsSolution{
         private Dictionary<int, int> countFrequencyTable;
         public WordHandler (string word){
             charFrequencyTable = [];
-             foreach(char ch in word){
+
+            foreach(char ch in word){
 
             if (charFrequencyTable.TryGetValue(ch, out int value)){
                 charFrequencyTable[ch] = value + 1;
                 continue;
             }
 
-            charFrequencyTable.Add(ch, 1);
-        }
+                charFrequencyTable.Add(ch, 1);
+            }
 
-        countFrequencyTable = [];
+            countFrequencyTable = [];
+
+            foreach(int count in charFrequencyTable.Values){
+
+                if (countFrequencyTable.TryGetValue(count, out int value)){
+                    countFrequencyTable[count] = value + 1;
+                    continue;
+                }
+
+                countFrequencyTable.Add(count, 1);
+            }
 
         }
 
@@ -38,25 +49,11 @@ public class CloseStringsSolution{
 
         public int NumberOfDistintChars => charFrequencyTable.Count;
 
-        public void InitiateCountFrequency(){
-            countFrequencyTable = [];
-
-            foreach(int d in charFrequencyTable.Values){
-
-            if (countFrequencyTable.TryGetValue(d, out int value)){
-                countFrequencyTable[d] = value + 1;
-                continue;
-            }
-
-            countFrequencyTable.Add(d, 1);
-        }
-        }
-
         public int NumberOfDistinctCounts => countFrequencyTable.Count;
 
         public bool HasSameCountFrequencies(WordHandler handler){
              foreach( KeyValuePair<int, int> pair in countFrequencyTable){
-                if (handler.countFrequencyTable[pair.Key] != pair.Value) return false;
+                if (!handler.countFrequencyTable.TryGetValue(pair.Key, out int value) || value != pair.Value) return false;
             }
 
             return true;
@@ -87,9 +84,6 @@ public class CloseStringsSolution{
         if (collection1.HasSameCharacterFrequencies(collection2)){
             return true;
         }
-
-        collection1.InitiateCountFrequency();
-        collection2.InitiateCountFrequency();
 
         if (collection1.NumberOfDistinctCounts != collection2.NumberOfDistinctCounts){
             return false;
