@@ -10,4 +10,9 @@ public class UniqueNumberOfOccurencesTests{
     public void Example1(){
         Assert.True(solution.UniqueOccurrences([1,2,2,1,1,3]));
     }
+
+    [Fact]
+    public void Example2(){
+        Assert.False(solution.UniqueOccurrences([1,2]));
+    }
 }
