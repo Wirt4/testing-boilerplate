@@ -19,7 +19,7 @@ public class CloseStringsSolution{
         return table;
     }
 
-    Dictionary<int, int> FrequencyOfCounts(Dictionary<char, int> table){
+    private Dictionary<int, int> FrequencyOfCounts(Dictionary<char, int> table){
         Dictionary<int, int> newTable =[];
 
         foreach(int d in table.Values){
@@ -54,11 +54,11 @@ public class CloseStringsSolution{
         bool matchingCounts = true;
 
         foreach(KeyValuePair<char, int> pair in table1){
-            if (!table2.ContainsKey(pair.Key)){
+            if (!table2.TryGetValue(pair.Key, out int value)){
                 return false;
-            
             }
-            matchingCounts = matchingCounts && table2[pair.Key] == pair.Value;
+
+            matchingCounts = matchingCounts && value == pair.Value;
         }
 
         if (matchingCounts){
@@ -73,20 +73,11 @@ public class CloseStringsSolution{
         }
 
         foreach (KeyValuePair<int, int> pair in charCounts1){
-            if (!charCounts2.TryGetValue(pair.Key, out int value)){
-                return false;
-            }
-
-            if (value != pair.Value){
+            if (!(charCounts2.TryGetValue(pair.Key, out int value) || value == pair.Value)){
                 return false;
             }
         }
 
-
-        return true;
-        
-
-
-        
+        return true;       
     }
 }

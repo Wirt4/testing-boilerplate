@@ -26,4 +26,9 @@ public class CloseStringsTests{
     public void Example3(){
         Assert.True(solution.CloseStrings("cabbba", "abbccc"));
     }
+
+    [Fact]
+    public void BreakingCase1(){
+         Assert.False(solution.CloseStrings("aaabbbbccddeeeeefffff", "aaaaabbcccdddeeeeffff"));
+    }
 }
