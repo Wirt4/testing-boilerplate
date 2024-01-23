@@ -1,38 +1,6 @@
 namespace LeetCodeSolutions;
 
 public class CloseStringsSolution{
-    private Dictionary<char, int> CreateFrequencyTable(string word){
-        Dictionary<char, int> table =[];
-
-        foreach(char ch in word){
-
-            if (table.TryGetValue(ch, out int value)){
-                table[ch] = value + 1;
-                continue;
-            }
-
-            table.Add(ch, 1);
-        }
-
-        return table;
-    }
-
-    private Dictionary<int, int> FrequencyOfCounts(Dictionary<char, int> table){
-        Dictionary<int, int> newTable =[];
-
-        foreach(int d in table.Values){
-
-            if (newTable.TryGetValue(d, out int value)){
-                newTable[d] = value + 1;
-                continue;
-            }
-
-            newTable.Add(d, 1);
-        }
-
-        return newTable;
-    }
-
     private class WordHandler{
         private readonly Dictionary<char, int> charFrequencyTable;
         private Dictionary<int, int> countFrequencyTable;
