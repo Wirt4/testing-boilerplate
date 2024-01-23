@@ -5,6 +5,7 @@ namespace LeetCodeSolutions;
 public class CloseStringsSolution{
     private Dictionary<char, int> CreateFrequencyTable(string word){
         Dictionary<char, int> table =[];
+        
         foreach(char ch in word){
 
             if (table.TryGetValue(ch, out int value)){
@@ -23,8 +24,8 @@ public class CloseStringsSolution{
 
         foreach(int d in table.Values){
 
-            if (newTable.ContainsKey(d)){
-                newTable[d] = newTable[d] + 1;
+            if (newTable.TryGetValue(d, out int value)){
+                newTable[d] = value + 1;
                 continue;
             }
 
