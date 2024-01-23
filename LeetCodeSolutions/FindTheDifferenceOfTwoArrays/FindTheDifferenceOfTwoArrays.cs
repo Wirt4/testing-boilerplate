@@ -2,6 +2,7 @@ using System.Collections;
 
 namespace LeetCodeSolutions;
 public class FindTheDifferenceOfTwoArraysSolution {
+    
     private ArrayList ANotInB(HashSet<int> setA, HashSet<int> setB){
         ArrayList answer = new ArrayList();
 
@@ -16,6 +17,7 @@ public class FindTheDifferenceOfTwoArraysSolution {
     private int[] Coerce(ArrayList list){
         return (int [])list.ToArray(typeof(int));
     }
+    
     public IList<IList<int>> FindDifference(int[] nums1, int[] nums2) {
         HashSet<int> set1 = new (nums1);
         HashSet<int> set2 = new(nums2);
