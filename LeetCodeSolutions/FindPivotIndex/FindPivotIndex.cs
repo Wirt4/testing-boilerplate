@@ -1,8 +1,8 @@
-using System.Drawing;
-
 namespace LeetCodeSolutions;
 public class PivotSolution{
+    
     private class NumSums{
+        
         private readonly int size;
         private int leftSum;
         private int rightSum;
@@ -11,6 +11,7 @@ public class PivotSolution{
         private int [] InitializeArray(){
             return new int[size];
         }
+        
         public NumSums(ref int[] nums){
             size = nums.Length;
             leftSum = nums[0];
@@ -36,7 +37,8 @@ public class PivotSolution{
             return leftSums[index] == rightSums[index];
         }
     }
-     public int PivotIndex(int[] nums) {
+     
+    public int PivotIndex(int[] nums) {
         NumSums numSum = new NumSums(ref nums);
         
         for (int i = 1; i< numSum.Size; i++){
