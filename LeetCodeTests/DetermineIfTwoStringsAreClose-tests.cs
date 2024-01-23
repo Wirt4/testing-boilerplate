@@ -11,4 +11,9 @@ public class CloseStringsTests{
     public void Example1(){
         Assert.True(solution.CloseStrings("abc", "bca"));
     }
+
+    [Fact]
+    public void Exmaple2(){
+         Assert.False(solution.CloseStrings("a", "aa"));
+    }
 }
