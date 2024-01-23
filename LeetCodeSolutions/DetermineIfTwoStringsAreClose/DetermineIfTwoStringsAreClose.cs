@@ -53,7 +53,7 @@ public class CloseStringsSolution{
 
         public bool HasSameCountFrequencies(WordHandler handler){
              foreach( KeyValuePair<int, int> pair in countFrequencyTable){
-                if (!handler.countFrequencyTable.TryGetValue(pair.Key, out int value) || value != pair.Value) return false;
+                if (!(handler.countFrequencyTable.TryGetValue(pair.Key, out int value) && value == pair.Value)) return false;
             }
 
             return true;
