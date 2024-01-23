@@ -42,8 +42,8 @@ public class PivotSolution{
         NumSums numSum = new NumSums(ref nums);
         
         for (int i = 1; i< numSum.Size; i++){
-            int j = numSum.LastIndex - i;
             numSum.SetLeft(i, nums[i]);
+            int j = numSum.LastIndex - i;
             numSum.SetRight(j, nums[j]);
         }
 
