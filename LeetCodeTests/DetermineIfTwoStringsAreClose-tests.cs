@@ -13,7 +13,12 @@ public class CloseStringsTests{
     }
 
     [Fact]
-    public void Exmaple2(){
+    public void Example2(){
          Assert.False(solution.CloseStrings("a", "aa"));
+    }
+
+    [Fact]
+    public void SameLengthStringButFalse(){
+        Assert.False(solution.CloseStrings("aabb", "ccdd"));
     }
 }
