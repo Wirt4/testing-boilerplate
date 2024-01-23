@@ -3,14 +3,12 @@ using System.Collections;
 namespace LeetCodeSolutions;
 
 public class UniqueNumberOfOccurencesSolution{
-    private Dictionary<int, int> frequencyTable (int [] arr){
-        Dictionary<int, int> table = new Dictionary<int, int>();
+    private Dictionary<int, int> createTable (int [] arr){
+        Dictionary<int, int> table = [];
 
         foreach (int v in arr){
-            if (table.ContainsKey(v)){
-                int count = (int)table[v];
-                count ++;
-                table[v] = count;
+            if (table.TryGetValue(v, out int value)){
+                table[v] = value + 1;
                 continue;
             }
 
@@ -20,16 +18,14 @@ public class UniqueNumberOfOccurencesSolution{
         return table;
     }
     public bool UniqueOccurrences(int[] arr) {
-        // create a frequency hashtable
-        Dictionary<int, int> freqquencyTable = frequencyTable(arr);
-        HashSet<int> frequencies = new HashSet<int>();
-        foreach (KeyValuePair<int, int> entry in freqquencyTable){
-            if (frequencies.Contains(entry.Value)) return false;
-            frequencies.Add(entry.Value);
+        HashSet<int> set = [];
+
+        foreach (KeyValuePair<int, int> entry in createTable(arr)){
+            int frequency = entry.Value;
+            if (set.Contains(frequency)) return false;
+            set.Add(frequency);
         }
         
-        // if that set contains the frquency, return false
-
         return true;
     }
 }
