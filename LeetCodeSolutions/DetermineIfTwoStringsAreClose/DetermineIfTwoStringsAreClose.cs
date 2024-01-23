@@ -2,38 +2,31 @@ namespace LeetCodeSolutions;
 
 public class CloseStringsSolution{
     private class WordHandler{
-        private readonly Dictionary<char, int> charFrequencyTable;
-        private Dictionary<int, int> countFrequencyTable;
+        private readonly Dictionary<char, int> charFrequency;
+        private readonly Dictionary<int, int> countFrequency;
         public WordHandler (string word){
-            charFrequencyTable = [];
-
+            charFrequency = [];
             foreach(char ch in word){
-
-            if (charFrequencyTable.TryGetValue(ch, out int value)){
-                charFrequencyTable[ch] = value + 1;
-                continue;
-            }
-
-                charFrequencyTable.Add(ch, 1);
-            }
-
-            countFrequencyTable = [];
-
-            foreach(int count in charFrequencyTable.Values){
-
-                if (countFrequencyTable.TryGetValue(count, out int value)){
-                    countFrequencyTable[count] = value + 1;
+                if (charFrequency.TryGetValue(ch, out int value)){
+                    charFrequency[ch] = value + 1;
                     continue;
                 }
-
-                countFrequencyTable.Add(count, 1);
+                charFrequency.Add(ch, 1);
             }
 
+            countFrequency = [];
+            foreach(int count in charFrequency.Values){
+                if (countFrequency.TryGetValue(count, out int value)){
+                    countFrequency[count] = value + 1;
+                    continue;
+                }
+                countFrequency.Add(count, 1);
+            }
         }
 
         public bool HasSameDistinctChars(WordHandler handler){
-            foreach (char k in charFrequencyTable.Keys){
-                if (! handler.charFrequencyTable.ContainsKey(k)){
+            foreach (char k in charFrequency.Keys){
+                if (! handler.charFrequency.ContainsKey(k)){
                     return false;
                 }
             }
@@ -42,8 +35,8 @@ public class CloseStringsSolution{
         }
 
         public bool HasSameCharacterFrequencies(WordHandler handler){
-            foreach( KeyValuePair<char, int> pair in charFrequencyTable){
-                if (handler.charFrequencyTable[pair.Key] != pair.Value){
+            foreach( KeyValuePair<char, int> pair in charFrequency){
+                if (handler.charFrequency[pair.Key] != pair.Value){
                     return false;
                 }
             }
@@ -51,13 +44,13 @@ public class CloseStringsSolution{
             return true;
         }
 
-        public int NumberOfDistintChars => charFrequencyTable.Count;
+        public int NumberOfDistintChars => charFrequency.Count;
 
-        public int NumberOfDistinctCounts => countFrequencyTable.Count;
+        public int NumberOfDistinctCounts => countFrequency.Count;
 
         public bool HasSameCountFrequencies(WordHandler handler){
-             foreach( KeyValuePair<int, int> pair in countFrequencyTable){
-                if (!(handler.countFrequencyTable.TryGetValue(pair.Key, out int value) && value == pair.Value)){
+             foreach( KeyValuePair<int, int> pair in countFrequency){
+                if (!(handler.countFrequency.TryGetValue(pair.Key, out int value) && value == pair.Value)){
                     return false;
                 }
             }
