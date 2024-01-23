@@ -21,4 +21,9 @@ public class CloseStringsTests{
     public void SameLengthStringButFalse(){
         Assert.False(solution.CloseStrings("aabb", "ccdd"));
     }
+
+    [Fact]
+    public void Example3(){
+        Assert.True(solution.CloseStrings("cabbba", "abbccc"));
+    }
 }
