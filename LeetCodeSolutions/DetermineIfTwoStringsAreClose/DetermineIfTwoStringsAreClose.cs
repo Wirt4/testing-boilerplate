@@ -16,13 +16,13 @@ public class CloseStringsSolution{
             charFrequencyTable.Add(ch, 1);
         }
 
+        countFrequencyTable = [];
 
         }
 
-        public Dictionary<char, int> CharFrequency => charFrequencyTable;
         public bool HasSameDistinctChars(WordHandler handler){
             foreach (char k in charFrequencyTable.Keys){
-                if (! handler.CharFrequency.ContainsKey(k)) return false;
+                if (! handler.charFrequencyTable.ContainsKey(k)) return false;
             }
 
             return true;
@@ -30,7 +30,7 @@ public class CloseStringsSolution{
 
         public bool HasSameCharacterFrequencies(WordHandler handler){
             foreach( KeyValuePair<char, int> pair in charFrequencyTable){
-                if (handler.CharFrequency[pair.Key] != pair.Value) return false;
+                if (handler.charFrequencyTable[pair.Key] != pair.Value) return false;
             }
 
             return true;
