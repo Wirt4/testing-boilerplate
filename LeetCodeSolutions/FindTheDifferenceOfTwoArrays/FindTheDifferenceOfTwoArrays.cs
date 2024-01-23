@@ -1,6 +1,7 @@
 using System.Collections;
 
 namespace LeetCodeSolutions;
+
 public class FindTheDifferenceOfTwoArraysSolution {
     
     private ArrayList ANotInB(HashSet<int> setA, HashSet<int> setB){
