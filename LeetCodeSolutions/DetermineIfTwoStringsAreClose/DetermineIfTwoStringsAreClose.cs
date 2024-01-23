@@ -43,10 +43,13 @@ public class CloseStringsSolution{
 
         if (table1.Count != table2.Count) return false;
 
-        //TODO: add an early break for when the char counts are identical
+        bool matchingCounts = true;
         foreach(KeyValuePair<char, int> pair in table1){
             if (!table2.ContainsKey(pair.Key)) return false;
+            matchingCounts = matchingCounts && table2[pair.Key] == pair.Value;
         }
+
+        if (matchingCounts) return true;
 
         Dictionary<int, int> charCounts1 = FrequencyOfCounts(table1);
         Dictionary<int, int> charCounts2 = FrequencyOfCounts(table2);
