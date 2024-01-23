@@ -68,13 +68,15 @@ public class CloseStringsSolution{
         Dictionary<int, int> charCounts1 = FrequencyOfCounts(table1);
         Dictionary<int, int> charCounts2 = FrequencyOfCounts(table2);
 
-        if (charCounts1.Count != charCounts2.Count) return false;
+        if (charCounts1.Count != charCounts2.Count){
+            return false;
+        }
 
         foreach (KeyValuePair<int, int> pair in charCounts1){
             if (!charCounts2.TryGetValue(pair.Key, out int value)){
                 return false;
             }
-            
+
             if (value != pair.Value){
                 return false;
             }
