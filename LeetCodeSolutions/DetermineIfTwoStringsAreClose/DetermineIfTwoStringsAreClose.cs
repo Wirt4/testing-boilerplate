@@ -1,5 +1,3 @@
-using Microsoft.VisualBasic;
-
 namespace LeetCodeSolutions;
 
 public class CloseStringsSolution{
@@ -34,6 +32,68 @@ public class CloseStringsSolution{
 
         return newTable;
     }
+
+    private class WordHandler{
+        private readonly Dictionary<char, int> charFrequencyTable;
+        private Dictionary<int, int> countFrequencyTable;
+        public WordHandler (string word){
+            charFrequencyTable = [];
+             foreach(char ch in word){
+
+            if (charFrequencyTable.TryGetValue(ch, out int value)){
+                charFrequencyTable[ch] = value + 1;
+                continue;
+            }
+
+            charFrequencyTable.Add(ch, 1);
+        }
+
+
+        }
+
+        public Dictionary<char, int> CharFrequency => charFrequencyTable;
+        public bool HasSameDistinctChars(WordHandler handler){
+            foreach (char k in charFrequencyTable.Keys){
+                if (! handler.CharFrequency.ContainsKey(k)) return false;
+            }
+
+            return true;
+        }
+
+        public bool HasSameCharacterFrequencies(WordHandler handler){
+            foreach( KeyValuePair<char, int> pair in charFrequencyTable){
+                if (handler.CharFrequency[pair.Key] != pair.Value) return false;
+            }
+
+            return true;
+        }
+
+        public int NumberOfDistintChars => charFrequencyTable.Count;
+
+        public void InitiateCountFrequency(){
+            countFrequencyTable = [];
+
+            foreach(int d in charFrequencyTable.Values){
+
+            if (countFrequencyTable.TryGetValue(d, out int value)){
+                countFrequencyTable[d] = value + 1;
+                continue;
+            }
+
+            countFrequencyTable.Add(d, 1);
+        }
+        }
+
+        public int NumberOfDistinctCounts => countFrequencyTable.Count;
+
+        public bool HasSameCountFrequencies(WordHandler handler){
+             foreach( KeyValuePair<int, int> pair in countFrequencyTable){
+                if (handler.countFrequencyTable[pair.Key] != pair.Value) return false;
+            }
+
+            return true;
+        }
+    }
    
     public bool CloseStrings(string word1, string word2) {
         if (word1 == word2) {
@@ -44,40 +104,29 @@ public class CloseStringsSolution{
             return false;
         }
 
-        Dictionary<char, int> table1 = CreateFrequencyTable(word1);
-        Dictionary<char, int> table2 = CreateFrequencyTable(word2);
+        WordHandler collection1 = new(word1);
+        WordHandler collection2 = new(word2);
 
-        if (table1.Count != table2.Count){
+
+        if (collection1.NumberOfDistintChars != collection2.NumberOfDistintChars){
             return false;
         }
 
-        bool matchingCounts = true;
-
-        foreach(KeyValuePair<char, int> pair in table1){
-            if (!table2.TryGetValue(pair.Key, out int value)){
-                return false;
-            }
-
-            matchingCounts = matchingCounts && value == pair.Value;
+        if (!collection1.HasSameDistinctChars(collection2)){
+            return false;
         }
 
-        if (matchingCounts){
+        if (collection1.HasSameCharacterFrequencies(collection2)){
             return true;
         }
 
-        Dictionary<int, int> charCounts1 = FrequencyOfCounts(table1);
-        Dictionary<int, int> charCounts2 = FrequencyOfCounts(table2);
+        collection1.InitiateCountFrequency();
+        collection2.InitiateCountFrequency();
 
-        if (charCounts1.Count != charCounts2.Count){
+        if (collection1.NumberOfDistinctCounts != collection2.NumberOfDistinctCounts){
             return false;
         }
 
-        foreach (KeyValuePair<int, int> pair in charCounts1){
-            if (!(charCounts2.TryGetValue(pair.Key, out int value) && value == pair.Value)){
-                return false;
-            }
-        }
-
-        return true;       
+        return collection1.HasSameCountFrequencies(collection2); 
     }
 }
