@@ -73,7 +73,7 @@ public class CloseStringsSolution{
         }
 
         foreach (KeyValuePair<int, int> pair in charCounts1){
-            if (!(charCounts2.TryGetValue(pair.Key, out int value) || value == pair.Value)){
+            if (!(charCounts2.TryGetValue(pair.Key, out int value) && value == pair.Value)){
                 return false;
             }
         }
