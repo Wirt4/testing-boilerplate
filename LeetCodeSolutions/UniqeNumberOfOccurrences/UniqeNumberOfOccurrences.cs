@@ -1,5 +1,3 @@
-using System.Collections;
-
 namespace LeetCodeSolutions;
 
 public class UniqueNumberOfOccurencesSolution{
