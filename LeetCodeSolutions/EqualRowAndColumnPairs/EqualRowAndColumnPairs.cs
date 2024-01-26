@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace LeetCodeSolutions;
 
 public class EqualRowAndColumnPairsSolution{
@@ -64,7 +62,6 @@ public class EqualRowAndColumnPairsSolution{
         Grid gridWrapper = new Grid(grid);
 
         for (int i = 0; i < gridWrapper.Length; i++){
-            
                 allRows.Add(gridWrapper.Row(i));
         }
 
