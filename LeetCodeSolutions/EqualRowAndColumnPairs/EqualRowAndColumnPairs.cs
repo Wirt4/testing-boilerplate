@@ -1,14 +1,33 @@
+using System.Runtime.CompilerServices;
+
 namespace LeetCodeSolutions;
 
 public class EqualRowAndColumnPairsSolution{
+    private class ArrayTracker{
+        private readonly HashSet<string> allArrs;
+        public ArrayTracker(){
+            allArrs = [];
+        }
+
+        private string StringifyArr(int[] arr){
+            return string.Join("", arr);
+        }
+        public bool Contains(int[] arr){
+            return allArrs.Contains(StringifyArr(arr));
+        }
+
+        public void Add(int [] arr){
+            allArrs.Add(StringifyArr(arr));
+        }
+    }
     public int EqualPairs(int[][] grid) {
-        int pairs = 0;
+       int pairs = 0;
         // create a set of the rows
-       HashSet<string> rows = new();
+        ArrayTracker tracker = new();
+
         for (int i = 0; i< grid.Length; i++){
-            string row = string.Join("", grid[i]);
-            if (rows.Contains(row)) pairs ++;
-            rows.Add(row);
+            if (tracker.Contains(grid[i])) pairs ++;
+            tracker.Add(grid[i]);
             
         }
         
@@ -18,11 +37,9 @@ public class EqualRowAndColumnPairsSolution{
             for (int colNdx=0; colNdx < grid.Length; colNdx++){
                 col[colNdx] = grid[colNdx][rowNdx];
             }
-            string strCol = string.Join("", col);
-            if (rows.Contains(strCol)){
+            
+            if (tracker.Contains(col)){
                 pairs ++;
-
-                // then remove it
             }
         }
         
