@@ -7,7 +7,7 @@ public class EqualRowAndColumnPairsSolution{
             allArrs = [];
         }
 
-        private string StringifyArr(int[] arr){
+        private static string StringifyArr(int[] arr){
             return string.Join("", arr);
         }
         public bool Contains(int[] arr){
@@ -16,8 +16,9 @@ public class EqualRowAndColumnPairsSolution{
 
         public void Add(int [] arr){
             string strArr = StringifyArr(arr);
-            if (allArrs.ContainsKey(strArr)){
-                allArrs[strArr]++;
+
+            if (allArrs.TryGetValue(strArr, out int value)){
+                allArrs[strArr] = ++value;
                 return;
             }
 
@@ -26,18 +27,18 @@ public class EqualRowAndColumnPairsSolution{
 
          public int NumberOfMatches(int [] column){
             string strCol = StringifyArr(column);
-            if (!allArrs.TryGetValue(strCol, out int value)) return 0;
+            if (!allArrs.TryGetValue(strCol, out int value)){
+                return 0;
+            }
+
             return value;
         }
     }
 
-    private class Grid{
-        private int [][] grid;
-        private readonly int length;
-        public Grid(int [][] values){
-            grid = values;
-            length = values.Length;
-        }
+    private class Grid(int[][] values)
+    {
+        private readonly int [][] grid = values;
+        private readonly int length = values.Length;
 
         public int[] Row(int index){
             return grid[index];
@@ -58,15 +59,15 @@ public class EqualRowAndColumnPairsSolution{
     }
     public int EqualPairs(int[][] grid) {
         int pairs = 0;
-        ArrayTracker allRows = new();
-        Grid gridWrapper = new Grid(grid);
+        ArrayTracker rows = new();
+        Grid gridWrapper = new(grid);
 
         for (int i = 0; i < gridWrapper.Length; i++){
-                allRows.Add(gridWrapper.Row(i));
+                rows.Add(gridWrapper.Row(i));
         }
 
         for (int j = 0; j < gridWrapper.Length; j++){
-            pairs += allRows.NumberOfMatches(gridWrapper.Column(j));
+            pairs += rows.NumberOfMatches(gridWrapper.Column(j));
         }
 
         return pairs;
