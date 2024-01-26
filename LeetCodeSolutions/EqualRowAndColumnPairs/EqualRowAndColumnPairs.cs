@@ -20,29 +20,51 @@ public class EqualRowAndColumnPairsSolution{
             allArrs.Add(StringifyArr(arr));
         }
     }
-    public int EqualPairs(int[][] grid) {
-       int pairs = 0;
-        // create a set of the rows
-        ArrayTracker tracker = new();
 
-        for (int i = 0; i< grid.Length; i++){
-            if (tracker.Contains(grid[i])) pairs ++;
-            tracker.Add(grid[i]);
-            
+    private class Grid{
+        private int [][] grid;
+        private readonly int length;
+        public Grid(int [][] values){
+            grid = values;
+            length = values.Length;
         }
-        
 
-        for (int rowNdx = 0; rowNdx < grid.Length; rowNdx++){
-            int [] col = new int[grid.Length];
-            for (int colNdx=0; colNdx < grid.Length; colNdx++){
-                col[colNdx] = grid[colNdx][rowNdx];
+        public int[] Row(int index){
+            return grid[index];
+        }
+
+        public int[] Column(int index){
+            int[] column = new int[length];
+
+            for (int rowNdx = 0; rowNdx < length; rowNdx++){
+                column[rowNdx] = grid[rowNdx][index];
             }
-            
-            if (tracker.Contains(col)){
+
+            return column;
+        }
+
+        public int Length => length;
+
+    }
+    public int EqualPairs(int[][] grid) {
+        int pairs = 0;
+        ArrayTracker tracker = new();
+        Grid gridWrapper = new Grid(grid);
+
+        for (int i = 0; i < gridWrapper.Length; i++){
+            if (tracker.Contains(gridWrapper.Row(i))){
+                pairs ++;
+            }else{
+                tracker.Add(gridWrapper.Row(i));
+            }
+        }
+
+        for (int j = 0; j < gridWrapper.Length; j++){
+            if (tracker.Contains(gridWrapper.Column(j))){
                 pairs ++;
             }
         }
-        
+
         return pairs;
     }
 }
