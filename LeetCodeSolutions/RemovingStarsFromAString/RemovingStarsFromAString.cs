@@ -2,7 +2,7 @@ namespace LeetCodeSolutions;
 
 public class RemovingStarsFromAStringSolution{
 
-    private class StringWrapper{
+   
         private string _s;
         public StringWrapper(string s){
             _s = s;
