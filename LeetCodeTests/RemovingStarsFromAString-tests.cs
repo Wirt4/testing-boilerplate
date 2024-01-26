@@ -11,4 +11,9 @@ public class RemovingStarsFromAStringTests{
     public void Example1(){
         Assert.Equal("lecoe", solution.RemoveStars("leet**cod*e"));
     }
+
+    [Fact]
+    public void Example2(){
+        Assert.Equal("", solution.RemoveStars("erase*****"));
+    }
 }
