@@ -48,19 +48,19 @@ public class EqualRowAndColumnPairsSolution{
     }
     public int EqualPairs(int[][] grid) {
         int pairs = 0;
-        ArrayTracker tracker = new();
+        ArrayTracker allRows = new();
         Grid gridWrapper = new Grid(grid);
 
         for (int i = 0; i < gridWrapper.Length; i++){
-            if (tracker.Contains(gridWrapper.Row(i))){
+            if (allRows.Contains(gridWrapper.Row(i))){
                 pairs ++;
             }else{
-                tracker.Add(gridWrapper.Row(i));
+                allRows.Add(gridWrapper.Row(i));
             }
         }
 
         for (int j = 0; j < gridWrapper.Length; j++){
-            if (tracker.Contains(gridWrapper.Column(j))){
+            if (allRows.Contains(gridWrapper.Column(j))){
                 pairs ++;
             }
         }
