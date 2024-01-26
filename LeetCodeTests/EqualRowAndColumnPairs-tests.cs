@@ -1,4 +1,5 @@
 using LeetCodeSolutions;
+using Newtonsoft.Json.Bson;
 
 namespace Tests;
 
@@ -23,5 +24,10 @@ public class EqualRowAndColumnPairsTests{
         //should be the intersection of columns and rows, not just duplicated rows:
         // the column "
          Assert.Equal(0, solution.EqualPairs([[3,1,0,2],[1,4,4,5],[2,4,2,2],[2,4,2,2]]));
+    }
+
+    [Fact]
+    public void BreakingCase1(){
+        Assert.Equal(2, solution.EqualPairs([[11,1],[1,11]]));
     }
 }

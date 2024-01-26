@@ -8,7 +8,7 @@ public class EqualRowAndColumnPairsSolution{
         }
 
         private static string StringifyArr(int[] arr){
-            return string.Join("", arr);
+            return string.Join("-", arr);
         }
         public bool Contains(int[] arr){
             return allArrs.ContainsKey(StringifyArr(arr));
