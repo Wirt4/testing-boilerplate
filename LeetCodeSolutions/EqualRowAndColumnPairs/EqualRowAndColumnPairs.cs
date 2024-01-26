@@ -4,7 +4,7 @@ namespace LeetCodeSolutions;
 
 public class EqualRowAndColumnPairsSolution{
     private class ArrayTracker{
-        private readonly HashSet<string> allArrs;
+        private readonly Dictionary<string, int> allArrs;
         public ArrayTracker(){
             allArrs = [];
         }
@@ -13,11 +13,23 @@ public class EqualRowAndColumnPairsSolution{
             return string.Join("", arr);
         }
         public bool Contains(int[] arr){
-            return allArrs.Contains(StringifyArr(arr));
+            return allArrs.ContainsKey(StringifyArr(arr));
         }
 
         public void Add(int [] arr){
-            allArrs.Add(StringifyArr(arr));
+            string strArr = StringifyArr(arr);
+            if (allArrs.ContainsKey(strArr)){
+                allArrs[strArr]++;
+                return;
+            }
+
+            allArrs.Add(strArr, 1);
+        }
+
+         public int NumberOfMatches(int [] column){
+            string strCol = StringifyArr(column);
+            if (!allArrs.TryGetValue(strCol, out int value)) return 0;
+            return value;
         }
     }
 
@@ -52,17 +64,12 @@ public class EqualRowAndColumnPairsSolution{
         Grid gridWrapper = new Grid(grid);
 
         for (int i = 0; i < gridWrapper.Length; i++){
-            if (allRows.Contains(gridWrapper.Row(i))){
-                pairs ++;
-            }else{
+            
                 allRows.Add(gridWrapper.Row(i));
-            }
         }
 
         for (int j = 0; j < gridWrapper.Length; j++){
-            if (allRows.Contains(gridWrapper.Column(j))){
-                pairs ++;
-            }
+            pairs += allRows.NumberOfMatches(gridWrapper.Column(j));
         }
 
         return pairs;
