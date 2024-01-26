@@ -1,40 +1,38 @@
 namespace LeetCodeSolutions;
 
 public class RemovingStarsFromAStringSolution{
-
-   
-        private string _s;
-        public StringWrapper(string s){
-            _s = s;
+    private class StackWrapper{
+        private Stack<char> stack;
+        public StackWrapper(){
+            stack = new();
+        }
+        public void Pop(){
+            if (stack.Count > 0) stack.Pop();
         }
 
-        public bool IsValidIndex(int index){
-            return index < _s.Length;
+        public void Push(char ch){
+            stack.Push(ch);
         }
 
-        public bool StarAtLocation(int index){
-            if (IsValidIndex(index)){
-                return _s[index] == '*';
-            }
-
-            return false;
+        public string AsString(){
+            char[] chars = [.. stack];
+            Array.Reverse(chars);
+            return new string(chars);
         }
     }
-     public string RemoveStars(string s) {
-        // set up a stack of chars
-        Stack<char> nonStars = new();
-
-        foreach (char ch in s){
-            if (ch == '*'){
-                nonStars.Pop();
-                continue;
-            }
-            nonStars.Push(ch);
+ public string RemoveStars(string s) {
+    StackWrapper noStars = new StackWrapper();
+    foreach(char ch in s){
+        if (ch == '*'){
+            noStars.Pop();
+            continue;
         }
 
-        char [] chars = nonStars.ToArray();
-        Array.Reverse(chars);
-        string starsRemoved = new(chars);
-        return starsRemoved;
+        noStars.Push(ch);
     }
+
+    return noStars.AsString();  
+    }
+       
+
 }
