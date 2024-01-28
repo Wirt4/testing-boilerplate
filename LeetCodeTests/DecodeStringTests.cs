@@ -39,4 +39,9 @@ using LeetCodeSolutions;
   public void CharFollowedByEncoded(){
     Assert.Equal("acc", _solution.DecodeString("a2[c]"));
   }
+
+  [Fact]
+  public void BreakingCase1(){
+    Assert.Equal("zzzyypqjkjkefjkjkefjkjkefjkjkefyypqjkjkefjkjkefjkjkefjkjkefef", _solution.DecodeString("3[z]2[2[y]pq4[2[jk]e1[f]]]ef"));
+  }
 }

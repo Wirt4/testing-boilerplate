@@ -45,6 +45,11 @@ public class DecodeStringSolution {
 
         while (l < s.Length){
             int r = l;
+
+            while (!Char.IsDigit(s[r])){
+                sb.Append(s[r]);
+                r++;
+            }
             
             while(s[l] != '[') l++;
 
