@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace LeetCodeSolutions;
 public class AsteroidCollisionSolution {
     private class StackWrapper{
@@ -14,16 +16,31 @@ public class AsteroidCollisionSolution {
             return _stack.Peek() < 0 && item > 0;
         }
 
+        private bool HasCollision(int item, bool isEqual = false){
+            if (IsEmpty){
+                return false;
+            }
+
+            int diff = Math.Abs(item) - _stack.Peek();
+
+            if (isEqual){
+                return diff == 0;
+            }
+
+            return diff > 0;
+
+        } 
+
         public void Push(int item){
             _stack.Push(item);
         }
 
         public bool HasDominantCollision(int item){
-            return !IsEmpty && _stack.Peek() < Math.Abs(item);
+            return HasCollision(item);
         }
 
         public bool HasEqualCollision(int item){
-           return  !IsEmpty && _stack.Peek() == Math.Abs(item);
+            return HasCollision(item, true);
         }
 
         public void Pop(){
