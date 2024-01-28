@@ -38,24 +38,28 @@ public class AsteroidCollisionSolution {
         return arr;
         }
 
+        public bool WillBeStableWhenAdded(int item){
+            return IsEmpty || HasMatchingSigns(item) || !WillCollide(item);
+        }
+
         public bool IsEmpty => _stack.Count == 0;
     }
    
     public int[] AsteroidCollision(int[] asteroids) {
         StackWrapper stableAsteroids =  new();
         foreach(int roid in asteroids){
-            if (stableAsteroids.IsEmpty || stableAsteroids.HasMatchingSigns(roid) || !stableAsteroids.WillCollide(roid)){
+            if (stableAsteroids.WillBeStableWhenAdded(roid)){
                 stableAsteroids.Push(roid);
                 continue;
             }
 
             while (stableAsteroids.HasDominantCollision(roid)){
-                    stableAsteroids.Pop();
+                stableAsteroids.Pop();
             }
 
             if (stableAsteroids.IsEmpty){
                 stableAsteroids.Push(roid);
-                    continue;
+                continue;
             }
 
             if (stableAsteroids.HasEqualCollision(roid)){
