@@ -23,6 +23,19 @@ public class DecodeStringSolution {
             return sb.ToString();
         }
         
+        
+        if(s[s.Length -1] != ']'){
+            int p = s.Length - 1;
+            while (s[p-1] != ']') p--;
+            string seg = s[..p];
+            string sub = s.Substring(p);
+            string decoded = DecodeString(seg);
+            sb.Append(decoded);
+            sb.Append(sub);
+            return sb.ToString();
+
+        }
+
         int l = 0;
 
         while (l < s.Length){

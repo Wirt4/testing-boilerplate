@@ -11,6 +11,11 @@ using LeetCodeSolutions;
   }
 
   [Fact]
+  public void ExampleOneAndAHalf(){
+    Assert.Equal("aaabcbcf", _solution.DecodeString("3[a]2[bc]f"));
+  }
+
+  [Fact]
   public void Example2(){
     Assert.Equal("accaccacc", _solution.DecodeString("3[a2[c]]"));
   }
