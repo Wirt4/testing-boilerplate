@@ -10,11 +10,11 @@ public class AsteroidCollisionSolution {
             _stack.Push(item);
         }
 
-        public bool HasMatchingSigns(int item){
+        private bool HasMatchingSigns(int item){
             return (_stack.Peek() < 0 && item < 0 ) || (_stack.Peek() > 0 && item > 0);
         }
 
-        public bool WillCollide(int item){
+        private bool WillCollide(int item){
             return _stack.Peek() >= 0 || item <= 0;
         }
 
