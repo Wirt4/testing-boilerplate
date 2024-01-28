@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace LeetCodeSolutions;
 
 public class CloseStringsSolution{
@@ -6,7 +8,7 @@ public class CloseStringsSolution{
         private readonly Dictionary<char, int> charFrequency;
         private readonly Dictionary<int, int> countFrequency;
         
-        private Dictionary<char, int> InitiateCharFrequency(string word){
+        private static Dictionary<char, int> InitiateCharFrequency(string word){
             Dictionary <char, int> frequency = [];
             
             foreach(char ch in word){
@@ -22,7 +24,7 @@ public class CloseStringsSolution{
 
         }
 
-        private Dictionary<int, int> InitiateCountFrequency(Dictionary<char, int>.ValueCollection  charCounts){
+        private static Dictionary<int, int> InitiateCountFrequency(Dictionary<char, int>.ValueCollection  charCounts){
                 Dictionary <int, int> frequency = [];
 
                 foreach(int count in charCounts){
@@ -40,7 +42,6 @@ public class CloseStringsSolution{
         public WordHandler (string word){
             charFrequency = InitiateCharFrequency(word);
             countFrequency = InitiateCountFrequency(charFrequency.Values);
-            
         }
 
         public bool HasSameDistinctChars(WordHandler handler){
@@ -67,21 +68,25 @@ public class CloseStringsSolution{
             return true;
         }
 
-        public int NumberOfDistintChars => charFrequency.Count;
-
-        public int NumberOfDistinctCounts => countFrequency.Count;
+       public bool MatchesFrequency(KeyValuePair<int, int> pair){
+        return countFrequency.TryGetValue(pair.Key, out int value) && value == pair.Value;
+       }
 
         public bool HasSameCountFrequencies(WordHandler handler){
              
              foreach( KeyValuePair<int, int> pair in countFrequency){
                
-                if (!(handler.countFrequency.TryGetValue(pair.Key, out int value) && value == pair.Value)){
+                if (!handler.MatchesFrequency(pair)){
                     return false;
                 }
             }
 
             return true;
         }
+
+        public int NumberOfDistintChars => charFrequency.Count;
+
+        public int NumberOfDistinctCounts => countFrequency.Count;
     }
    
     public bool CloseStrings(string word1, string word2) {
