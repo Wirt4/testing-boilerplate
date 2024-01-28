@@ -4,8 +4,11 @@ namespace LeetCodeSolutions;
 public class DecodeStringSolution {
     private static bool EditingRequired(string inputString){
         foreach(char character in inputString){
-            if (inputString.Equals('[') || inputString.Equals(']') || Char.IsDigit(character)) return true;
+            if (inputString.Equals('[') || inputString.Equals(']') || Char.IsDigit(character)) {
+                return true;
+                }
         }
+        
         return false;
     }
 
@@ -18,7 +21,9 @@ public class DecodeStringSolution {
 
         if(inputString[^1] != ']'){
             int endBracketIndex = inputString.Length - 1;
-            while (inputString[endBracketIndex-1] != ']') endBracketIndex--;
+            while (inputString[endBracketIndex-1] != ']'){
+                endBracketIndex--;
+            }
 
             suffix = inputString.Substring(endBracketIndex);
             inputString = inputString[..endBracketIndex];
@@ -34,7 +39,9 @@ public class DecodeStringSolution {
                 rightIndex++;
             }
             
-            while(inputString[leftIndex] != '[') leftIndex++;
+            while(inputString[leftIndex] != '['){
+                leftIndex++;
+            };
 
             int k = int.Parse(inputString[rightIndex..leftIndex]);
             rightIndex = leftIndex;
@@ -43,9 +50,13 @@ public class DecodeStringSolution {
             do{
                 rightIndex++;
 
-                if (inputString[rightIndex] == '[') parens++;
+                if (inputString[rightIndex] == '['){
+                    parens++;
+                }
 
-                if(inputString[rightIndex] == ']') parens--;
+                if(inputString[rightIndex] == ']'){
+                    parens--;
+                }
 
             }while(parens > 0); 
 
@@ -53,7 +64,9 @@ public class DecodeStringSolution {
             string segment = inputString[leftIndex..rightIndex];
             string decoded = DecodeString(segment);
 
-            for (int i=0; i<k; i++) returnStringBuilder.Append(decoded);
+            for (int i=0; i<k; i++) {
+                returnStringBuilder.Append(decoded);
+            }
 
             leftIndex = rightIndex + 1;
         }
