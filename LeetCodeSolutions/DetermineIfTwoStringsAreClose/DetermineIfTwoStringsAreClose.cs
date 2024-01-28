@@ -6,29 +6,41 @@ public class CloseStringsSolution{
         private readonly Dictionary<char, int> charFrequency;
         private readonly Dictionary<int, int> countFrequency;
         
-        public WordHandler (string word){
-            charFrequency = [];
+        private Dictionary<char, int> InitiateCharFrequency(string word){
+            Dictionary <char, int> frequency = [];
             
             foreach(char ch in word){
-                if (charFrequency.TryGetValue(ch, out int value)){
-                    charFrequency[ch] = value + 1;
+                if (frequency.TryGetValue(ch, out int value)){
+                    frequency[ch] = value + 1;
                     continue;
                 }
                 
-                charFrequency.Add(ch, 1);
+                frequency.Add(ch, 1);
             }
 
-            countFrequency = [];
-            
-            foreach(int count in charFrequency.Values){
+            return frequency;
+
+        }
+
+        private Dictionary<int, int> InitiateCountFrequency(Dictionary<char, int>.ValueCollection  charCounts){
+                Dictionary <int, int> frequency = [];
+
+                foreach(int count in charCounts){
                 
-                if (countFrequency.TryGetValue(count, out int value)){
-                    countFrequency[count] = value + 1;
-                    continue;
-                
-                }
-                countFrequency.Add(count, 1);
+                    if (frequency.TryGetValue(count, out int value)){
+                        frequency[count] = value + 1;
+                        continue;
+                    }
+
+                    frequency.Add(count, 1);
             }
+
+            return frequency;
+        }
+        public WordHandler (string word){
+            charFrequency = InitiateCharFrequency(word);
+            countFrequency = InitiateCountFrequency(charFrequency.Values);
+            
         }
 
         public bool HasSameDistinctChars(WordHandler handler){
