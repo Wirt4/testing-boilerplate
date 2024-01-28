@@ -1,54 +1,80 @@
 namespace LeetCodeSolutions;
 public class AsteroidCollisionSolution {
-   
-    public int[] AsteroidCollision(int[] asteroids) {
-        Stack<int> stableAsteroids = new();
+    private class StackWrapper{
+        private Stack <int> _stack;
+        public StackWrapper(){
+            _stack =  new();
+        }
 
-        foreach(int roid in asteroids){
-            if (stableAsteroids.Count == 0){
-                stableAsteroids.Push(roid);
-                continue;
-            }
+        public void Push(int item){
+            _stack.Push(item);
+        }
 
-            if (stableAsteroids.Peek() < 0 && roid < 0){
-                stableAsteroids.Push(roid);
-                continue;
-            }
-
-
-            // in this case, the rightmost asteroid of the array and the new asteroid will never intersect
-            if (stableAsteroids.Peek() < 0 && roid > 0){
-                stableAsteroids.Push(roid);
-                continue;
-            }
-
-            if (stableAsteroids.Peek() > 0 && roid > 0){
-                stableAsteroids.Push(roid);
-                continue;
-            }
-            
-            //the remaining possiblility is a positive moving stack asteroid and negatively moving new asteroid
-            while (stableAsteroids.Count > 0 && stableAsteroids.Peek() < Math.Abs(roid)){
-                stableAsteroids.Pop(); // all geting smacked by the new 'roid
-            }
-
-            if (stableAsteroids.Count == 0){
-                stableAsteroids.Push(roid);
-            }
-
-            if (stableAsteroids.Count > 0 && stableAsteroids.Peek() + roid == 0){
-                stableAsteroids.Pop();
-                continue;
-            }
-
-
-
-           
+        public bool HasMatchingSigns(int item){
+            if (IsEmpty) return true;
+            if (_stack.Peek() < 0 && item < 0 ) return true;
+            return _stack.Peek() > 0 && item > 0;
 
         }
 
-        int [] stableAsteroidsArr = [.. stableAsteroids];
-        Array.Reverse(stableAsteroidsArr);
-        return stableAsteroidsArr;
+        public bool WillCollide(int item){
+            return !(_stack.Peek() < 0 && item > 0);
+        }
+
+        public bool HasDominantCollision(int item){
+            return ! IsEmpty && _stack.Peek() < Math.Abs(item);
+        }
+
+        public bool HasEqualCollision(int item){
+           return  !IsEmpty && _stack.Peek() + item == 0;
+        }
+
+        public void Pop(){
+            _stack.Pop();
+        }
+
+        public int[] ToArray(){
+        int [] arr = [.. _stack];
+        Array.Reverse(arr);
+        return arr;
+        }
+
+        public bool IsEmpty => _stack.Count == 0;
+    }
+   
+    public int[] AsteroidCollision(int[] asteroids) {
+        //Stack<int> stableAsteroids = new();
+        StackWrapper stableAsteroids =  new();
+        foreach(int roid in asteroids){
+            if (stableAsteroids.IsEmpty){
+                stableAsteroids.Push(roid);
+                continue;
+            }
+
+            if (stableAsteroids.HasMatchingSigns(roid)){
+                stableAsteroids.Push(roid);
+                continue;
+            }
+
+            // in this case, the rightmost asteroid of the array and the new asteroid will never intersect
+            if (stableAsteroids.WillCollide(roid)){
+                while (stableAsteroids.HasDominantCollision(roid)){
+                    stableAsteroids.Pop();
+                }
+
+                if (stableAsteroids.IsEmpty){
+                    stableAsteroids.Push(roid);
+                    continue;
+                }
+
+                if (stableAsteroids.HasEqualCollision(roid)){
+                    stableAsteroids.Pop();
+                }
+            }
+
+
+        }
+
+        return stableAsteroids.ToArray();
     }
 }

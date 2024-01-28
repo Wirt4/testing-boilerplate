@@ -13,4 +13,9 @@ using LeetCodeSolutions;
   public void Example2(){
     Assert.Equal([], _solution.AsteroidCollision([8, -8]));
   }
+
+  [Fact]
+  public void Example3(){
+     Assert.Equal([10], _solution.AsteroidCollision([10, 2, -5]));
+  }
 }
