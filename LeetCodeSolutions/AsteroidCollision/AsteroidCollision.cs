@@ -3,7 +3,7 @@ public class AsteroidCollisionSolution {
     private class StackWrapper{
         private readonly Stack <int> _stack;
         public StackWrapper(){
-            _stack =  new();
+            _stack = new();
         }
 
         public void Push(int item){
@@ -15,7 +15,7 @@ public class AsteroidCollisionSolution {
         }
 
         public bool WillCollide(int item){
-            return !(_stack.Peek() < 0 && item > 0);
+            return _stack.Peek() >= 0 || item <= 0;
         }
 
         public bool HasDominantCollision(int item){
