@@ -25,17 +25,22 @@ public class DecodeStringSolution {
         
         int l = 0;
 
-        while(s[l] != '[') l++;
+        while (l < s.Length){
+            int r = l;
+            
+            while(s[l] != '[') l++;
 
-        int k = int.Parse(s[..l]);
-        int r = l;
+            int k = int.Parse(s[r..l]);
 
-        while (s[r] != ']') r++;
+            while (s[r] != ']') r++;
 
-        l++;
-        string segment = s[l..r];
+            l++;
+            string segment = s[l..r];
 
-        for (int i=0; i<k; i++) sb.Append(segment);
+            for (int i=0; i<k; i++) sb.Append(segment);
+
+            l = r + 1;
+        }
 
         return sb.ToString();
     }
