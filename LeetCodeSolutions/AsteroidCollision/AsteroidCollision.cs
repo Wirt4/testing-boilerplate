@@ -43,7 +43,6 @@ public class AsteroidCollisionSolution {
     }
    
     public int[] AsteroidCollision(int[] asteroids) {
-        //Stack<int> stableAsteroids = new();
         StackWrapper stableAsteroids =  new();
         foreach(int roid in asteroids){
             if (stableAsteroids.IsEmpty){
@@ -56,7 +55,6 @@ public class AsteroidCollisionSolution {
                 continue;
             }
 
-            // in this case, the rightmost asteroid of the array and the new asteroid will never intersect
             if (stableAsteroids.WillCollide(roid)){
                 while (stableAsteroids.HasDominantCollision(roid)){
                     stableAsteroids.Pop();
