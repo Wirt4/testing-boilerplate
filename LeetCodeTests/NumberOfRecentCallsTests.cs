@@ -8,5 +8,6 @@ using LeetCodeSolutions;
   [Fact]
   public void Example1(){
     Assert.Equal(1, _solution.Ping(1));
+    Assert.Equal(2, _solution.Ping(100));
   }
 }
