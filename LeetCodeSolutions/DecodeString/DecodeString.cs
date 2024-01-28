@@ -31,13 +31,23 @@ public class DecodeStringSolution {
             while(s[l] != '[') l++;
 
             int k = int.Parse(s[r..l]);
+            r = l;
+            int parens = 1;
 
-            while (s[r] != ']') r++;
+            do{
+                r++;
+
+                if (s[r] == '[') parens++;
+
+                if(s[r] == ']') parens--;
+
+            }while(parens >0); 
 
             l++;
             string segment = s[l..r];
+            string decoded = DecodeString(segment);
 
-            for (int i=0; i<k; i++) sb.Append(segment);
+            for (int i=0; i<k; i++) sb.Append(decoded);
 
             l = r + 1;
         }
