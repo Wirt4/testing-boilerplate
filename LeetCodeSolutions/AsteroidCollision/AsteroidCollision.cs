@@ -1,4 +1,3 @@
-using System.ComponentModel;
 
 namespace LeetCodeSolutions;
 public class AsteroidCollisionSolution {
@@ -12,7 +11,7 @@ public class AsteroidCollisionSolution {
             if (_stack.Peek() < 0 && item < 0 ){
                 return true;
             }
-            
+
             return _stack.Peek() > 0 && item > 0;
         }
 
