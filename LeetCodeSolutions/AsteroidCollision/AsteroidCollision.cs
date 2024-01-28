@@ -44,30 +44,23 @@ public class AsteroidCollisionSolution {
     public int[] AsteroidCollision(int[] asteroids) {
         StackWrapper stableAsteroids =  new();
         foreach(int roid in asteroids){
-            if (stableAsteroids.IsEmpty || stableAsteroids.HasMatchingSigns(roid)){
+            if (stableAsteroids.IsEmpty || stableAsteroids.HasMatchingSigns(roid) || !stableAsteroids.WillCollide(roid)){
                 stableAsteroids.Push(roid);
                 continue;
             }
 
-            if (stableAsteroids.WillCollide(roid)){
-                while (stableAsteroids.HasDominantCollision(roid)){
+            while (stableAsteroids.HasDominantCollision(roid)){
                     stableAsteroids.Pop();
-                }
-
-                if (stableAsteroids.IsEmpty){
-                    stableAsteroids.Push(roid);
-                    continue;
-                }
-
-                if (stableAsteroids.HasEqualCollision(roid)){
-                    stableAsteroids.Pop();
-                }
-                continue;
             }
 
-            stableAsteroids.Push(roid);
+            if (stableAsteroids.IsEmpty){
+                stableAsteroids.Push(roid);
+                    continue;
+            }
 
-
+            if (stableAsteroids.HasEqualCollision(roid)){
+                stableAsteroids.Pop();
+            }
         }
 
         return stableAsteroids.ToArray();
