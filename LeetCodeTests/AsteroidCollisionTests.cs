@@ -9,4 +9,8 @@ using LeetCodeSolutions;
   public void Example1(){
     Assert.Equal([5, 10], _solution.AsteroidCollision([5, 10, -5]));
   }
+  [Fact]
+  public void Example2(){
+    Assert.Equal([], _solution.AsteroidCollision([8, -8]));
+  }
 }
