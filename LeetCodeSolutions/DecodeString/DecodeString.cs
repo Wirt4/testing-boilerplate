@@ -15,17 +15,14 @@ public class DecodeStringSolution {
 
         StringBuilder sb = new();
 
+        string suffix = "";
         
         if(s[^1] != ']'){
             int p = s.Length - 1;
             while (s[p-1] != ']') p--;
-            string seg = s[..p];
-            string sub = s.Substring(p);
-            string decoded = DecodeString(seg);
-            sb.Append(decoded);
-            sb.Append(sub);
-            return sb.ToString();
 
+            suffix = s.Substring(p);
+            s = s[..p];
         }
 
         int l = 0;
@@ -61,6 +58,8 @@ public class DecodeStringSolution {
 
             l = r + 1;
         }
+
+        sb.Append(suffix);
 
         return sb.ToString();
     }
