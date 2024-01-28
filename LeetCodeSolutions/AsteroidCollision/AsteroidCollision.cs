@@ -1,7 +1,7 @@
 namespace LeetCodeSolutions;
 public class AsteroidCollisionSolution {
     private class StackWrapper{
-        private Stack <int> _stack;
+        private readonly Stack <int> _stack;
         public StackWrapper(){
             _stack =  new();
         }
