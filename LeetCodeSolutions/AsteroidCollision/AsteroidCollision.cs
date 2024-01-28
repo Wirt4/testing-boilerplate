@@ -9,7 +9,11 @@ public class AsteroidCollisionSolution {
         }
 
         private bool HasMatchingSigns(int item){
-            return (_stack.Peek() < 0 && item < 0 ) || (_stack.Peek() > 0 && item > 0);
+            if (_stack.Peek() < 0 && item < 0 ){
+                return true;
+            }
+            
+            return _stack.Peek() > 0 && item > 0;
         }
 
         private bool WontCollide(int item){
