@@ -2,63 +2,64 @@ using System.Text;
 
 namespace LeetCodeSolutions;
 public class DecodeStringSolution {
-    private static bool EditingRequired(string s){
-        foreach(char ch in s){
-            if (s.Equals('[') || s.Equals(']') || Char.IsDigit(ch)) return true;
+    private static bool EditingRequired(string inputString){
+        foreach(char character in inputString){
+            if (inputString.Equals('[') || inputString.Equals(']') || Char.IsDigit(character)) return true;
         }
         return false;
     }
-    public string DecodeString(string s) {
-        if (!EditingRequired(s)) return s;
 
-        StringBuilder sb = new();
+    public string DecodeString(string inputString) {
+        if (!EditingRequired(inputString)) return inputString;
+
+        StringBuilder returnStringBuilder = new();
 
         string suffix = "";
 
-        if(s[^1] != ']'){
-            int p = s.Length - 1;
-            while (s[p-1] != ']') p--;
+        if(inputString[^1] != ']'){
+            int endBracketIndex = inputString.Length - 1;
+            while (inputString[endBracketIndex-1] != ']') endBracketIndex--;
 
-            suffix = s.Substring(p);
-            s = s[..p];
+            suffix = inputString.Substring(endBracketIndex);
+            inputString = inputString[..endBracketIndex];
         }
 
-        int l = 0;
+        int leftIndex = 0;
 
-        while (l < s.Length){
-            int r = l;
+        while (leftIndex < inputString.Length){
+            int rightIndex = leftIndex;
 
-            while (!Char.IsDigit(s[r])){
-                sb.Append(s[r]);
-                r++;
+            while (!Char.IsDigit(inputString[rightIndex])){
+                returnStringBuilder.Append(inputString[rightIndex]);
+                rightIndex++;
             }
             
-            while(s[l] != '[') l++;
+            while(inputString[leftIndex] != '[') leftIndex++;
 
-            int k = int.Parse(s[r..l]);
-            r = l;
+            int k = int.Parse(inputString[rightIndex..leftIndex]);
+            rightIndex = leftIndex;
             int parens = 1;
 
             do{
-                r++;
+                rightIndex++;
 
-                if (s[r] == '[') parens++;
+                if (inputString[rightIndex] == '[') parens++;
 
-                if(s[r] == ']') parens--;
+                if(inputString[rightIndex] == ']') parens--;
 
             }while(parens > 0); 
 
-            l++;
-            string segment = s[l..r];
+            leftIndex++;
+            string segment = inputString[leftIndex..rightIndex];
             string decoded = DecodeString(segment);
 
-            for (int i=0; i<k; i++) sb.Append(decoded);
+            for (int i=0; i<k; i++) returnStringBuilder.Append(decoded);
 
-            l = r + 1;
+            leftIndex = rightIndex + 1;
         }
 
-        sb.Append(suffix);
+        returnStringBuilder.Append(suffix);
 
-        return sb.ToString();
+        return returnStringBuilder.ToString();
     }
 }
