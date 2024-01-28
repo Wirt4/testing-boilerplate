@@ -12,15 +12,11 @@ public class DecodeStringSolution {
         return false;
     }
 
-    private class StringIndexer{
-        public int leftIndex;
-        public int rightIndex;
-        private string encodedString;
-        public StringIndexer(string inputString){
-            encodedString = inputString;
-            leftIndex = 0;
-            rightIndex = 0;
-        }
+    private class StringIndexer(string inputString)
+    {
+        public int leftIndex = 0;
+        public int rightIndex = 0;
+        private string encodedString = inputString;
 
         public void FindEncasingBrackets(){
             int levelsOfParenthesis = 1;
@@ -75,7 +71,7 @@ public class DecodeStringSolution {
         }
 
         public bool HasRemainingChars(){
-            return leftIndex < encodedString.Lengthl
+            return leftIndex < encodedString.Length;
         }
     }
 
@@ -116,7 +112,7 @@ public class DecodeStringSolution {
                 builder.Append(segment);
             }
         }
-        public string ToString(){
+        public string OutputString(){
             if (hasSuffix){
                  builder.Append(suffix);
             }
@@ -125,14 +121,14 @@ public class DecodeStringSolution {
         }
 
         private int FindClosingBracketIndex(string inputString){
-         int closingBracketIndex = inputString.Length - 1;
+            int closingBracketIndex = inputString.Length - 1;
 
-        while (inputString[closingBracketIndex-1] != ']'){
-                closingBracketIndex--;
-        }
+            while (inputString[closingBracketIndex-1] != ']'){
+                    closingBracketIndex--;
+            }
 
         return closingBracketIndex;
-    }
+        }
     }
 
 
@@ -155,6 +151,6 @@ public class DecodeStringSolution {
             parser.SetIndecesForNextIteration();
         }
 
-        return decoder.ToString();
+        return decoder.OutputString();
     }
 }
