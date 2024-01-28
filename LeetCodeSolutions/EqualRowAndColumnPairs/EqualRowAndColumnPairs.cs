@@ -1,8 +1,11 @@
 namespace LeetCodeSolutions;
 
 public class EqualRowAndColumnPairsSolution{
+    
     private class ArrayTracker{
+        
         private readonly Dictionary<string, int> allArrs;
+        
         public ArrayTracker(){
             allArrs = [];
         }
@@ -14,6 +17,7 @@ public class EqualRowAndColumnPairsSolution{
             return allArrs.ContainsKey(StringifyArr(arr));
         }
 
+        
         public void Add(int [] arr){
             string strArr = StringifyArr(arr);
 
@@ -35,11 +39,12 @@ public class EqualRowAndColumnPairsSolution{
         }
     }
 
-    private class Grid(int[][] values)
-    {
+    private class Grid(int[][] values){
+        
         private readonly int [][] grid = values;
         private readonly int length = values.Length;
 
+        
         public int[] Row(int index){
             return grid[index];
         }
@@ -57,6 +62,7 @@ public class EqualRowAndColumnPairsSolution{
         public int Length => length;
 
     }
+    
     public int EqualPairs(int[][] grid) {
         int pairs = 0;
         ArrayTracker rows = new();
