@@ -21,8 +21,13 @@ using LeetCodeSolutions;
   }
 
   [Fact]
-  public void MinimumCase(){
+  public void MinimumCase1(){
     Assert.Equal("tttt", _solution.DecodeString("4[t]"));
+  }
+
+  [Fact]
+  public void MinimumCase2(){
+    Assert.Equal("bb", _solution.DecodeString("2[b]"));
   }
 
   [Fact]
