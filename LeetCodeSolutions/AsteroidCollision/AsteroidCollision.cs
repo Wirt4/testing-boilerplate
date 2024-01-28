@@ -20,7 +20,7 @@ public class AsteroidCollisionSolution {
         }
 
         private bool HasCollision(int item, bool isEqual = false){
-            if (IsEmpty){
+            if (WillBeStableWhenAdded(item)){
                 return false;
             }
 
@@ -72,8 +72,8 @@ public class AsteroidCollisionSolution {
             while (stableAsteroids.HasDominantCollision(roid)){
                 stableAsteroids.Pop();
             }
-
-            if (stableAsteroids.IsEmpty){
+        
+            if (stableAsteroids.WillBeStableWhenAdded(roid) ){
                 stableAsteroids.Push(roid);
                 continue;
             }

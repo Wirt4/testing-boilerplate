@@ -22,4 +22,9 @@ using LeetCodeSolutions;
   public void OppositeDirections(){
      Assert.Equal([-8, 8], _solution.AsteroidCollision([-8, 8]));
   }
+
+  [Fact]
+  public void BreakingCase1(){
+     Assert.Equal([-2, -2, -2], _solution.AsteroidCollision([-2,-2,1,-2]));
+  }
 }
