@@ -6,6 +6,7 @@ using LeetCodeSolutions;
       _solution = new();
   }
   [Fact]
-  public void Test1(){
+  public void Example1(){
+    Assert.Equal("aaabcbc", _solution.DecodeString("3[a]2[bc]"));
   }
 }
