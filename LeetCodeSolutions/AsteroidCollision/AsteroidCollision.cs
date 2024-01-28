@@ -6,16 +6,16 @@ public class AsteroidCollisionSolution {
             _stack = new();
         }
 
-        public void Push(int item){
-            _stack.Push(item);
-        }
-
         private bool HasMatchingSigns(int item){
             return (_stack.Peek() < 0 && item < 0 ) || (_stack.Peek() > 0 && item > 0);
         }
 
-        private bool WillCollide(int item){
-            return _stack.Peek() >= 0 || item <= 0;
+        private bool WontCollide(int item){
+            return _stack.Peek() < 0 && item > 0;
+        }
+
+        public void Push(int item){
+            _stack.Push(item);
         }
 
         public bool HasDominantCollision(int item){
@@ -23,7 +23,7 @@ public class AsteroidCollisionSolution {
         }
 
         public bool HasEqualCollision(int item){
-           return  !IsEmpty && _stack.Peek() + item == 0;
+           return  !IsEmpty && _stack.Peek() == Math.Abs(item);
         }
 
         public void Pop(){
@@ -35,7 +35,7 @@ public class AsteroidCollisionSolution {
         }
 
         public bool WillBeStableWhenAdded(int item){
-            return IsEmpty || HasMatchingSigns(item) || !WillCollide(item);
+            return IsEmpty || HasMatchingSigns(item) || WontCollide(item);
         }
 
         public bool IsEmpty => _stack.Count == 0;
