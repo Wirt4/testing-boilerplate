@@ -11,7 +11,6 @@ public class AsteroidCollisionSolution {
         }
 
         public bool HasMatchingSigns(int item){
-            if (IsEmpty) return true;
             if (_stack.Peek() < 0 && item < 0 ) return true;
             return _stack.Peek() > 0 && item > 0;
         }
