@@ -14,7 +14,6 @@ public class AsteroidCollisionSolution {
             if (IsEmpty) return true;
             if (_stack.Peek() < 0 && item < 0 ) return true;
             return _stack.Peek() > 0 && item > 0;
-
         }
 
         public bool WillCollide(int item){
@@ -45,12 +44,7 @@ public class AsteroidCollisionSolution {
     public int[] AsteroidCollision(int[] asteroids) {
         StackWrapper stableAsteroids =  new();
         foreach(int roid in asteroids){
-            if (stableAsteroids.IsEmpty){
-                stableAsteroids.Push(roid);
-                continue;
-            }
-
-            if (stableAsteroids.HasMatchingSigns(roid)){
+            if (stableAsteroids.IsEmpty || stableAsteroids.HasMatchingSigns(roid)){
                 stableAsteroids.Push(roid);
                 continue;
             }
