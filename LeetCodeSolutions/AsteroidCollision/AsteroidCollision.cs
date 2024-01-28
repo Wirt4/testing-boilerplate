@@ -31,9 +31,7 @@ public class AsteroidCollisionSolution {
         }
 
         public int[] ToArray(){
-        int [] arr = [.. _stack];
-        Array.Reverse(arr);
-        return arr;
+            return [.. new Stack<int>(_stack)];
         }
 
         public bool WillBeStableWhenAdded(int item){
