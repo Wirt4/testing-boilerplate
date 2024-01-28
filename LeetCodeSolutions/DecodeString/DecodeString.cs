@@ -1,10 +1,8 @@
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace LeetCodeSolutions;
 public class DecodeStringSolution {
-    private bool EditingRequired(string s){
+    private static bool EditingRequired(string s){
         foreach(char ch in s){
             if (s.Equals('[') || s.Equals(']') || Char.IsDigit(ch)) return true;
         }
@@ -16,7 +14,7 @@ public class DecodeStringSolution {
         StringBuilder sb = new();
 
         string suffix = "";
-        
+
         if(s[^1] != ']'){
             int p = s.Length - 1;
             while (s[p-1] != ']') p--;
@@ -48,7 +46,7 @@ public class DecodeStringSolution {
 
                 if(s[r] == ']') parens--;
 
-            }while(parens >0); 
+            }while(parens > 0); 
 
             l++;
             string segment = s[l..r];
