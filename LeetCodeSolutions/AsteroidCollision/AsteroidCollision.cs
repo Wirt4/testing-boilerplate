@@ -1,2 +1,6 @@
 namespace LeetCodeSolutions;
-public class AsteroidCollisionSolution {}
+public class AsteroidCollisionSolution {
+    public int[] AsteroidCollision(int[] asteroids) {
+        return [];
+    }
+}

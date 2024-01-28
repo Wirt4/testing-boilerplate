@@ -6,6 +6,7 @@ using LeetCodeSolutions;
       _solution = new();
   }
   [Fact]
-  public void Test1(){
+  public void Example1(){
+    Assert.Equal([5, 10], _solution.AsteroidCollision([5, 10, -5]));
   }
 }
