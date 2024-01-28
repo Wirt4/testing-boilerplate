@@ -70,7 +70,10 @@ public class AsteroidCollisionSolution {
                 if (stableAsteroids.HasEqualCollision(roid)){
                     stableAsteroids.Pop();
                 }
+                continue;
             }
+
+            stableAsteroids.Push(roid);
 
 
         }

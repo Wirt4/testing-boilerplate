@@ -18,4 +18,8 @@ using LeetCodeSolutions;
   public void Example3(){
      Assert.Equal([10], _solution.AsteroidCollision([10, 2, -5]));
   }
+  [Fact]
+  public void OppositeDirections(){
+     Assert.Equal([-8, 8], _solution.AsteroidCollision([-8, 8]));
+  }
 }
