@@ -14,4 +14,19 @@ using LeetCodeSolutions;
   public void Example2(){
     Assert.Equal("accaccacc", _solution.DecodeString("3[a2[c]]"));
   }
+
+  [Fact]
+  public void BaseCase(){
+     Assert.Equal("t", _solution.DecodeString("t"));
+  }
+
+  [Fact]
+  public void MinimumCase(){
+    Assert.Equal("tttt", _solution.DecodeString("4[t]"));
+  }
+
+  [Fact]
+  public void CharFollowedByEncoded(){
+    Assert.Equal("acc", _solution.DecodeString("a2[c]"));
+  }
 }
