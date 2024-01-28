@@ -1,12 +1,17 @@
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace LeetCodeSolutions;
 public class DecodeStringSolution {
+    private bool EditingRequired(string s){
+        foreach(char ch in s){
+            if (s.Equals('[') || s.Equals(']') || Char.IsDigit(ch)) return true;
+        }
+        return false;
+    }
     public string DecodeString(string s) {
-        string pattern = "^[a-zA]*$";
-
-        if (Regex.IsMatch(s,pattern)) return s;
+        if (!EditingRequired(s)) return s;
 
           StringBuilder sb = new();
 
@@ -24,7 +29,7 @@ public class DecodeStringSolution {
         }
         
         
-        if(s[s.Length -1] != ']'){
+        if(s[^1] != ']'){
             int p = s.Length - 1;
             while (s[p-1] != ']') p--;
             string seg = s[..p];
