@@ -11,8 +11,7 @@ public class AsteroidCollisionSolution {
         }
 
         public bool HasMatchingSigns(int item){
-            if (_stack.Peek() < 0 && item < 0 ) return true;
-            return _stack.Peek() > 0 && item > 0;
+            return (_stack.Peek() < 0 && item < 0 ) || (_stack.Peek() > 0 && item > 0);
         }
 
         public bool WillCollide(int item){
@@ -20,7 +19,7 @@ public class AsteroidCollisionSolution {
         }
 
         public bool HasDominantCollision(int item){
-            return ! IsEmpty && _stack.Peek() < Math.Abs(item);
+            return !IsEmpty && _stack.Peek() < Math.Abs(item);
         }
 
         public bool HasEqualCollision(int item){
