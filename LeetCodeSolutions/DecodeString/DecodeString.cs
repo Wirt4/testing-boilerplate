@@ -13,21 +13,8 @@ public class DecodeStringSolution {
     public string DecodeString(string s) {
         if (!EditingRequired(s)) return s;
 
-          StringBuilder sb = new();
+        StringBuilder sb = new();
 
-        if (!Char.IsDigit(s[0])){
-            int p = 0;
-
-            while (!Char.IsDigit(s[p])) p++;
-
-            string seg = s[..p];
-            sb.Append(seg);
-            string sub = s.Substring(p);
-            string decoded = DecodeString(sub);
-            sb.Append(decoded);
-            return sb.ToString();
-        }
-        
         
         if(s[^1] != ']'){
             int p = s.Length - 1;
