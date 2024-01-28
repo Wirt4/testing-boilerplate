@@ -2,8 +2,10 @@ namespace Tests;
 using LeetCodeSolutions;
 
 public class CloseStringsTests{
+    
     private CloseStringsSolution solution;
-    public CloseStringsTests(){
+
+public CloseStringsTests(){
         solution = new CloseStringsSolution();
     }
 
