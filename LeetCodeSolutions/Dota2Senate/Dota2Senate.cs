@@ -1,20 +1,26 @@
 namespace LeetCodeSolutions;
-public class Dota2SenateSolution {
-    private enum Party{
+public class Dota2SenateSolution
+{
+    private enum Party
+    {
         Dire,
         Radiant
     }
 
-    private enum SenatorAction{
+    private enum SenatorAction
+    {
         AnnounceVictory,
         BanOpponent
     }
 
 
-    private class Senator{
+    private class Senator
+    {
         private readonly Party party;
-        public Senator(char initial){
-            switch(initial){
+        public Senator(char initial)
+        {
+            switch (initial)
+            {
                 case 'D':
                     party = Party.Dire;
                     break;
@@ -24,17 +30,23 @@ public class Dota2SenateSolution {
             }
         }
 
-        
-        public SenatorAction ExerciseRight(Dictionary<Party, int> activeSenateCount){
-            if(activeSenateCount[party] > 0 && activeSenateCount[OpposingParty()] == 0){
+
+        public SenatorAction ExerciseRight(Dictionary<Party, int> activeSenateCount)
+        {
+            if (activeSenateCount[party] > 0 && activeSenateCount[OpposingParty()] == 0)
+            {
                 return SenatorAction.AnnounceVictory;
-            }else{
+            }
+            else
+            {
                 return SenatorAction.BanOpponent;
             }
         }
 
-        public Party OpposingParty(){
-            switch(party){
+        public Party OpposingParty()
+        {
+            switch (party)
+            {
                 case Party.Dire:
                     return Party.Radiant;
                 case Party.Radiant:
@@ -47,49 +59,59 @@ public class Dota2SenateSolution {
         public Party Party => party;
     }
 
-    private class Senate{
+    private class Senate
+    {
         private readonly Dictionary<Party, int> senatorCount;
         private readonly Dictionary<Party, int> partyVetos;
         private Queue<Senator> activeSenators;
         private bool victoryDeclared;
         private Party winningParty;
-        public Senate(string senators){
+        public Senate(string senators)
+        {
             senatorCount = IntializeDictionary();
             partyVetos = IntializeDictionary();
             activeSenators = new Queue<Senator>();
             victoryDeclared = false;
 
-            foreach(char partyInitial in senators){
+            foreach (char partyInitial in senators)
+            {
                 AddSenator(partyInitial);
             }
         }
 
-        private void AddSenator(char initial){
+        private void AddSenator(char initial)
+        {
             Senator senator = new(initial);
             activeSenators.Enqueue(senator);
             senatorCount[senator.Party]++;
         }
-        private static Dictionary<Party, int> IntializeDictionary(){
-            Dictionary<Party, int >dictionary = [];
+        private static Dictionary<Party, int> IntializeDictionary()
+        {
+            Dictionary<Party, int> dictionary = [];
             dictionary.Add(Party.Dire, 0);
             dictionary.Add(Party.Radiant, 0);
             return dictionary;
         }
-        public bool IsVoting(){
+        public bool IsVoting()
+        {
             return activeSenators.Count > 0 && !victoryDeclared;
         }
 
-        private bool IsBanned(Senator senator){
+        private bool IsBanned(Senator senator)
+        {
             return partyVetos[senator.Party] > 0;
         }
 
-        private void RemoveSenator(Senator senator){
-            partyVetos[senator.Party] --;
-            senatorCount[senator.Party] --;
+        private void RemoveSenator(Senator senator)
+        {
+            partyVetos[senator.Party]--;
+            senatorCount[senator.Party]--;
         }
 
-        private void TakeVote(Senator senator){
-            switch(senator.ExerciseRight(senatorCount)){
+        private void TakeVote(Senator senator)
+        {
+            switch (senator.ExerciseRight(senatorCount))
+            {
                 case SenatorAction.BanOpponent:
                     partyVetos[senator.OpposingParty()]++;
                     return;
@@ -97,19 +119,22 @@ public class Dota2SenateSolution {
                     winningParty = senator.Party;
                     victoryDeclared = true;
                     return;
-                }  
+            }
         }
-        public void ConductVotingRound(){
+        public void ConductVotingRound()
+        {
             Queue<Senator> nextRoundQueue = new();
 
-            while (activeSenators.Count > 0){
+            while (activeSenators.Count > 0)
+            {
                 Senator polledSenator = activeSenators.Dequeue();
 
-                if (IsBanned(polledSenator)){
-                       RemoveSenator(polledSenator);
-                       continue;
+                if (IsBanned(polledSenator))
+                {
+                    RemoveSenator(polledSenator);
+                    continue;
                 }
-                
+
                 TakeVote(polledSenator);
                 nextRoundQueue.Enqueue(polledSenator);
             }
@@ -117,8 +142,10 @@ public class Dota2SenateSolution {
             activeSenators = nextRoundQueue;
         }
 
-        public string PrevailingParty(){
-            switch(winningParty){
+        public string PrevailingParty()
+        {
+            switch (winningParty)
+            {
                 case Party.Dire:
                     return "Dire";
                 case Party.Radiant:
@@ -129,9 +156,11 @@ public class Dota2SenateSolution {
         }
     }
 
-    public string PredictPartyVictory(string senators) {
+    public string PredictPartyVictory(string senators)
+    {
         Senate senate = new(senators);
-        while (senate.IsVoting()){
+        while (senate.IsVoting())
+        {
             senate.ConductVotingRound();
         }
 
