@@ -43,7 +43,7 @@ public class Dota2SenateSolution {
         private Dictionary<Party, int> partyVetos;
         private Queue<Senator> activeSenators;
         private bool victoryDeclared;
-        private Party winningPary;
+        private Party winningParty;
         public Senate(string senators){
             senatorCount =[];
             senatorCount.Add(Party.Radiant, 0);
@@ -80,7 +80,7 @@ public class Dota2SenateSolution {
 
                     SenatorAction action = polledSenator.ExerciseRight(senatorCount);
                     if (action == SenatorAction.AnnounceVictory){
-                        winningPary = polledSenator.Party;
+                        winningParty = polledSenator.Party;
                         victoryDeclared = true;
                         return;
                     }
@@ -98,7 +98,7 @@ public class Dota2SenateSolution {
         }
 
         public string PrevailingParty(){
-            return winningPary == Party.Radiant ? "Radiant" : "Dire";
+            return winningParty == Party.Radiant ? "Radiant" : "Dire";
         }
     }
 
