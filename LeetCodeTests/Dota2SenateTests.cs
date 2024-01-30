@@ -6,6 +6,7 @@ using LeetCodeSolutions;
       _solution = new();
   }
   [Fact]
-  public void Test1(){
+  public void ArrayOfOneDire(){
+    Assert.Equal("Dire",_solution.PredictPartyVictory("D"));
   }
 }
