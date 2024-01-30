@@ -1,6 +1,7 @@
 namespace LeetCodeSolutions;
 public class Dota2SenateSolution {
     public string PredictPartyVictory(string senate) {
-        return "Dire";
+        if (senate == "D")return "Dire";
+        return "Radiant";
     }
 }
