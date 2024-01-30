@@ -7,6 +7,11 @@ using LeetCodeSolutions;
   }
   [Fact]
   public void ArrayOfOneDire(){
-    Assert.Equal("Dire",_solution.PredictPartyVictory("D"));
+    Assert.Equal("Dire", _solution.PredictPartyVictory("D"));
+  } 
+
+  [Fact]
+  public void ArrayOfOneRadiante(){
+    Assert.Equal("Radiant", _solution.PredictPartyVictory("R"));
   }
 }
