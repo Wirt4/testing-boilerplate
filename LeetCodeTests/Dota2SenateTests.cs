@@ -19,4 +19,9 @@ using LeetCodeSolutions;
   public void Example1(){
      Assert.Equal("Radiant", _solution.PredictPartyVictory("RD"));
   }
+
+  [Fact]
+  public void Example2(){
+       Assert.Equal("Dire", _solution.PredictPartyVictory("RDD"));
+  }
 }
