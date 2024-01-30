@@ -98,11 +98,7 @@ public class Dota2SenateSolution {
         }
 
         public string PrevailingParty(){
-            if (winningPary == Party.Radiant){
-                return "Radiant";
-            }
-
-            return "Dire";
+            return winningPary == Party.Radiant ? "Radiant" : "Dire";
         }
     }
 
