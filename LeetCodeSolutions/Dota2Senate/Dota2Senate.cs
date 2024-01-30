@@ -86,10 +86,8 @@ public class Dota2SenateSolution {
                 if (partyVetos[polledSenator.Party] > 0){
                         partyVetos[polledSenator.Party] --;
                         senatorCount[polledSenator.Party] --;
-                        continue;
-                    }
-                    
-                    switch(polledSenator.ExerciseRight(senatorCount)){
+                    }else{
+                        switch(polledSenator.ExerciseRight(senatorCount)){
                           case SenatorAction.BanOpponent:
                             partyVetos[polledSenator.OpposingParty()]++;
                             nextRoundQueue.Enqueue(polledSenator);
@@ -98,6 +96,8 @@ public class Dota2SenateSolution {
                             winningParty = polledSenator.Party;
                             victoryDeclared = true;
                             return;
+                        }
+
                     }
                 }
 
