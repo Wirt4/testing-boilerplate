@@ -30,9 +30,9 @@ public class Dota2SenateSolution {
         public SenatorAction ExerciseRight(Dictionary<Party, int> activeSenateCount){
             if(activeSenateCount[party] > 0 && activeSenateCount[OpposingParty()] == 0){
                 return SenatorAction.AnnounceVictory;
+            }else{
+                return SenatorAction.BanOpponent;
             }
-
-            return SenatorAction.BanOpponent;
         }
 
         public Party OpposingParty(){
