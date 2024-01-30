@@ -71,7 +71,7 @@ public class Dota2SenateSolution {
         private static Dictionary<Party, int> IntializeDictionary(){
             Dictionary<Party, int >dictionary = [];
             dictionary.Add(Party.Dire, 0);
-             dictionary.Add(Party.Radiant, 0);
+            dictionary.Add(Party.Radiant, 0);
             return dictionary;
         }
         public bool IsVoting(){
