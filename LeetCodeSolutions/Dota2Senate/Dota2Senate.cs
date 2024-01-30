@@ -3,8 +3,8 @@ using System.Diagnostics;
 namespace LeetCodeSolutions;
 public class Dota2SenateSolution {
     private enum Party{
-        Radiant,
-        Dire
+        Dire,
+        Radiant
     }
 
     private enum SenatorAction{
@@ -16,12 +16,14 @@ public class Dota2SenateSolution {
     private class Senator{
         private readonly Party party;
         public Senator(char initial){
-            if (initial == 'D'){
-                party = Party.Dire;
-                return;
+            switch(initial){
+                case 'D':
+                    party = Party.Dire;
+                    break;
+                case 'R':
+                    party = Party.Radiant;
+                    break;
             }
-
-            party = Party.Radiant;
         }
 
         
@@ -34,20 +36,27 @@ public class Dota2SenateSolution {
         }
 
         public Party OpposingParty(){
-            return party == Party.Radiant ? Party.Dire: Party.Radiant;
+            switch(party){
+                case Party.Dire:
+                    return Party.Radiant;
+                case Party.Radiant:
+                    return Party.Dire;
+                default:
+                    return Party.Dire;
+            }
         }
 
         public Party Party => party;
     }
 
     private class Senate{
-        private Dictionary<Party, int> senatorCount;
-        private Dictionary<Party, int> partyVetos;
+        private readonly Dictionary<Party, int> senatorCount;
+        private readonly Dictionary<Party, int> partyVetos;
         private Queue<Senator> activeSenators;
         private bool victoryDeclared;
         private Party winningParty;
         public Senate(string senators){
-            senatorCount =IntializeDictionary();
+            senatorCount = IntializeDictionary();
             partyVetos = IntializeDictionary();
             activeSenators = [];
             victoryDeclared = false;
@@ -59,10 +68,10 @@ public class Dota2SenateSolution {
                 senatorCount[currentSenator.Party]++;
             }
         }
-        private Dictionary<Party, int> IntializeDictionary(){
+        private static Dictionary<Party, int> IntializeDictionary(){
             Dictionary<Party, int >dictionary = [];
-            dictionary.Add(Party.Radiant, 0);
             dictionary.Add(Party.Dire, 0);
+             dictionary.Add(Party.Radiant, 0);
             return dictionary;
         }
         public bool IsVoting(){
@@ -79,28 +88,31 @@ public class Dota2SenateSolution {
                         senatorCount[polledSenator.Party] --;
                         continue;
                     }
-
-                    SenatorAction action = polledSenator.ExerciseRight(senatorCount);
-                    if (action == SenatorAction.AnnounceVictory){
-                        winningParty = polledSenator.Party;
-                        victoryDeclared = true;
-                        return;
-                    }
-
-                    if (action == SenatorAction.BanOpponent){
-                        partyVetos[polledSenator.OpposingParty()]++;
-                        nextRoundQueue.Enqueue(polledSenator);
-                        continue;
+                    
+                    switch(polledSenator.ExerciseRight(senatorCount)){
+                          case SenatorAction.BanOpponent:
+                            partyVetos[polledSenator.OpposingParty()]++;
+                            nextRoundQueue.Enqueue(polledSenator);
+                            break;
+                        case SenatorAction.AnnounceVictory:
+                            winningParty = polledSenator.Party;
+                            victoryDeclared = true;
+                            return;
                     }
                 }
-
-               
 
             activeSenators = nextRoundQueue;
         }
 
         public string PrevailingParty(){
-            return winningParty == Party.Radiant ? "Radiant" : "Dire";
+            switch(winningParty){
+                case Party.Dire:
+                    return "Dire";
+                case Party.Radiant:
+                    return "Radiant";
+                default:
+                    return "";
+            }
         }
     }
 
