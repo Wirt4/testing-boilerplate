@@ -15,7 +15,7 @@ public class Dota2SenateSolution {
         }
 
         private void CountSenators(string senate){
-            for(int i=0; i< senate.Length; i++){
+            for(int i =0; i< senate.Length; i++){
                 if (IsDire(senate[i])){
                     _firstCharIsDire = i == 0 || _firstCharIsDire;
                     _direSenators ++;

@@ -1,4 +1,6 @@
 namespace Tests;
+
+using System.Security;
 using LeetCodeSolutions;
  public class Dota2SenateTests {
   private Dota2SenateSolution _solution;
@@ -24,4 +26,9 @@ using LeetCodeSolutions;
   public void Example2(){
        Assert.Equal("Dire", _solution.PredictPartyVictory("RDD"));
   }
+
+  [Fact]
+  public void BreakingCase1(){
+    Assert.Equal("Dire", _solution.PredictPartyVictory("DDRRR"));
+  } 
 }
