@@ -14,4 +14,9 @@ using LeetCodeSolutions;
   public void ArrayOfOneRadiante(){
     Assert.Equal("Radiant", _solution.PredictPartyVictory("R"));
   }
+
+  [Fact]
+  public void Example1(){
+     Assert.Equal("Radiant", _solution.PredictPartyVictory("RD"));
+  }
 }
