@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace LeetCodeSolutions;
 public class Dota2SenateSolution {
     private enum Party{
@@ -78,27 +76,37 @@ public class Dota2SenateSolution {
             return activeSenators.Count > 0 && !victoryDeclared;
         }
 
+        private bool IsBanned(Senator senator){
+            return partyVetos[senator.Party] > 0;
+        }
+
+        private void RemoveSenator(Senator senator){
+            partyVetos[senator.Party] --;
+            senatorCount[senator.Party] --;
+        }
         public void ConductVotingRound(){
             Queue<Senator> nextRoundQueue = new();
 
             while (activeSenators.Count > 0){
                 Senator polledSenator = activeSenators.Dequeue();
-                if (partyVetos[polledSenator.Party] > 0){
-                        partyVetos[polledSenator.Party] --;
-                        senatorCount[polledSenator.Party] --;
-                    }else{
-                        switch(polledSenator.ExerciseRight(senatorCount)){
-                          case SenatorAction.BanOpponent:
-                            partyVetos[polledSenator.OpposingParty()]++;
-                            nextRoundQueue.Enqueue(polledSenator);
-                            break;
-                        case SenatorAction.AnnounceVictory:
-                            winningParty = polledSenator.Party;
-                            victoryDeclared = true;
-                            return;
-                        }
+                if (IsBanned(polledSenator)){
+                       RemoveSenator(polledSenator);
+                       continue;
+                }
 
+                nextRoundQueue.Enqueue(polledSenator);
+                
+                switch(polledSenator.ExerciseRight(senatorCount)){
+                    case SenatorAction.BanOpponent:
+                        partyVetos[polledSenator.OpposingParty()]++;
+                        break;
+                    case SenatorAction.AnnounceVictory:
+                        winningParty = polledSenator.Party;
+                        victoryDeclared = true;
+                        return;
                     }
+
+                    
                 }
 
             activeSenators = nextRoundQueue;
