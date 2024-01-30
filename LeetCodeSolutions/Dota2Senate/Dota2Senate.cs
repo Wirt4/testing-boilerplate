@@ -56,15 +56,18 @@ public class Dota2SenateSolution {
         public Senate(string senators){
             senatorCount = IntializeDictionary();
             partyVetos = IntializeDictionary();
-            activeSenators = [];
+            activeSenators = new Queue<Senator>();
             victoryDeclared = false;
 
-
             foreach(char partyInitial in senators){
-                Senator currentSenator = new(partyInitial);
-                activeSenators.Enqueue(currentSenator);
-                senatorCount[currentSenator.Party]++;
+                AddSenator(partyInitial);
             }
+        }
+
+        private void AddSenator(char initial){
+            Senator senator = new(initial);
+            activeSenators.Enqueue(senator);
+            senatorCount[senator.Party]++;
         }
         private static Dictionary<Party, int> IntializeDictionary(){
             Dictionary<Party, int >dictionary = [];
@@ -84,30 +87,32 @@ public class Dota2SenateSolution {
             partyVetos[senator.Party] --;
             senatorCount[senator.Party] --;
         }
+
+        private void TakeVote(Senator senator){
+            switch(senator.ExerciseRight(senatorCount)){
+                case SenatorAction.BanOpponent:
+                    partyVetos[senator.OpposingParty()]++;
+                    return;
+                case SenatorAction.AnnounceVictory:
+                    winningParty = senator.Party;
+                    victoryDeclared = true;
+                    return;
+                }  
+        }
         public void ConductVotingRound(){
             Queue<Senator> nextRoundQueue = new();
 
             while (activeSenators.Count > 0){
                 Senator polledSenator = activeSenators.Dequeue();
+
                 if (IsBanned(polledSenator)){
                        RemoveSenator(polledSenator);
                        continue;
                 }
-
-                nextRoundQueue.Enqueue(polledSenator);
                 
-                switch(polledSenator.ExerciseRight(senatorCount)){
-                    case SenatorAction.BanOpponent:
-                        partyVetos[polledSenator.OpposingParty()]++;
-                        break;
-                    case SenatorAction.AnnounceVictory:
-                        winningParty = polledSenator.Party;
-                        victoryDeclared = true;
-                        return;
-                    }
-
-                    
-                }
+                TakeVote(polledSenator);
+                nextRoundQueue.Enqueue(polledSenator);
+            }
 
             activeSenators = nextRoundQueue;
         }
