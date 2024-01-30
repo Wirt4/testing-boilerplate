@@ -30,4 +30,20 @@ public class DeleteTheMiddleNodeTests
     Assert.Equal(2, Output.val);
     Assert.Null(Output.next);
   }
+
+  [Fact]
+  public void Example3DifferentValues()
+  {
+    /**
+    Input: head = [1,2]
+    Output: [1]
+    */
+
+    ListNode Tail = new(2);
+    ListNode InputHead = new(1, Tail);
+
+    ListNode Output = _solution.DeleteMiddle(InputHead);
+    Assert.Equal(1, Output.val);
+    Assert.Null(Output.next);
+  }
 }
