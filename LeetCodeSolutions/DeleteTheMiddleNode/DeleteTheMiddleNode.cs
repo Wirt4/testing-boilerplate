@@ -17,6 +17,6 @@ public class DeleteTheMiddleNodeSolution
 {
     public ListNode DeleteMiddle(ListNode head)
     {
-        return new ListNode();
+        return null;
     }
 }
