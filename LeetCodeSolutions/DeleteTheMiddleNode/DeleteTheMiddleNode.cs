@@ -13,4 +13,10 @@ public class ListNode
     }
 }
 
-public class DeleteTheMiddleNodeSolution { }
+public class DeleteTheMiddleNodeSolution
+{
+    public ListNode DeleteMiddle(ListNode head)
+    {
+        return new ListNode();
+    }
+}
