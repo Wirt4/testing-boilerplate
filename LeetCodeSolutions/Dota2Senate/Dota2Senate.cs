@@ -1,6 +1,3 @@
-using System.IO.Pipes;
-using System.Security.Cryptography;
-
 namespace LeetCodeSolutions;
 public class Dota2SenateSolution {
     private enum Party{
@@ -27,13 +24,15 @@ public class Dota2SenateSolution {
 
         
         public SenatorAction ExerciseRight(Dictionary<Party, int> activeSenateCount){
-            foreach(KeyValuePair<Party, int> pair in activeSenateCount){
-                if (pair.Key != party && pair.Value == 0){
-                    return SenatorAction.AnnounceVictory;
-                }   
+            if(activeSenateCount[party] > 0 && activeSenateCount[OpposingParty()] == 0){
+                return SenatorAction.AnnounceVictory;
             }
 
             return SenatorAction.BanOpponent;
+        }
+
+        public Party OpposingParty(){
+            return party == Party.Radiant ? Party.Dire: Party.Radiant;
         }
 
         public Party Party => party;
@@ -77,10 +76,9 @@ public class Dota2SenateSolution {
 
             while (activeSenators.Count > 0){
                 Senator polledSenator = activeSenators.Dequeue();
-                if (polledSenator.Party == Party.Radiant){
-                    if (partyVetos[Party.Radiant] > 0){
-                        partyVetos[Party.Radiant] --;
-                        senatorCount[Party.Radiant] --;
+                if (partyVetos[polledSenator.Party] > 0){
+                        partyVetos[polledSenator.Party] --;
+                        senatorCount[polledSenator.Party] --;
                         continue;
                     }
 
@@ -92,34 +90,13 @@ public class Dota2SenateSolution {
                     }
 
                     if (action == SenatorAction.BanOpponent){
-                        partyVetos[Party.Dire]++;
+                        partyVetos[polledSenator.OpposingParty()]++;
                         nextRoundQueue.Enqueue(polledSenator);
                         continue;
                     }
                 }
 
-                if (polledSenator.Party == Party.Dire){
-                    if (partyVetos[Party.Dire] > 0){
-                        partyVetos[Party.Dire] --;
-                        senatorCount[Party.Dire] --;
-                        continue;
-                    }
-
-                    SenatorAction action = polledSenator.ExerciseRight(senatorCount);
-                    if (action == SenatorAction.AnnounceVictory){
-                        winningPary = polledSenator.Party;
-                        victoryDeclared = true;
-                        return;
-                    }
-
-                    if (action == SenatorAction.BanOpponent){
-                        partyVetos[Party.Radiant]++;
-                        nextRoundQueue.Enqueue(polledSenator);
-                        continue;
-                    }
-                }
-
-            }
+               
 
             activeSenators = nextRoundQueue;
         }
