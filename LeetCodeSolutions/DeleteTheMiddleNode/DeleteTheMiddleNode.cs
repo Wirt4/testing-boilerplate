@@ -15,7 +15,7 @@ public class ListNode
 
 public class DeleteTheMiddleNodeSolution
 {
-    public ListNode DeleteMiddle(ListNode head)
+    private int getLength(ListNode head)
     {
         int count = 0;
         ListNode cur = head;
@@ -25,9 +25,19 @@ public class DeleteTheMiddleNodeSolution
             count++;
             cur = cur.next;
         }
+        return count;
+    }
+    public ListNode DeleteMiddle(ListNode head)
+    {
+        int count = getLength(head);
+
+        if (count == 1)
+        {
+            return null;
+        }
 
         head.next = null;
-        return count == 1 ? null : head;
+        return head;
 
     }
 }
