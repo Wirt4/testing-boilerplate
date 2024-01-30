@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace LeetCodeSolutions;
 public class Dota2SenateSolution {
     private enum Party{
@@ -45,23 +47,23 @@ public class Dota2SenateSolution {
         private bool victoryDeclared;
         private Party winningParty;
         public Senate(string senators){
-            senatorCount =[];
-            senatorCount.Add(Party.Radiant, 0);
-            senatorCount.Add(Party.Dire, 0);
-
+            senatorCount =IntializeDictionary();
+            partyVetos = IntializeDictionary();
             activeSenators = [];
-
             victoryDeclared = false;
 
-            partyVetos = [];
-            partyVetos.Add(Party.Radiant, 0);
-            partyVetos.Add(Party.Dire, 0);
 
             foreach(char partyInitial in senators){
-                Senator currentSenator = new Senator(partyInitial);
+                Senator currentSenator = new(partyInitial);
                 activeSenators.Enqueue(currentSenator);
                 senatorCount[currentSenator.Party]++;
             }
+        }
+        private Dictionary<Party, int> IntializeDictionary(){
+            Dictionary<Party, int >dictionary = [];
+            dictionary.Add(Party.Radiant, 0);
+            dictionary.Add(Party.Dire, 0);
+            return dictionary;
         }
         public bool IsVoting(){
             return activeSenators.Count > 0 && !victoryDeclared;
