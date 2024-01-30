@@ -37,10 +37,8 @@ public class Dota2SenateSolution
             {
                 return SenatorAction.AnnounceVictory;
             }
-            else
-            {
-                return SenatorAction.BanOpponent;
-            }
+
+            return SenatorAction.BanOpponent;
         }
 
         public Party OpposingParty()
@@ -94,7 +92,7 @@ public class Dota2SenateSolution
         }
         public bool IsVoting()
         {
-            return activeSenators.Count > 0 && !victoryDeclared;
+            return !(activeSenators.Count <= 0 || !victoryDeclared);
         }
 
         private bool IsBanned(Senator senator)
