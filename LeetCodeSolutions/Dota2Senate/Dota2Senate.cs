@@ -64,11 +64,7 @@ public class Dota2SenateSolution {
             }
         }
         public bool IsVoting(){
-            if (activeSenators.Count >0){
-                return !victoryDeclared;
-
-            }
-            return false;
+            return activeSenators.Count > 0 && !victoryDeclared;
         }
 
         public void ConductVotingRound(){
