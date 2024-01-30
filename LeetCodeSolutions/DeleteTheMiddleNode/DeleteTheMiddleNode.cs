@@ -19,12 +19,15 @@ public class DeleteTheMiddleNodeSolution
     {
         int count = 0;
         ListNode cur = head;
+
         while (cur != null)
         {
             count++;
             cur = cur.next;
         }
-        return count == 1 ? null : new ListNode(2);
+
+        head.next = null;
+        return count == 1 ? null : head;
 
     }
 }
