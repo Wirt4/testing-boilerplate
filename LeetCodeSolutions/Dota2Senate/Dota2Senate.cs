@@ -1,39 +1,47 @@
+using System.Runtime.CompilerServices;
+
 namespace LeetCodeSolutions;
 public class Dota2SenateSolution {
-    private bool EqualNumbers(string senate){
-        int DireCount = 0;
-        int RadiantCount = 0;
-        foreach(char senator in senate){
-            if (senator == 'D'){
-                DireCount++;
-                continue;
-            }
 
-            RadiantCount ++;
+    private class SenateTally{
+        private int DireSenators;
+        private int RadiantSenators;
+        public SenateTally(string senate){
+            DireSenators = 0;
+            RadiantSenators = 0;
+            CountSenators(senate);
         }
-        return DireCount ==  RadiantCount;
-    }
-
-    private bool DireMajority(string senate){
-        int DireCount = 0;
-        int RadiantCount = 0;
-        foreach(char senator in senate){
-            if (senator == 'D'){
-                DireCount++;
-                continue;
-            }
-
-            RadiantCount ++;
+        public static bool IsDire(char senator){
+            return senator == 'D';
         }
-        return DireCount >  RadiantCount;
+
+        private void CountSenators(string senate){
+            foreach(char senator in senate){
+                if (IsDire(senator)){
+                    DireSenators ++;
+                    continue;
+                }
+
+                RadiantSenators++;
+
+            }
+        }
+
+        public bool HasEqualNumbers => RadiantSenators == DireSenators;
+
+        public bool DireHasMajority => DireSenators > RadiantSenators;
     }
     public string PredictPartyVictory(string senate) {
-        if (EqualNumbers(senate)){
-            return senate[0] == 'D' ? "Dire" : "Radiant";
+        SenateTally tally = new SenateTally(senate);
+
+        if (tally.HasEqualNumbers){
+            return SenateTally.IsDire(senate[0]) ? "Dire": "Radiant";
         }
-        if (DireMajority(senate)){
+
+        if (tally.DireHasMajority){
             return "Dire";
         }
+
       return "Radiant";
     }
 }
