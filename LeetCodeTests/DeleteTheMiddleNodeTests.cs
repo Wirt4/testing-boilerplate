@@ -27,8 +27,8 @@ public class DeleteTheMiddleNodeTests
     ListNode InputHead = new(2, Tail);
 
     ListNode Output = _solution.DeleteMiddle(InputHead);
-    Assert.Equal(2, Output.val);
-    Assert.Null(Output.next);
+    ListNode DesiredOutput = new(2);
+    Assert.True(AssertListsAreEqual(DesiredOutput, Output));
   }
 
   [Fact]
@@ -43,8 +43,8 @@ public class DeleteTheMiddleNodeTests
     ListNode InputHead = new(1, Tail);
 
     ListNode Output = _solution.DeleteMiddle(InputHead);
-    Assert.Equal(1, Output.val);
-    Assert.Null(Output.next);
+    ListNode DesiredOutput = new(1);
+    Assert.True(AssertListsAreEqual(DesiredOutput, Output));
   }
 
   [Fact]
