@@ -41,8 +41,9 @@ public class DeleteTheMiddleNodeSolution
     private ListNode RemoveMiddle(ListNode head, int length)
     {
         ListNode cur = head;
+        int positionBeforeHalfway = length / 2 - 1;
 
-        for (int i = 0; i < length / 2 - 1; i++)
+        for (int i = 0; i < positionBeforeHalfway; i++)
         {
             cur = cur.next;
         }
