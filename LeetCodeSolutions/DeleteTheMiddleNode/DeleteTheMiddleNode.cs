@@ -36,8 +36,33 @@ public class DeleteTheMiddleNodeSolution
             return null;
         }
 
-        head.next = null;
+        if (count == 2)
+        {
+
+            head.next = null;
+            return head;
+
+        }
+
+        int halfwayMark = count / 2; // 1
+
+        ListNode prev = head;
+        ListNode cur = head.next;
+
+        halfwayMark--;
+
+        while (halfwayMark > 0)
+        {
+            cur = cur.next;
+            prev = prev.next;
+            halfwayMark--;
+        }
+
+        prev.next = cur.next;
+        cur.next = null;
+        // c# has automatic garbage collection, nullify the references and the memory will be realocated
         return head;
+
 
     }
 }
