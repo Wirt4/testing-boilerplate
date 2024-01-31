@@ -19,12 +19,11 @@ public class DeleteTheMiddleNodeSolution
     private int getLength(ListNode head)
     {
         int count = 0;
-        ListNode cur = head;
 
-        while (cur != null)
+        while (head != null)
         {
             count++;
-            cur = cur.next;
+            head = head.next;
         }
         return count;
     }
