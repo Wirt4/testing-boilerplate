@@ -18,82 +18,45 @@ public class DeleteTheMiddleNodeTests
   [Fact]
   public void Example3()
   {
-    /**
-    Input: head = [2,1]
-    Output: [2]
-    */
-
-    ListNode Tail = new(1);
-    ListNode InputHead = new(2, Tail);
-
-    ListNode Output = _solution.DeleteMiddle(InputHead);
-    ListNode DesiredOutput = new(2);
-    AssertListsAreEqual(DesiredOutput, Output);
+    CompareHeadToDesiredOutput([2, 1], [2]);
   }
 
   [Fact]
   public void Example3_DifferentValues()
   {
-    /**
-    Input: head = [1,2]
-    Output: [1]
-    */
-
-    ListNode Tail = new(2);
-    ListNode InputHead = new(1, Tail);
-
-    ListNode Output = _solution.DeleteMiddle(InputHead);
-    ListNode DesiredOutput = new(1);
-    AssertListsAreEqual(DesiredOutput, Output);
+    CompareHeadToDesiredOutput([1, 2], [1]);
   }
 
   [Fact]
   public void ListOfSize3()
   {
-    /**
-    Input: head = [1,2,3]
-    Output: [1,3]
-    */
-    ListNode head = ListFromArray([1, 2, 3]);
-    AssertListsAreEqual(ListFromArray([1, 3]), _solution.DeleteMiddle(head));
+    CompareHeadToDesiredOutput([1, 2, 3], [1, 3]);
   }
 
   [Fact]
 
   public void ListOfSize3DifferentData()
   {
-    /**
-    Input: head = [3,2,1]
-    Output: [3,1]
-    */
-    ListNode head = ListFromArray([3, 2, 1]);
-    AssertListsAreEqual(ListFromArray([3, 1]), _solution.DeleteMiddle(head));
+    CompareHeadToDesiredOutput([3, 2, 1], [3, 1]);
   }
 
   [Fact]
   public void Example1()
   {
-    /**
-    Input: head = [1,3,4,7,1,2,6]
-    Output: [1,3,4,1,2,6]
-    */
-    ListNode head = ListFromArray([1, 3, 4, 7, 1, 2, 6]);
-    ListNode desiredOutput = ListFromArray([1, 3, 4, 1, 2, 6]);
-    ListNode actualOutput = _solution.DeleteMiddle(head);
-    AssertListsAreEqual(desiredOutput, actualOutput);
+    CompareHeadToDesiredOutput([1, 3, 4, 7, 1, 2, 6], [1, 3, 4, 1, 2, 6]);
   }
 
   [Fact]
   public void Example2()
   {
-    /**
-   Input: head = [1,2,3,4]
-   Output: [1,2,4]
-   */
+    CompareHeadToDesiredOutput([1, 2, 3, 4], [1, 2, 4]);
+  }
 
-    ListNode head = ListFromArray([1, 2, 3, 4]);
-    ListNode desiredOutput = ListFromArray([1, 2, 4]);
-    ListNode actualOutput = _solution.DeleteMiddle(head);
+  private void CompareHeadToDesiredOutput(int[] head, int[] output)
+  {
+    ListNode input = ListFromArray(head);
+    ListNode desiredOutput = ListFromArray(output);
+    ListNode actualOutput = _solution.DeleteMiddle(input);
     AssertListsAreEqual(desiredOutput, actualOutput);
   }
 
