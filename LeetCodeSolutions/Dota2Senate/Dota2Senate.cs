@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.Marshalling;
+
 namespace LeetCodeSolutions;
 public class Dota2SenateSolution
 {
@@ -92,7 +94,7 @@ public class Dota2SenateSolution
         }
         public bool IsVoting()
         {
-            return !(activeSenators.Count <= 0 || !victoryDeclared);
+            return !(activeSenators.Count <= 0 || victoryDeclared);
         }
 
         private bool IsBanned(Senator senator)
