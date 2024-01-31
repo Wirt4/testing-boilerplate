@@ -28,7 +28,7 @@ public class DeleteTheMiddleNodeTests
 
     ListNode Output = _solution.DeleteMiddle(InputHead);
     ListNode DesiredOutput = new(2);
-    Assert.True(AssertListsAreEqual(DesiredOutput, Output));
+    AssertListsAreEqual(DesiredOutput, Output);
   }
 
   [Fact]
@@ -44,7 +44,7 @@ public class DeleteTheMiddleNodeTests
 
     ListNode Output = _solution.DeleteMiddle(InputHead);
     ListNode DesiredOutput = new(1);
-    Assert.True(AssertListsAreEqual(DesiredOutput, Output));
+    AssertListsAreEqual(DesiredOutput, Output);
   }
 
   [Fact]
@@ -55,7 +55,7 @@ public class DeleteTheMiddleNodeTests
     Output: [1,3]
     */
     ListNode head = ListFromArray([1, 2, 3]);
-    Assert.True(AssertListsAreEqual(ListFromArray([1, 3]), _solution.DeleteMiddle(head)));
+    AssertListsAreEqual(ListFromArray([1, 3]), _solution.DeleteMiddle(head));
   }
 
   [Fact]
@@ -67,7 +67,7 @@ public class DeleteTheMiddleNodeTests
     Output: [3,1]
     */
     ListNode head = ListFromArray([3, 2, 1]);
-    Assert.True(AssertListsAreEqual(ListFromArray([3, 1]), _solution.DeleteMiddle(head)));
+    AssertListsAreEqual(ListFromArray([3, 1]), _solution.DeleteMiddle(head));
   }
 
   [Fact]
@@ -80,10 +80,15 @@ public class DeleteTheMiddleNodeTests
     ListNode head = ListFromArray([1, 3, 4, 7, 1, 2, 6]);
     ListNode desiredOutput = ListFromArray([1, 3, 4, 1, 2, 6]);
     ListNode actualOutput = _solution.DeleteMiddle(head);
-    Assert.True(AssertListsAreEqual(desiredOutput, actualOutput));
+    AssertListsAreEqual(desiredOutput, actualOutput);
   }
 
-  private bool AssertListsAreEqual(ListNode head1, ListNode head2)
+  private void AssertListsAreEqual(ListNode head1, ListNode head2)
+  {
+    Assert.True(MatchLists(head1, head2));
+  }
+
+  private bool MatchLists(ListNode head1, ListNode head2)
   {
     if (head1 == null && head2 == null)
     {
@@ -97,7 +102,7 @@ public class DeleteTheMiddleNodeTests
 
     if (head1.val == head2.val)
     {
-      return AssertListsAreEqual(head1.next, head2.next);
+      return MatchLists(head1.next, head2.next);
     }
 
     return false;
