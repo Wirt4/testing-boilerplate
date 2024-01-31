@@ -28,30 +28,39 @@ public class DeleteTheMiddleNodeSolution
         }
         return count;
     }
+    private ListNode RemoveFirst()
+    {
+        return null;
+    }
+
+    private ListNode RemoveLast(ListNode head)
+    {
+        return new ListNode(head.val);
+    }
+
+    private ListNode RemoveMiddle(ListNode head, int length)
+    {
+        int halfwayMark = length / 2;
+        ListNode prev = head;
+        halfwayMark--;
+
+        while (halfwayMark > 1)
+        {
+            prev = prev.next;
+            halfwayMark--;
+        }
+
+        prev.next = prev.next.next;
+        return head;
+    }
     public ListNode DeleteMiddle(ListNode head)
     {
-        int count = getLength(head);
-        switch (count)
+        int length = getLength(head);
+        return length switch
         {
-            case 1:
-                return null;
-            case 2:
-                head.next = null;
-                break;
-            default:
-                int halfwayMark = count / 2;
-                ListNode prev = head;
-                halfwayMark--;
-
-                while (halfwayMark > 1)
-                {
-                    prev = prev.next;
-                    halfwayMark--;
-                }
-
-                prev.next = prev.next.next;
-                break;
-        }
-        return head;
+            1 => RemoveFirst(),
+            2 => RemoveLast(head),
+            _ => RemoveMiddle(head, length),
+        };
     }
 }
