@@ -27,6 +27,7 @@ public class DeleteTheMiddleNodeSolution
         }
         return count;
     }
+
     private ListNode RemoveFirst()
     {
         return null;
@@ -49,6 +50,7 @@ public class DeleteTheMiddleNodeSolution
         cur.next = cur.next.next;
         return head;
     }
+
     public ListNode DeleteMiddle(ListNode head)
     {
         int length = getLength(head);
