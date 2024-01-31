@@ -58,6 +58,18 @@ public class DeleteTheMiddleNodeTests
     Assert.True(AssertListsAreEqual(ListFromArray([1, 3]), _solution.DeleteMiddle(head)));
   }
 
+  [Fact]
+
+  public void ListOfSize3DifferentData()
+  {
+    /**
+    Input: head = [3,2,1]
+    Output: [3,1]
+    */
+    ListNode head = ListFromArray([3, 2, 1]);
+    Assert.True(AssertListsAreEqual(ListFromArray([3, 1]), _solution.DeleteMiddle(head)));
+  }
+
   private bool AssertListsAreEqual(ListNode head1, ListNode head2)
   {
     if (head1 == null && head2 == null)
