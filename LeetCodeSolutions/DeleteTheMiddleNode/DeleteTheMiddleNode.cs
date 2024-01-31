@@ -41,16 +41,15 @@ public class DeleteTheMiddleNodeSolution
     private ListNode RemoveMiddle(ListNode head, int length)
     {
         int halfwayMark = length / 2;
-        ListNode prev = head;
-        halfwayMark--;
+        ListNode cur = head;
 
         while (halfwayMark > 1)
         {
-            prev = prev.next;
+            cur = cur.next;
             halfwayMark--;
         }
 
-        prev.next = prev.next.next;
+        cur.next = cur.next.next;
         return head;
     }
     public ListNode DeleteMiddle(ListNode head)
