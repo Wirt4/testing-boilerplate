@@ -80,6 +80,7 @@ public class OddEvenLinkedListSolution
             }
             it.Advance();
         }
+
         return odds.Join(ref evens);
     }
 }
