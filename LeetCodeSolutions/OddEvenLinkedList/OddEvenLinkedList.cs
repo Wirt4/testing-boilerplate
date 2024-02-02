@@ -17,8 +17,19 @@ public class OddEvenLinkedListSolution
                 return;
             }
 
-            Tail.next = node;
-            Tail = Tail.next;
+            if (Tail != null)
+            {
+                Tail.next = node;
+                Tail = Tail.next;
+            }
+        }
+
+
+        public ListNode Join(ref ListWrapper listB)
+        {
+            Tail.next = listB.Head;
+            listB.Tail.next = null;
+            return Head;
         }
     }
 
@@ -50,13 +61,6 @@ public class OddEvenLinkedListSolution
 
         public ref ListNode CurrentNode => ref current;
     }
-
-    private ListNode join(ref ListWrapper listA, ref ListWrapper listB)
-    {
-        listA.Tail.next = listB.Head;
-        listB.Tail.next = null;
-        return listA.Head;
-    }
     public ListNode OddEvenList(ListNode head)
     {
         ListWrapper evens = new();
@@ -75,7 +79,6 @@ public class OddEvenLinkedListSolution
             }
             it.Advance();
         }
-
-        return join(ref odds, ref evens);
+        return odds.Join(ref evens);
     }
 }
