@@ -7,6 +7,20 @@ public class OddEvenLinkedListSolution
     {
         public ListNode Head;
         public ListNode Tail;
+
+        public void Add(ref ListNode node)
+        {
+            if (Head == null)
+            {
+                Head = node;
+                Tail = node;
+            }
+            else
+            {
+                Tail.next = node;
+                Tail = Tail.next;
+            }
+        }
     }
 
     public ListNode OddEvenList(ListNode head)
@@ -19,29 +33,11 @@ public class OddEvenLinkedListSolution
         {
             if (position % 2 == 0)
             {
-                if (evens.Head == null)
-                {
-                    evens.Head = head;
-                    evens.Tail = head;
-                }
-                else
-                {
-                    evens.Tail.next = head;
-                    evens.Tail = evens.Tail.next;
-                }
+                evens.Add(ref head);
             }
             else
             {
-                if (odds.Head == null)
-                {
-                    odds.Head = head;
-                    odds.Tail = head;
-                }
-                else
-                {
-                    odds.Tail.next = head;
-                    odds.Tail = odds.Tail.next;
-                }
+                odds.Add(ref head);
             }
 
             head = head.next;
