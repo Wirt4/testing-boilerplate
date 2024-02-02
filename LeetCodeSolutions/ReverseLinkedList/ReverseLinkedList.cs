@@ -1,15 +1,8 @@
-using System.Globalization;
-
 namespace LeetCodeSolutions;
 public class ReverseLinkedListSolution
 {
-    public ListNode ReverseList(ListNode head)
+    private Stack<ListNode> PushAllToStack(ListNode head)
     {
-        if (head == null || head.next == null)
-        {
-            return head;
-        }
-
         Stack<ListNode> nodeStack = new();
         ListNode cur = head;
 
@@ -19,18 +12,47 @@ public class ReverseLinkedListSolution
             cur = cur.next;
         }
 
-        ListNode returnHead = nodeStack.Pop();
-        returnHead.next = null;
-        ListNode tail = returnHead;
+        return nodeStack;
+    }
 
-        while (nodeStack.Count > 0)
+    private class ListWrapper
+    {
+        private readonly ListNode head;
+        private ListNode tail;
+        public ListWrapper(ListNode node)
         {
-            tail.next = nodeStack.Pop();
+            head = node;
+            head.next = null;
+            tail = head;
+        }
+
+        public void add(ListNode node)
+        {
+            tail.next = node;
             tail = tail.next;
         }
 
-        tail.next = null;
+        public ListNode Head()
+        {
+            tail.next = null;
+            return head;
+        }
+    }
+    public ListNode ReverseList(ListNode head)
+    {
+        if (head == null || head.next == null)
+        {
+            return head;
+        }
 
-        return returnHead;
+        Stack<ListNode> nodeStack = PushAllToStack(head);
+        ListWrapper reversedList = new(nodeStack.Pop());
+
+        while (nodeStack.Count > 0)
+        {
+            reversedList.add(nodeStack.Pop());
+        }
+
+        return reversedList.Head();
     }
 }
