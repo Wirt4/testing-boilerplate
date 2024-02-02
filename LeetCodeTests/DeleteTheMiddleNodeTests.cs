@@ -52,49 +52,12 @@ public class DeleteTheMiddleNodeTests
     CompareHeadToDesiredOutput([1, 2, 3, 4], [1, 2, 4]);
   }
 
+
   private void CompareHeadToDesiredOutput(int[] head, int[] output)
   {
-    ListNode input = ListFromArray(head);
-    ListNode desiredOutput = ListFromArray(output);
+    ListNode input = LinkedListTesting.ListFromArray(head);
+    ListNode desiredOutput = LinkedListTesting.ListFromArray(output);
     ListNode actualOutput = _solution.DeleteMiddle(input);
-    AssertListsAreEqual(desiredOutput, actualOutput);
-  }
-
-  private void AssertListsAreEqual(ListNode head1, ListNode head2)
-  {
-    Assert.True(MatchLists(head1, head2));
-  }
-
-  private bool MatchLists(ListNode head1, ListNode head2)
-  {
-    if (head1 == null && head2 == null)
-    {
-      return true;
-    }
-
-    if (head1 == null || head2 == null)
-    {
-      return false;
-    }
-
-    if (head1.val == head2.val)
-    {
-      return MatchLists(head1.next, head2.next);
-    }
-
-    return false;
-  }
-
-  private static ListNode ListFromArray(int[] arr)
-  {
-    ListNode head = new(arr[0]);
-    ListNode cur = head;
-    for (int i = 1; i < arr.Length; i++)
-    {
-      cur.next = new(arr[i]);
-      cur = cur.next;
-    }
-
-    return head;
+    LinkedListTesting.AssertListsAreEqual(desiredOutput, actualOutput);
   }
 }
