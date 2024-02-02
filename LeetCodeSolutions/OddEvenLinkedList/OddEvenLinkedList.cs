@@ -14,12 +14,11 @@ public class OddEvenLinkedListSolution
             {
                 Head = node;
                 Tail = node;
+                return;
             }
-            else
-            {
-                Tail.next = node;
-                Tail = Tail.next;
-            }
+
+            Tail.next = node;
+            Tail = Tail.next;
         }
     }
 
