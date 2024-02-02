@@ -25,10 +25,18 @@ public class OddEvenLinkedListSolution
         }
 
 
-        public ListNode Join(ref ListWrapper listB)
+        public ListNode? Join(ref ListWrapper additionalList)
         {
-            Tail.next = listB.Head;
-            listB.Tail.next = null;
+            if (Tail != null && additionalList.Head != null)
+            {
+                Tail.next = additionalList.Head;
+            }
+
+            if (additionalList.Tail != null)
+            {
+                additionalList.Tail.next = null;
+            }
+
             return Head;
         }
     }
