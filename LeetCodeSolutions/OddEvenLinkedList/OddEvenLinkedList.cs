@@ -51,6 +51,12 @@ public class OddEvenLinkedListSolution
         public ref ListNode CurrentNode => ref current;
     }
 
+    private ListNode join(ref ListWrapper listA, ref ListWrapper listB)
+    {
+        listA.Tail.next = listB.Head;
+        listB.Tail.next = null;
+        return listA.Head;
+    }
     public ListNode OddEvenList(ListNode head)
     {
         ListWrapper evens = new();
@@ -70,8 +76,6 @@ public class OddEvenLinkedListSolution
             it.Advance();
         }
 
-        odds.Tail.next = evens.Head;
-        evens.Tail.next = null;
-        return odds.Head;
+        return join(ref odds, ref evens);
     }
 }
