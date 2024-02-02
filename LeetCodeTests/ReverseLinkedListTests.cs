@@ -24,8 +24,13 @@ public class ReverseLinkedListTests
   [Fact]
   public void Example2()
   {
-    ListNode input = LinkedListTesting.ListFromArray([1, 2]);
-    ListNode expectedAnswer = LinkedListTesting.ListFromArray([2, 1]);
-    LinkedListTesting.AssertListsAreEqual(_solution.ReverseList(input), expectedAnswer);
+    Compare([1, 2], [2, 1]);
+  }
+
+  private void Compare(int[] input, int[] expected)
+  {
+    ListNode argument = LinkedListTesting.ListFromArray(input);
+    ListNode expectedAnswer = LinkedListTesting.ListFromArray(expected);
+    LinkedListTesting.AssertListsAreEqual(_solution.ReverseList(argument), expectedAnswer);
   }
 }
