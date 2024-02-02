@@ -41,15 +41,10 @@ public class OddEvenLinkedListSolution
         }
     }
 
-    private class ListIterator
+    private class ListIterator(ListNode head)
     {
-        private int position;
-        private ListNode current;
-        public ListIterator(ListNode head)
-        {
-            current = head;
-            position = 1;
-        }
+        private int position = 1;
+        private ListNode current = head;
 
         public bool PositionIsEven()
         {
