@@ -3,42 +3,44 @@ using System.Diagnostics.Tracing;
 namespace LeetCodeSolutions;
 public class OddEvenLinkedListSolution
 {
-
+    private class ListWrapper
+    {
+        public ListNode Head;
+        public ListNode Tail;
+    }
 
     public ListNode OddEvenList(ListNode head)
     {
         int position = 1;
-        ListNode? evensHead = null;
-        ListNode? evensTail = null;
-        ListNode? oddsHead = null;
-        ListNode? oddsTail = null;
+        ListWrapper evens = new();
+        ListWrapper odds = new();
 
         while (head != null)
         {
             if (position % 2 == 0)
             {
-                if (evensHead == null)
+                if (evens.Head == null)
                 {
-                    evensHead = head;
-                    evensTail = head;
+                    evens.Head = head;
+                    evens.Tail = head;
                 }
                 else
                 {
-                    evensTail.next = head;
-                    evensTail = evensTail.next;
+                    evens.Tail.next = head;
+                    evens.Tail = evens.Tail.next;
                 }
             }
             else
             {
-                if (oddsHead == null)
+                if (odds.Head == null)
                 {
-                    oddsHead = head;
-                    oddsTail = head;
+                    odds.Head = head;
+                    odds.Tail = head;
                 }
                 else
                 {
-                    oddsTail.next = head;
-                    oddsTail = oddsTail.next;
+                    odds.Tail.next = head;
+                    odds.Tail = odds.Tail.next;
                 }
             }
 
@@ -46,9 +48,9 @@ public class OddEvenLinkedListSolution
             position++;
         }
 
-        oddsTail.next = evensHead;
-        evensTail.next = null;
-        return oddsHead;
+        odds.Tail.next = evens.Head;
+        evens.Tail.next = null;
+        return odds.Head;
 
 
     }
