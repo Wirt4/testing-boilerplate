@@ -1,11 +1,15 @@
 namespace Tests;
 using LeetCodeSolutions;
- public class ReverseLinkedListTests {
+public class ReverseLinkedListTests
+{
   private ReverseLinkedListSolution _solution;
-  public ReverseLinkedListTests (){
-      _solution = new();
+  public ReverseLinkedListTests()
+  {
+    _solution = new();
   }
   [Fact]
-  public void Test1(){
+  public void ZeroNodes()
+  {
+    Assert.Null(_solution.ReverseList(null));
   }
 }
