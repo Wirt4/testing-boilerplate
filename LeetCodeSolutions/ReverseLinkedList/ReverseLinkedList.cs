@@ -26,7 +26,7 @@ public class ReverseLinkedListSolution
             tail = head;
         }
 
-        public void add(ListNode node)
+        public void Add(ListNode node)
         {
             tail.next = node;
             tail = tail.next;
@@ -50,7 +50,7 @@ public class ReverseLinkedListSolution
 
         while (nodeStack.Count > 0)
         {
-            reversedList.add(nodeStack.Pop());
+            reversedList.Add(nodeStack.Pop());
         }
 
         return reversedList.Head();
