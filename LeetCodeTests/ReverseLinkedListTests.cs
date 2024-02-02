@@ -1,5 +1,6 @@
 namespace Tests;
 using LeetCodeSolutions;
+using Microsoft.VisualBasic;
 using Tests;
 public class ReverseLinkedListTests
 {
@@ -18,5 +19,13 @@ public class ReverseLinkedListTests
   {
     ListNode node = new(4);
     LinkedListTesting.AssertListsAreEqual(_solution.ReverseList(node), node);
+  }
+
+  [Fact]
+  public void Example2()
+  {
+    ListNode input = LinkedListTesting.ListFromArray([1, 2]);
+    ListNode expectedAnswer = LinkedListTesting.ListFromArray([2, 1]);
+    LinkedListTesting.AssertListsAreEqual(_solution.ReverseList(input), expectedAnswer);
   }
 }
