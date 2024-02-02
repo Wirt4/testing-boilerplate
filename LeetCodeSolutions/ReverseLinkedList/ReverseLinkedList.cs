@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace LeetCodeSolutions;
 public class ReverseLinkedListSolution
 {
@@ -8,15 +10,27 @@ public class ReverseLinkedListSolution
             return head;
         }
 
-        ListNode reversedList = ReverseList(head.next);
-        head.next = null;
-        ListNode tail = reversedList;
-        while (tail != null && tail.next != null)
+        Stack<ListNode> nodeStack = new();
+        ListNode cur = head;
+
+        while (cur != null)
         {
+            nodeStack.Push(cur);
+            cur = cur.next;
+        }
+
+        ListNode returnHead = nodeStack.Pop();
+        returnHead.next = null;
+        ListNode tail = returnHead;
+
+        while (nodeStack.Count > 0)
+        {
+            tail.next = nodeStack.Pop();
             tail = tail.next;
         }
-        tail.next = head;
 
-        return reversedList;
+        tail.next = null;
+
+        return returnHead;
     }
 }
