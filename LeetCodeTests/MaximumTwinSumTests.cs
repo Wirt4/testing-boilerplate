@@ -9,7 +9,7 @@ public class MaximumTwinSumTests
   }
 
   [Fact]
-  public void Test1()
+  public void BasicCase()
   {
     ListNode basicInput = LinkedListTesting.ListFromArray([1, 2]);
     Assert.Equal(3, _solution.PairSum(basicInput));

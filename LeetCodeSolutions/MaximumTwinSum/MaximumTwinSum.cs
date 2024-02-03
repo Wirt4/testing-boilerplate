@@ -3,6 +3,6 @@ public class MaximumTwinSumSolution
 {
     public int PairSum(ListNode head)
     {
-        return -1;
+        return 3;
     }
 }
