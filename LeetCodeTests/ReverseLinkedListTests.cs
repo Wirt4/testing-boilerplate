@@ -27,6 +27,12 @@ public class ReverseLinkedListTests
     Compare([1, 2], [2, 1]);
   }
 
+  [Fact]
+  public void Example1()
+  {
+    Compare([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]);
+  }
+
   private void Compare(int[] input, int[] expected)
   {
     ListNode argument = LinkedListTesting.ListFromArray(input);
