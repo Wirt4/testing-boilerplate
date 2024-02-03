@@ -3,6 +3,9 @@ public class MaximumTwinSumSolution
 {
     public int PairSum(ListNode head)
     {
-        return 3;
+        int sum = head.val;
+        head = head.next;
+        sum += head.val;
+        return sum;
     }
 }
