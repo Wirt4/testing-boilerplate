@@ -1,7 +1,7 @@
 namespace LeetCodeSolutions;
 public class ReverseLinkedListSolution
 {
-    private Stack<ListNode> PushAllToStack(ListNode head)
+    private static Stack<ListNode> PushAllToStack(ListNode head)
     {
         Stack<ListNode> nodeStack = new();
         ListNode cur = head;
@@ -38,6 +38,7 @@ public class ReverseLinkedListSolution
             return head;
         }
     }
+
     public ListNode ReverseList(ListNode head)
     {
         if (head == null || head.next == null)

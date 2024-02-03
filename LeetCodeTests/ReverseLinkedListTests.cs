@@ -9,11 +9,13 @@ public class ReverseLinkedListTests
   {
     _solution = new();
   }
+
   [Fact]
   public void ZeroNodes()
   {
     Assert.Null(_solution.ReverseList(null));
   }
+
   [Fact]
   public void OneNode()
   {
