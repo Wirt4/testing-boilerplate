@@ -11,14 +11,18 @@ public class MaximumTwinSumTests
   [Fact]
   public void BasicCase()
   {
-    ListNode basicInput = LinkedListTesting.ListFromArray([1, 2]);
-    Assert.Equal(3, _solution.PairSum(basicInput));
+    PairSumTest(3, [1, 2]);
   }
 
   [Fact]
   public void Example3()
   {
-    ListNode basicInput = LinkedListTesting.ListFromArray([1, 100000]);
-    Assert.Equal(100000, _solution.PairSum(basicInput));
+    PairSumTest(100001, [1, 100000]);
+  }
+
+  private void PairSumTest(int Output, int[] ListValues)
+  {
+    ListNode valuesAsList = LinkedListTesting.ListFromArray(ListValues);
+    Assert.Equal(Output, _solution.PairSum(valuesAsList));
   }
 }
