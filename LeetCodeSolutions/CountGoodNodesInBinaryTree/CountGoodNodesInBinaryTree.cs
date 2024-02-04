@@ -1,6 +1,10 @@
 namespace LeetCodeSolutions;
 public class CountGoodNodesInBinaryTreeSolution
 {
+    private int RecursiveSumCall(TreeNode node, int maximum)
+    {
+        return NumberOfGoodNodes(node.left, maximum) + NumberOfGoodNodes(node.right, maximum);
+    }
     private int NumberOfGoodNodes(TreeNode node, int currentPathMaximum)
     {
         if (node == null)
@@ -10,10 +14,10 @@ public class CountGoodNodesInBinaryTreeSolution
 
         if (node.val >= currentPathMaximum)
         {
-            return 1 + NumberOfGoodNodes(node.left, node.val) + NumberOfGoodNodes(node.right, node.val);
+            return 1 + RecursiveSumCall(node, node.val);
         }
 
-        return NumberOfGoodNodes(node.left, currentPathMaximum) + NumberOfGoodNodes(node.right, currentPathMaximum);
+        return RecursiveSumCall(node, currentPathMaximum);
     }
     public int GoodNodes(TreeNode root)
     {
