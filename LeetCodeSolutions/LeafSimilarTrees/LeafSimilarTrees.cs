@@ -18,6 +18,7 @@ public class LeafSimilarTreesSolution
             {
                 return;
             }
+
             if (node.left == null && node.right == null)
             {
                 treeLeaves.Add(node.val);
@@ -31,13 +32,13 @@ public class LeafSimilarTreesSolution
         public List<int> TreeLeaves => treeLeaves;
     }
 
-
     private int[] GetValueSequence(TreeNode node)
     {
         TreeWrapper wrapper = new TreeWrapper(node);
         wrapper.GetValueSequence();
         return wrapper.TreeLeaves.ToArray();
     }
+
     public bool LeafSimilar(TreeNode root1, TreeNode root2)
     {
         int[] root1ValueSequence = GetValueSequence(root1);
