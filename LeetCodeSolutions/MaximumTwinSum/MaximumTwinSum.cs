@@ -1,52 +1,64 @@
 namespace LeetCodeSolutions;
 public class MaximumTwinSumSolution
 {
-    private int getCount(ListNode head)
+
+
+    private class ListWrapper
     {
-        int count = 0;
-        while (head != null)
+        private int[] array;
+        public int Size => array.Length;
+        public ListWrapper(ListNode head)
         {
-            count++;
-            head = head.next;
+            array = ListToArray(head);
         }
 
-        return count;
-    }
-    private int[] ListToArray(ListNode head)
-    {
-        if (head == null)
+        public int sumFromTwin(int ndex)
         {
-            return [];
+            if (ndex >= 0 && ndex <= (array.Length / 2) - 1)
+            {
+                int twindex = array.Length - 1 - ndex;
+                return array[ndex] + array[twindex];
+            }
+            return -1;
         }
-        int length = getCount(head);
-        int[] returnArr = new int[length];
-        int ndx = 0;
-        while (head != null)
-        {
-            returnArr[ndx] = head.val;
-            ndx++;
-            head = head.next;
-        }
-        return returnArr;
-    }
 
-    private int sumFromTwin(int ndex, int[] arr)
-    {
-        if (ndex >= 0 && ndex <= (arr.Length / 2) - 1)
+        private int[] ListToArray(ListNode head)
         {
-            int twindex = arr.Length - 1 - ndex;
-            return arr[ndex] + arr[twindex];
+            if (head == null)
+            {
+                return [];
+            }
+            int length = getCount(head);
+            int[] returnArr = new int[length];
+            int ndx = 0;
+            while (head != null)
+            {
+                returnArr[ndx] = head.val;
+                ndx++;
+                head = head.next;
+            }
+            return returnArr;
         }
-        return -1;
+        private int getCount(ListNode head)
+        {
+            int count = 0;
+            while (head != null)
+            {
+                count++;
+                head = head.next;
+            }
+
+            return count;
+        }
     }
 
     public int PairSum(ListNode head)
     {
-        int[] arr = ListToArray(head);
+        ListWrapper wrapper = new(head);
         int sum = 0;
-        for (int i = 0; i < arr.Length; i++)
+        for (int i = 0; i < wrapper.Size; i++)
         {
-            int currentSum = sumFromTwin(i, arr);
+            int currentSum = wrapper.sumFromTwin(i);
             if (currentSum > sum)
             {
                 sum = currentSum;
