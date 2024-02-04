@@ -30,6 +30,8 @@ public class LeafSimilarTreesSolution
 
         public List<int> TreeLeaves => treeLeaves;
     }
+
+
     private int[] GetValueSequence(TreeNode node)
     {
         TreeWrapper wrapper = new TreeWrapper(node);
