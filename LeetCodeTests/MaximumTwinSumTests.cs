@@ -21,6 +21,12 @@ public class MaximumTwinSumTests
   }
 
   [Fact]
+  public void Example2()
+  {
+    PairSumTest(7, [4, 2, 2, 3]);
+  }
+
+  [Fact]
   public void Example3()
   {
     PairSumTest(100001, [1, 100000]);
