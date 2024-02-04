@@ -14,21 +14,18 @@ public class LeafSimilarTreesSolution
 
         private void PopulateTreeLeaves(TreeNode node)
         {
+            if (node == null)
+            {
+                return;
+            }
             if (node.left == null && node.right == null)
             {
                 treeLeaves.Add(node.val);
                 return;
             }
 
-            if (node.left != null)
-            {
-                PopulateTreeLeaves(node.left);
-            }
-
-            if (node.right != null)
-            {
-                PopulateTreeLeaves(node.right);
-            }
+            PopulateTreeLeaves(node.left);
+            PopulateTreeLeaves(node.right);
         }
 
         public List<int> TreeLeaves => treeLeaves;
