@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace LeetCodeSolutions;
 public class MaximumTwinSumSolution
 {
@@ -19,40 +21,20 @@ public class MaximumTwinSumSolution
                 return -1;
             }
 
-            int twindex = array.Length - 1 - ndex;
-            return array[ndex] + array[twindex];
+            return array[ndex] + array[array.Length - 1 - ndex];
         }
 
-        private int[] ListToArray(ListNode head)
+        private static int[] ListToArray(ListNode head)
         {
-            if (head == null)
-            {
-                return [];
-            }
+            List<int> arrList = new();
 
-            int length = getCount(head);
-            int[] returnArr = new int[length];
-
-            int ndx = 0;
             while (head != null)
             {
-                returnArr[ndx] = head.val;
-                ndx++;
+                arrList.Add(head.val);
                 head = head.next;
             }
 
-            return returnArr;
-        }
-        private int getCount(ListNode head)
-        {
-            int count = 0;
-            while (head != null)
-            {
-                count++;
-                head = head.next;
-            }
-
-            return count;
+            return [.. arrList];
         }
     }
 
