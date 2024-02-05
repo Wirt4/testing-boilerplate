@@ -3,17 +3,17 @@ public class PathSumIIISolution
 {
     private class TreeSearcher
     {
-        private int _numPaths;
-        private readonly Dictionary<int, int> _cache;
+        private int _numberOfMatchingPaths;
+        private readonly Dictionary<int, int> _frequencyOfSums;
         public TreeSearcher()
         {
-            _numPaths = 0;
-            _cache = new()
+            _numberOfMatchingPaths = 0;
+            _frequencyOfSums = new()
             {
                 { 0, 1 }
             };
         }
-        public int NumberOfPaths => _numPaths;
+        public int NumberOfPaths => _numberOfMatchingPaths;
         private void TraverseMemoized(TreeNode node, int targetSum, int currentPathSum)
         {
             if (node == null)
@@ -22,24 +22,24 @@ public class PathSumIIISolution
             }
             currentPathSum += node.val;
             int oldPathSum = currentPathSum - targetSum;
-            if (_cache.ContainsKey(oldPathSum))
+            if (_frequencyOfSums.TryGetValue(oldPathSum, out int oldValue))
             {
-                _numPaths += _cache[oldPathSum];
+                _numberOfMatchingPaths += oldValue;
             }
 
-            if (_cache.ContainsKey(currentPathSum))
+            if (_frequencyOfSums.TryGetValue(currentPathSum, out int newValue))
             {
-                _cache[currentPathSum]++;
+                _frequencyOfSums[currentPathSum] = ++newValue;
             }
             else
             {
-                _cache.Add(currentPathSum, 1);
+                _frequencyOfSums.Add(currentPathSum, 1);
             }
 
             TraverseMemoized(node.left, targetSum, currentPathSum);
             TraverseMemoized(node.right, targetSum, currentPathSum);
 
-            _cache[currentPathSum]--;
+            _frequencyOfSums[currentPathSum]--;
         }
         public void TraverseTree(TreeNode node, int targetSum)
         {
