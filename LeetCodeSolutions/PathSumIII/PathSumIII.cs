@@ -1,42 +1,29 @@
 namespace LeetCodeSolutions;
 public class PathSumIIISolution
 {
-    private enum Comparison
-    {
-        Equal,
-        GreaterThan,
-        LessThan
-    }
+
     private class TreeWrapper(int targetSum)
     {
         private readonly int _targetSum = targetSum;
 
-        private Comparison CompareValues(int currentVal)
-        {
-            if (currentVal > _targetSum) return Comparison.GreaterThan;
-
-            if (currentVal == _targetSum) return Comparison.Equal;
-
-            return Comparison.LessThan;
-        }
-
         private int RecursiveSum(TreeNode node, int parentSum = 0)
         {
-            return NumberOfTargetSums(node.left, parentSum) + NumberOfTargetSums(node.right, parentSum);
+            int leftSums = NumberOfTargetSums(node.left, parentSum);
+            int rightSums = NumberOfTargetSums(node.right, parentSum);
+            return leftSums + rightSums;
         }
 
-        public int NumberOfTargetSums(TreeNode node, int parentSum = 0)
+        public int NumberOfTargetSums(TreeNode node, int runningSum = 0)
         {
-            if (node == null) return 0;
-
-            int currentVal = node.val + parentSum;
-            int sumsFromCurrent = RecursiveSum(node);
-
-            return CompareValues(currentVal) switch
+            if (node == null)
             {
-                Comparison.Equal => sumsFromCurrent + 1,
-                _ => sumsFromCurrent + RecursiveSum(node, currentVal),
-            };
+                return 0;
+            }
+
+            runningSum += node.val;
+            int sumsFromCurrent = RecursiveSum(node);
+            sumsFromCurrent += runningSum == _targetSum ? 1 : RecursiveSum(node, runningSum);
+            return sumsFromCurrent;
         }
     }
     public int PathSum(TreeNode root, int targetSum)
