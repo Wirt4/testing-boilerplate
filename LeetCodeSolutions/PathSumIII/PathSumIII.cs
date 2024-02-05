@@ -59,14 +59,7 @@ public class PathSumIIISolution
         }
         public void TraverseTree(TreeNode node, int targetSum)
         {
-            if (node == null)
-            {
-                return;
-            }
-
-            SearchForSum(node, targetSum);
-            TraverseTree(node.left, targetSum);
-            TraverseTree(node.right, targetSum);
+            _TraverseMemoized(node, targetSum, 0);
         }
     }
     public int PathSum(TreeNode root, int targetSum)
