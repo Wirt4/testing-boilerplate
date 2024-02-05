@@ -15,10 +15,12 @@ public class PathSumIIISolution
             {
                 return;
             }
+
             if (node.val == targetSum)
             {
                 _numPaths++;
             }
+
             int adjustedSum = targetSum - node.val;
             TestAsRoot(node.left, adjustedSum);
             TestAsRoot(node.right, adjustedSum);
