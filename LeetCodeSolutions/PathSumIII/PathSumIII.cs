@@ -1,39 +1,25 @@
 namespace LeetCodeSolutions;
 public class PathSumIIISolution
 {
+    private int RecursiveCall(TreeNode node, int targetSum, int currentSum = 0)
+    {
+        return PathSum(node.left, targetSum) + PathSum(node.right, targetSum, currentSum);
+    }
 
     public int PathSum(TreeNode root, int targetSum, int currentSum = 0)
     {
         //base case
         if (root != null)
         {
-            if (root.val == targetSum)
+            if (root.val == targetSum || root.val + currentSum == targetSum)
             {
-                return 1 + PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
+                return 1 + RecursiveCall(root, targetSum);
             }
-
-            //root < 0, target <0 and currentSum < 0
-            if (root.val < 0 && targetSum < 0 && currentSum < 0)
+            if (currentSum == 0)
             {
-                if (root.val < targetSum)
-                {
-                    return PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
-                }
+                return RecursiveCall(root, targetSum) + RecursiveCall(root, targetSum, root.val);
             }
-
-            //root < 0 target <0 and currentSum >=0
-
-            //root < 0 target >=0 and currentSum <0
-
-            //root < 0 target >=0 and currentSum >=0
-
-            //root >=0, target <0 and currentSum <0
-
-            //root >=0 target <0 and currentSum >=0
-
-            //root >=0 target >=0 and currentSum <0
-            //root >=0, target >=0 and currentSum >=0
-
+            return RecursiveCall(root, targetSum) + RecursiveCall(root, targetSum, root.val) + RecursiveCall(root, targetSum, root.val + currentSum);
         }
         return 0;
     }
