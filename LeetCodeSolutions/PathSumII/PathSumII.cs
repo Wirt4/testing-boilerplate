@@ -16,6 +16,7 @@ public class PathSumIISolution
         return node == null;
     }
 
+
     private bool IsLastNodeInPath(TreeNode node)
     {
         return IsNull(node.left) && IsNull(node.right);
