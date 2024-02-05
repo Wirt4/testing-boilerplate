@@ -6,8 +6,8 @@ public class PathSumIIISolution
     private class TreeSearcher
     {
         private int _numberOfMatchingPaths;
-        private readonly Dictionary<int, int> _frequencyOfSums;
-        private readonly int _targetSum;
+        private readonly Dictionary<long, int> _frequencyOfSums;
+        private readonly long _targetSum;
         public TreeSearcher(int targetSum)
         {
             _targetSum = targetSum;
@@ -19,14 +19,14 @@ public class PathSumIIISolution
             };
         }
         public int NumberOfPaths => _numberOfMatchingPaths;
-        private void Lookup(int sum)
+        private void Lookup(long sum)
         {
             if (_frequencyOfSums.TryGetValue(sum, out int value))
             {
                 _numberOfMatchingPaths += value;
             }
         }
-        private void Add(int sum)
+        private void Add(long sum)
         {
             if (_frequencyOfSums.TryGetValue(sum, out int value))
             {
@@ -37,11 +37,11 @@ public class PathSumIIISolution
             _frequencyOfSums.Add(sum, 1);
 
         }
-        private void Remove(int sum)
+        private void Remove(long sum)
         {
             _frequencyOfSums[sum]--;
         }
-        private void TraverseMemoized(TreeNode node, int currentPathSum)
+        private void TraverseMemoized(TreeNode node, long currentPathSum)
         {
             if (node == null)
             {
