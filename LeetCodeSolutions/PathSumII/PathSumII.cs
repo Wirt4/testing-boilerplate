@@ -25,8 +25,8 @@ namespace LeetCodeSolutions
 
         public IList<IList<int>> PathSum(TreeNode root, int targetSum)
         {
-            IList<IList<int>> result = new List<IList<int>>();
-            GetAllPaths(root, targetSum, new List<int>(), result);
+            IList<IList<int>> result = [];
+            GetAllPaths(root, targetSum, [], result);
             return result;
         }
     }
