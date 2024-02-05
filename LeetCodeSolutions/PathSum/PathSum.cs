@@ -9,13 +9,14 @@ public class PathSumSolution
             return false;
         }
 
+        runningSum += root.val;
         //is leaf
         if (root.left == null && root.right == null)
         {
-            return targetSum == runningSum + root.val;
+            return targetSum == runningSum;
         }
 
-        runningSum += root.val;
+
 
         //make the recursive call
         return HasPathSum(root.left, targetSum, runningSum) || HasPathSum(root.right, targetSum, runningSum);
