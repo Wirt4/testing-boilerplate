@@ -1,62 +1,44 @@
 namespace LeetCodeSolutions;
 public class PathSumIIISolution
 {
-    private static bool IsAtEnd(TreeNode node)
+    private class TreeSearcher
     {
-        return node.left == null && node.right == null;
-    }
-
-    private void RemoveLastElement(ref List<int> path)
-    {
-        path.RemoveAt(path.Count - 1);
-    }
-
-    private int NumberOfSums(IList<int> path, int targetSum)
-    {
-        int sums = 0;
-        for (int i = 0; i < path.Count; i++)
+        private int _numPaths;
+        public TreeSearcher()
         {
-            int currentSum = 0;
-            for (int j = i; j < path.Count; j++)
+            _numPaths = 0;
+        }
+        public int NumberOfPaths => _numPaths;
+        private void TestAsRoot(TreeNode node, int targetSum)
+        {
+            if (node == null)
             {
-                currentSum += path[j];
-                if (currentSum == targetSum)
-                {
-                    sums++;
-                }
+                return;
             }
+            if (node.val == targetSum)
+            {
+                _numPaths++;
+            }
+            int adjustedSum = targetSum - node.val;
+            TestAsRoot(node.left, adjustedSum);
+            TestAsRoot(node.right, adjustedSum);
         }
-        return sums;
-    }
-    private void GetAllPaths(TreeNode node, List<int> currentPath, IList<IList<int>> result)
-    {
-        if (node == null)
+        public void DepthFirstSearch(TreeNode node, int targetSum)
         {
-            return;
+            if (node == null)
+            {
+                return;
+            }
+
+            TestAsRoot(node, targetSum);
+            DepthFirstSearch(node.left, targetSum);
+            DepthFirstSearch(node.right, targetSum);
         }
-
-        currentPath.Add(node.val);
-
-        if (IsAtEnd(node))
-        {
-            result.Add(new List<int>(currentPath));
-            RemoveLastElement(ref currentPath);
-            return;
-        }
-
-        GetAllPaths(node.left, currentPath, result);
-        GetAllPaths(node.right, currentPath, result);
-        RemoveLastElement(ref currentPath);
     }
     public int PathSum(TreeNode root, int targetSum)
     {
-        IList<IList<int>> allPaths = [];
-        GetAllPaths(root, [], allPaths);
-        int sums = 0;
-        foreach (IList<int> path in allPaths)
-        {
-            sums += NumberOfSums(path, targetSum);
-        }
-        return sums;
+        TreeSearcher searchWrapper = new();
+        searchWrapper.DepthFirstSearch(root, targetSum);
+        return searchWrapper.NumberOfPaths;
     }
 }
