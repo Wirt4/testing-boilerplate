@@ -18,8 +18,9 @@ namespace LeetCodeSolutions
             }
             else
             {
-                GetAllPaths(node.left, targetSum - node.val, currentPath, result);
-                GetAllPaths(node.right, targetSum - node.val, currentPath, result);
+                int adjustedSum = targetSum - node.val;
+                GetAllPaths(node.left, adjustedSum, currentPath, result);
+                GetAllPaths(node.right, adjustedSum, currentPath, result);
             }
 
             currentPath.RemoveAt(currentPath.Count - 1);
