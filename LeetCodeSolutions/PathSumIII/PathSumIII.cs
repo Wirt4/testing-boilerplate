@@ -1,3 +1,5 @@
+using System.Reflection.PortableExecutable;
+
 namespace LeetCodeSolutions;
 public class PathSumIIISolution
 {
@@ -10,6 +12,7 @@ public class PathSumIIISolution
         {
             _targetSum = targetSum;
             _numberOfMatchingPaths = 0;
+            //there is always one path of sum zero, the null set so to speak
             _frequencyOfSums = new()
             {
                 { 0, 1 }
@@ -30,8 +33,13 @@ public class PathSumIIISolution
                 _frequencyOfSums[sum] = ++value;
                 return;
             }
+
             _frequencyOfSums.Add(sum, 1);
 
+        }
+        private void Remove(int sum)
+        {
+            _frequencyOfSums[sum]--;
         }
         private void TraverseMemoized(TreeNode node, int currentPathSum)
         {
@@ -45,7 +53,7 @@ public class PathSumIIISolution
             Add(currentPathSum);
             TraverseMemoized(node.left, currentPathSum);
             TraverseMemoized(node.right, currentPathSum);
-            _frequencyOfSums[currentPathSum]--;
+            Remove(currentPathSum);
         }
         public void TraverseTree(TreeNode node)
         {
