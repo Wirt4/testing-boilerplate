@@ -16,6 +16,23 @@ public class PathSumIIISolution
             };
         }
         public int NumberOfPaths => _numberOfMatchingPaths;
+        private void Lookup(int sum)
+        {
+            if (_frequencyOfSums.TryGetValue(sum, out int value))
+            {
+                _numberOfMatchingPaths += value;
+            }
+        }
+        private void Add(int sum)
+        {
+            if (_frequencyOfSums.TryGetValue(sum, out int value))
+            {
+                _frequencyOfSums[sum] = ++value;
+                return;
+            }
+            _frequencyOfSums.Add(sum, 1);
+
+        }
         private void TraverseMemoized(TreeNode node, int currentPathSum)
         {
             if (node == null)
@@ -24,25 +41,10 @@ public class PathSumIIISolution
             }
 
             currentPathSum += node.val;
-            int oldPathSum = currentPathSum - _targetSum;
-            //lookup sum
-            if (_frequencyOfSums.TryGetValue(oldPathSum, out int oldValue))
-            {
-                _numberOfMatchingPaths += oldValue;
-            }
-            //add sum
-            if (_frequencyOfSums.TryGetValue(currentPathSum, out int newValue))
-            {
-                _frequencyOfSums[currentPathSum] = ++newValue;
-            }
-            else
-            {
-                _frequencyOfSums.Add(currentPathSum, 1);
-            }
-
+            Lookup(currentPathSum - _targetSum);
+            Add(currentPathSum);
             TraverseMemoized(node.left, currentPathSum);
             TraverseMemoized(node.right, currentPathSum);
-
             _frequencyOfSums[currentPathSum]--;
         }
         public void TraverseTree(TreeNode node)
