@@ -15,7 +15,36 @@ public class PathSumIISolution
             _current_path = [];
         }
 
-        public void Traverse() { }
+        private bool IsLeaf(TreeNode node)
+        {
+            return node.left == null && node.right == null;
+        }
+
+        private void _traverse(TreeNode? node, IList<int> currentPath)
+        {
+            //base case
+            if (node == null)
+            {
+                return;
+            }
+            currentPath.Add(node.val);
+
+            //if is leaf
+
+            if (IsLeaf(node))
+            {
+                _paths.Add(currentPath);
+                return;
+            }
+
+            _traverse(node.left, currentPath);
+            _traverse(node.right, currentPath);
+        }
+
+        public void Traverse()
+        {
+            _traverse(_node, []);
+        }
 
         public IList<IList<int>> Paths => _paths;
     }
@@ -49,7 +78,7 @@ public class PathSumIISolution
         {
             if (SumsUpToEqual(path, targetSum))
             {
-                SummedPaths.Append(path);
+                SummedPaths.Add(path);
             }
         }
         return SummedPaths;
