@@ -37,7 +37,7 @@ public class PathSumIIITests
         root.left.left.right = new(-2);
         root.left.right.right = new(1);
 
-        Assert.Equal(3, _solution.PathSum(root, 22));
+        Assert.Equal(3, _solution.PathSum(root, 8));
     }
 
 
