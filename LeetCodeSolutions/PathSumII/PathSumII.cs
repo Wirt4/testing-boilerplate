@@ -1,41 +1,46 @@
 
-using System.Collections;
-
 namespace LeetCodeSolutions;
 public class PathSumIISolution
 {
+    private List<List<int>> InsertValueToAll(int value, List<List<int>> paths)
+    {
+        foreach (List<int> path in paths)
+        {
+            path.Insert(0, value);
+        }
+        return paths;
+    }
+
+    private bool IsNull(TreeNode? node)
+    {
+        return node == null;
+    }
+
+    private bool IsLastNodeInPath(TreeNode node)
+    {
+        return IsNull(node.left) && IsNull(node.right);
+    }
     private List<List<int>> GetAllPaths(TreeNode? node)
     {
-        //base cases
-        if (node == null)
+        if (IsNull(node))
         {
             return [];
         }
 
-        if (node.left == null && node.right == null)
+        if (IsLastNodeInPath(node))
         {
-            //returning a path of one
             return [[node.val]];
         }
 
-        List<List<int>> leftPaths = GetAllPaths(node.left);
-        List<List<int>> rightPaths = GetAllPaths(node.right);
-        leftPaths.AddRange(rightPaths);
-        List<List<int>> allPaths = leftPaths;
-
-        foreach (List<int> path in allPaths)
-        {
-            path.Insert(0, node.val);
-        }
-
-        return allPaths;
-
-
+        List<List<int>> paths = GetAllPaths(node.left);
+        paths.AddRange(GetAllPaths(node.right));
+        return InsertValueToAll(node.val, paths);
     }
     public IList<IList<int>> PathSum(TreeNode root, int targetSum)
     {
         List<List<int>> allPaths = GetAllPaths(root);
         IList<IList<int>> sums = [];
+
         foreach (List<int> path in allPaths)
         {
             if (path.Sum() == targetSum)
@@ -43,6 +48,7 @@ public class PathSumIISolution
                 sums.Add(path);
             }
         }
+
         return sums;
     }
 }
