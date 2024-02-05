@@ -4,7 +4,7 @@ public class PathSumIIISolution
     private class TreeSearcher
     {
         private int _numPaths;
-        private Dictionary<int, int> _cache;
+        private readonly Dictionary<int, int> _cache;
         public TreeSearcher()
         {
             _numPaths = 0;
@@ -14,23 +14,7 @@ public class PathSumIIISolution
             };
         }
         public int NumberOfPaths => _numPaths;
-        private void SearchForSum(TreeNode node, int targetSum)
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-            if (node.val == targetSum)
-            {
-                _numPaths++;
-            }
-
-            int adjustedSum = targetSum - node.val;
-            SearchForSum(node.left, adjustedSum);
-            SearchForSum(node.right, adjustedSum);
-        }
-        private void _TraverseMemoized(TreeNode node, int targetSum, int currentPathSum)
+        private void TraverseMemoized(TreeNode node, int targetSum, int currentPathSum)
         {
             if (node == null)
             {
@@ -52,14 +36,14 @@ public class PathSumIIISolution
                 _cache.Add(currentPathSum, 1);
             }
 
-            _TraverseMemoized(node.left, targetSum, currentPathSum);
-            _TraverseMemoized(node.right, targetSum, currentPathSum);
+            TraverseMemoized(node.left, targetSum, currentPathSum);
+            TraverseMemoized(node.right, targetSum, currentPathSum);
 
             _cache[currentPathSum]--;
         }
         public void TraverseTree(TreeNode node, int targetSum)
         {
-            _TraverseMemoized(node, targetSum, 0);
+            TraverseMemoized(node, targetSum, 0);
         }
     }
     public int PathSum(TreeNode root, int targetSum)
