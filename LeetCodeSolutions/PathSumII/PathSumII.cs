@@ -6,7 +6,9 @@ namespace LeetCodeSolutions
         private void GetAllPaths(TreeNode? node, int targetSum, List<int> currentPath, IList<IList<int>> result)
         {
             if (node == null)
+            {
                 return;
+            }
 
             currentPath.Add(node.val);
 
