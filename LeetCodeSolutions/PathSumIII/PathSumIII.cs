@@ -34,7 +34,6 @@ public class PathSumIIISolution
 
             return CompareValues(currentVal) switch
             {
-                Comparison.GreaterThan => sumsFromCurrent,
                 Comparison.Equal => sumsFromCurrent + 1,
                 _ => sumsFromCurrent + RecursiveSum(node, currentVal),
             };
