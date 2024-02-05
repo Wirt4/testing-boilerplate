@@ -5,8 +5,10 @@ public class PathSumIIISolution
     {
         private int _numberOfMatchingPaths;
         private readonly Dictionary<int, int> _frequencyOfSums;
-        public TreeSearcher()
+        private readonly int _targetSum;
+        public TreeSearcher(int targetSum)
         {
+            _targetSum = targetSum;
             _numberOfMatchingPaths = 0;
             _frequencyOfSums = new()
             {
@@ -14,19 +16,21 @@ public class PathSumIIISolution
             };
         }
         public int NumberOfPaths => _numberOfMatchingPaths;
-        private void TraverseMemoized(TreeNode node, int targetSum, int currentPathSum)
+        private void TraverseMemoized(TreeNode node, int currentPathSum)
         {
             if (node == null)
             {
                 return;
             }
+
             currentPathSum += node.val;
-            int oldPathSum = currentPathSum - targetSum;
+            int oldPathSum = currentPathSum - _targetSum;
+            //lookup sum
             if (_frequencyOfSums.TryGetValue(oldPathSum, out int oldValue))
             {
                 _numberOfMatchingPaths += oldValue;
             }
-
+            //add sum
             if (_frequencyOfSums.TryGetValue(currentPathSum, out int newValue))
             {
                 _frequencyOfSums[currentPathSum] = ++newValue;
@@ -36,20 +40,20 @@ public class PathSumIIISolution
                 _frequencyOfSums.Add(currentPathSum, 1);
             }
 
-            TraverseMemoized(node.left, targetSum, currentPathSum);
-            TraverseMemoized(node.right, targetSum, currentPathSum);
+            TraverseMemoized(node.left, currentPathSum);
+            TraverseMemoized(node.right, currentPathSum);
 
             _frequencyOfSums[currentPathSum]--;
         }
-        public void TraverseTree(TreeNode node, int targetSum)
+        public void TraverseTree(TreeNode node)
         {
-            TraverseMemoized(node, targetSum, 0);
+            TraverseMemoized(node, 0);
         }
     }
     public int PathSum(TreeNode root, int targetSum)
     {
-        TreeSearcher searchWrapper = new();
-        searchWrapper.TraverseTree(root, targetSum);
+        TreeSearcher searchWrapper = new(targetSum);
+        searchWrapper.TraverseTree(root);
         return searchWrapper.NumberOfPaths;
     }
 }
