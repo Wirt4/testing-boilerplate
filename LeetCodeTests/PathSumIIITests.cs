@@ -40,5 +40,18 @@ public class PathSumIIITests
         Assert.Equal(3, _solution.PathSum(root, 8));
     }
 
+    [Fact]
+    public void BreakingTest1()
+    {
+        TreeNode root = new(1000000000);
+
+        root.left = new(1000000000);
+        root.left.left = new(294967296);
+        root.left.left.left = new(1000000000);
+        root.left.left.left.left = new(1000000000);
+        root.left.left.left.left.left = new(1000000000);
+
+        Assert.Equal(0, _solution.PathSum(root, 0));
+    }
 
 }
