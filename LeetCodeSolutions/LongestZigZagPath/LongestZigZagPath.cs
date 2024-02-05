@@ -1,57 +1,17 @@
 namespace LeetCodeSolutions;
 public class LongestZigZagPathSolution
 {
-    private enum Direction
+    private void Traverse(TreeNode node, ref int longestPath, int leftPath, int rightPath)
     {
-        Left,
-        Right
-    }
-    private int TraverseTree(TreeNode node, int longestZigZag)
-    {
-        if (node == null)
-        {
-            return longestZigZag;
-        }
-
-        int left = MaxZigZag(node, Direction.Left);
-        int right = MaxZigZag(node, Direction.Right);
-        int longestFromNode = left > right ? left : right;
-
-        if (longestFromNode > longestZigZag)
-        {
-            longestZigZag = longestFromNode;
-        }
-
-        int leftTraversal = TraverseTree(node.left, longestZigZag);
-        int rightTraversal = TraverseTree(node.right, longestZigZag);
-        return leftTraversal > rightTraversal ? leftTraversal : rightTraversal;
+        if (node == null) return;
+        longestPath = Math.Max(longestPath, Math.Max(leftPath, rightPath));
+        Traverse(node.left, ref longestPath, 0, leftPath + 1);
+        Traverse(node.right, ref longestPath, rightPath + 1, 0);
     }
     public int LongestZigZag(TreeNode root)
     {
-        return TraverseTree(root, 0);
-    }
-
-    private int MaxZigZag(TreeNode node, Direction direction)
-    {
-        if (node == null)
-        {
-            return 0;
-        }
-
-        if (direction == Direction.Left)
-        {
-            if (node.left == null)
-            {
-                return 0;
-            }
-            return 1 + MaxZigZag(node.left, Direction.Right);
-        }
-
-        if (node.right == null)
-        {
-            return 0;
-        }
-        return 1 + MaxZigZag(node.right, Direction.Left);
-
+        int longestZigZag = 0;
+        Traverse(root, ref longestZigZag, 0, 0);
+        return longestZigZag;
     }
 }
