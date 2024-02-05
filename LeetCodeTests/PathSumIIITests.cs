@@ -21,5 +21,24 @@ public class PathSumIIITests
         Assert.Equal(1, _solution.PathSum(root, 4));
     }
 
+    [Fact]
+    public void Example1()
+    {
+        TreeNode root = new TreeNode(10);
+
+        root.left = new(5);
+        root.right = new TreeNode(-3);
+
+        root.left.left = new(3);
+        root.left.right = new(2);
+        root.right.right = new(11);
+
+        root.left.left.left = new(3);
+        root.left.left.right = new(-2);
+        root.left.right.right = new(1);
+
+        Assert.Equal(3, _solution.PathSum(root, 22));
+    }
+
 
 }
