@@ -8,15 +8,16 @@ public class PathSumIIISolution
             return 0;
         }
         int currentVal = root.val + parentSum;
+        int sumFromCur = PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
         if (currentVal == targetSum)
         {
-            return 1 + PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
+            return 1 + sumFromCur;
         }
         if (currentVal > targetSum)
         {
-            return PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
+            return sumFromCur;
         }
-        return PathSum(root.left, targetSum, currentVal) + PathSum(root.right, targetSum, currentVal) + PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
+        return sumFromCur + PathSum(root.left, targetSum, currentVal) + PathSum(root.right, targetSum, currentVal);
 
     }
 }
