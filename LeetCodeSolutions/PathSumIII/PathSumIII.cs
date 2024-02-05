@@ -2,33 +2,39 @@ namespace LeetCodeSolutions;
 public class PathSumIIISolution
 {
 
-    private class TreeWrapper(int targetSum)
+    public int PathSum(TreeNode root, int targetSum, int currentSum = 0)
     {
-        private readonly int _targetSum = targetSum;
-
-        private int RecursiveSum(TreeNode node, int parentSum = 0)
+        //base case
+        if (root != null)
         {
-            int leftSums = NumberOfTargetSums(node.left, parentSum);
-            int rightSums = NumberOfTargetSums(node.right, parentSum);
-            return leftSums + rightSums;
-        }
-
-        public int NumberOfTargetSums(TreeNode node, int runningSum = 0)
-        {
-            if (node == null)
+            if (root.val == targetSum)
             {
-                return 0;
+                return 1 + PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
             }
 
-            runningSum += node.val;
-            int sumsFromCurrent = RecursiveSum(node);
-            sumsFromCurrent += runningSum == _targetSum ? 1 : RecursiveSum(node, runningSum);
-            return sumsFromCurrent;
+            //root < 0, target <0 and currentSum < 0
+            if (root.val < 0 && targetSum < 0 && currentSum < 0)
+            {
+                if (root.val < targetSum)
+                {
+                    return PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
+                }
+            }
+
+            //root < 0 target <0 and currentSum >=0
+
+            //root < 0 target >=0 and currentSum <0
+
+            //root < 0 target >=0 and currentSum >=0
+
+            //root >=0, target <0 and currentSum <0
+
+            //root >=0 target <0 and currentSum >=0
+
+            //root >=0 target >=0 and currentSum <0
+            //root >=0, target >=0 and currentSum >=0
+
         }
-    }
-    public int PathSum(TreeNode root, int targetSum)
-    {
-        TreeWrapper tree = new(targetSum);
-        return tree.NumberOfTargetSums(root);
+        return 0;
     }
 }
