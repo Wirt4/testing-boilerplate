@@ -12,13 +12,16 @@ public class LongestZigZagPathSolution
         {
             return longestZigZag;
         }
+
         int left = MaxZigZag(node, Direction.Left);
         int right = MaxZigZag(node, Direction.Right);
         int longestFromNode = left > right ? left : right;
+
         if (longestFromNode > longestZigZag)
         {
             longestZigZag = longestFromNode;
         }
+
         int leftTraversal = TraverseTree(node.left, longestZigZag);
         int rightTraversal = TraverseTree(node.right, longestZigZag);
         return leftTraversal > rightTraversal ? leftTraversal : rightTraversal;
@@ -35,25 +38,20 @@ public class LongestZigZagPathSolution
             return 0;
         }
 
-        if (direction == Direction.Left && node.left == null)
-        {
-            return 0;
-        }
-
-        if (direction == Direction.Right && node.right == null)
-        {
-            return 0;
-        }
-
         if (direction == Direction.Left)
         {
+            if (node.left == null)
+            {
+                return 0;
+            }
             return 1 + MaxZigZag(node.left, Direction.Right);
         }
 
-        if (direction == Direction.Right)
+        if (node.right == null)
         {
-            return 1 + MaxZigZag(node.right, Direction.Left);
+            return 0;
         }
-        return -1;
+        return 1 + MaxZigZag(node.right, Direction.Left);
+
     }
 }
