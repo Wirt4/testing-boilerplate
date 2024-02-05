@@ -20,6 +20,7 @@ public class PathSumSolution
 
         return HasPathSum(node.right, targetSum, runningSum);
     }
+
     public bool HasPathSum(TreeNode root, int targetSum, int runningSum = 0)
     {
         if (IsBaseCase(root))
