@@ -28,17 +28,16 @@ public class PathSumIISolution
                 return;
             }
             currentPath.Add(node.val);
-
-            //if is leaf
+            int[] p = [.. currentPath];
 
             if (IsLeaf(node))
             {
-                _paths.Add(currentPath);
+                _paths.Add(p);
                 return;
             }
 
-            _traverse(node.left, currentPath);
-            _traverse(node.right, currentPath);
+            _traverse(node.left, p);
+            _traverse(node.right, p);
         }
 
         public void Traverse()
