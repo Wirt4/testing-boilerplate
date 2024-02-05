@@ -24,5 +24,3 @@ Constraints:
     -1000 <= targetSum <= 1000
 
 https://leetcode.com/problems/path-sum-iii
-
-Note: doing binary tree problems without tests
