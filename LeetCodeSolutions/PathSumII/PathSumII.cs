@@ -12,6 +12,7 @@ namespace LeetCodeSolutions
         {
             path.RemoveAt(path.Count - 1);
         }
+
         private void GetAllPaths(TreeNode? node, int targetSum, List<int> currentPath, IList<IList<int>> result)
         {
             if (node == null)
