@@ -3,6 +3,6 @@ public class PathSumIISolution
 {
     public IList<IList<int>> PathSum(TreeNode root, int targetSum)
     {
-        return [[4]];
+        return [];
     }
 }
