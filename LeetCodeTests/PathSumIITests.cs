@@ -31,16 +31,15 @@ public class PathSumIITests
     root.right = new(8);
 
     root.left.left = new(11);
-
     root.right.left = new(13);
     root.right.right = new(4);
 
     root.left.left.left = new(7);
     root.left.left.right = new(2);
-
-
     root.right.right.left = new(5);
-    root.right.right.left = new(1);
-    Assert.Equal([[5, 4, 11, 2], [5, 8, 4, 5]], _solution.PathSum(root, 22));
+    root.right.right.right = new(1);
+
+
+    ; Assert.Equal([[5, 4, 11, 2], [5, 8, 4, 5]], _solution.PathSum(root, 22));
   }
 }

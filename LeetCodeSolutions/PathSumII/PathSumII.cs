@@ -1,85 +1,48 @@
-using System.Runtime.CompilerServices;
+
+using System.Collections;
 
 namespace LeetCodeSolutions;
 public class PathSumIISolution
 {
-    private class TreeWrapper
+    private List<List<int>> GetAllPaths(TreeNode? node)
     {
-        private TreeNode _node;
-        private IList<IList<int>> _paths;
-        private IList<int> _current_path;
-        public TreeWrapper(TreeNode node)
+        //base cases
+        if (node == null)
         {
-            _node = node;
-            _paths = [];
-            _current_path = [];
+            return [];
         }
 
-        private bool IsLeaf(TreeNode node)
+        if (node.left == null && node.right == null)
         {
-            return node.left == null && node.right == null;
+            //returning a path of one
+            return [[node.val]];
         }
 
-        private void _traverse(TreeNode? node, IList<int> currentPath)
+        List<List<int>> leftPaths = GetAllPaths(node.left);
+        List<List<int>> rightPaths = GetAllPaths(node.right);
+        leftPaths.AddRange(rightPaths);
+        List<List<int>> allPaths = leftPaths;
+
+        foreach (List<int> path in allPaths)
         {
-            //base case
-            if (node == null)
-            {
-                return;
-            }
-            currentPath.Add(node.val);
-            int[] p = [.. currentPath];
-
-            if (IsLeaf(node))
-            {
-                _paths.Add(p);
-                return;
-            }
-
-            _traverse(node.left, p);
-            _traverse(node.right, p);
+            path.Insert(0, node.val);
         }
 
-        public void Traverse()
-        {
-            _traverse(_node, []);
-        }
+        return allPaths;
 
-        public IList<IList<int>> Paths => _paths;
-    }
-    private IList<IList<int>> GetAllPaths(TreeNode node)
-    {
-        TreeWrapper wrapper = new(node);
-        wrapper.Traverse();
-        return wrapper.Paths;
 
-    }
-
-    private bool SumsUpToEqual(IList<int> path, int targetSum)
-    {
-        int sum = 0;
-        foreach (int nodeValue in path)
-        {
-            if (sum > targetSum)
-            {
-                return false;
-            }
-            sum += nodeValue;
-        }
-
-        return sum == targetSum;
     }
     public IList<IList<int>> PathSum(TreeNode root, int targetSum)
     {
-        IList<IList<int>> AllPaths = GetAllPaths(root);
-        IList<IList<int>> SummedPaths = [];
-        foreach (IList<int> path in AllPaths)
+        List<List<int>> allPaths = GetAllPaths(root);
+        IList<IList<int>> sums = [];
+        foreach (List<int> path in allPaths)
         {
-            if (SumsUpToEqual(path, targetSum))
+            if (path.Sum() == targetSum)
             {
-                SummedPaths.Add(path);
+                sums.Add(path);
             }
         }
-        return SummedPaths;
+        return sums;
     }
 }
