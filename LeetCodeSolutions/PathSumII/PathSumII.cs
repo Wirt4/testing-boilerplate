@@ -1,55 +1,33 @@
 
-namespace LeetCodeSolutions;
-public class PathSumIISolution
+namespace LeetCodeSolutions
 {
-    private List<List<int>> InsertValueToAll(int value, List<List<int>> paths)
+    public class PathSumIISolution
     {
-        foreach (List<int> path in paths)
+        private void GetAllPaths(TreeNode? node, int targetSum, List<int> currentPath, IList<IList<int>> result)
         {
-            path.Insert(0, value);
-        }
-        return paths;
-    }
+            if (node == null)
+                return;
 
-    private bool IsNull(TreeNode? node)
-    {
-        return node == null;
-    }
+            currentPath.Add(node.val);
 
-
-    private bool IsLastNodeInPath(TreeNode node)
-    {
-        return IsNull(node.left) && IsNull(node.right);
-    }
-    private List<List<int>> GetAllPaths(TreeNode? node)
-    {
-        if (IsNull(node))
-        {
-            return [];
-        }
-
-        if (IsLastNodeInPath(node))
-        {
-            return [[node.val]];
-        }
-
-        List<List<int>> paths = GetAllPaths(node.left);
-        paths.AddRange(GetAllPaths(node.right));
-        return InsertValueToAll(node.val, paths);
-    }
-    public IList<IList<int>> PathSum(TreeNode root, int targetSum)
-    {
-        List<List<int>> allPaths = GetAllPaths(root);
-        IList<IList<int>> sums = [];
-
-        foreach (List<int> path in allPaths)
-        {
-            if (path.Sum() == targetSum)
+            if (node.left == null && node.right == null && node.val == targetSum)
             {
-                sums.Add(path);
+                result.Add(new List<int>(currentPath));
             }
+            else
+            {
+                GetAllPaths(node.left, targetSum - node.val, currentPath, result);
+                GetAllPaths(node.right, targetSum - node.val, currentPath, result);
+            }
+
+            currentPath.RemoveAt(currentPath.Count - 1);
         }
 
-        return sums;
+        public IList<IList<int>> PathSum(TreeNode root, int targetSum)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            GetAllPaths(root, targetSum, new List<int>(), result);
+            return result;
+        }
     }
 }
