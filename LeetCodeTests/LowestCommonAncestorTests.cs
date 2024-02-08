@@ -1,10 +1,9 @@
 namespace Tests;
 
-using System.Security.AccessControl;
 using LeetCodeSolutions;
 public class LowestCommonAncestorTests
 {
-  private LowestCommonAncestorSolution _solution;
+  private readonly LowestCommonAncestorSolution _solution;
   public LowestCommonAncestorTests()
   {
     _solution = new();
