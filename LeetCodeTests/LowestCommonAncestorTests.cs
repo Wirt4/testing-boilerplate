@@ -53,4 +53,13 @@ public class LowestCommonAncestorTests
     root.left = new(2);
     Assert.Equal(root, _solution.LowestCommonAncestor(root, new(1), new(2)));
   }
+
+  [Fact]
+  public void BreakingExample1()
+  {
+    TreeNode root = new(1);
+    root.left = new(2);
+    root.right = new(3);
+    Assert.Equal(root, _solution.LowestCommonAncestor(root, new(2), new(3)));
+  }
 }
