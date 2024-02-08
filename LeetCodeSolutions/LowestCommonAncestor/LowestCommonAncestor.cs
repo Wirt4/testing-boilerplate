@@ -7,9 +7,11 @@ public class LowestCommonAncestorSolution
         private TreeNode[] euler;
         private int[] level;
         private int writeIndex;
+        private int arrSize;
+
         public IndexedTree(TreeNode root, int HighestNodeValue)
         {
-            int arrSize = 2 * HighestNodeValue - 1;
+            arrSize = 2 * HighestNodeValue - 1;
             f_occur = new int[arrSize];
             euler = new TreeNode[arrSize]; // for euler tour sequence
             level = new int[arrSize]; // level of nodes in tour sequence
@@ -19,11 +21,13 @@ public class LowestCommonAncestorSolution
                 f_occur[i] = -1; // TODO: set a better "null" value here
             }
 
-            EulerianTour(root, 0, 0);
+            writeIndex = 0;
+
+            EulerianTour(root, 0);
 
         }
 
-        private void EulerianTour(TreeNode node, int levelIndex, int writeIndex)
+        private void EulerianTour(TreeNode node, int levelIndex)
         {
             euler[writeIndex] = node;
             level[writeIndex] = levelIndex;
@@ -37,18 +41,25 @@ public class LowestCommonAncestorSolution
 
             if (node.left != null)
             {
-                EulerianTour(node.left, levelIndex + 1, writeIndex);
-                euler[writeIndex] = node;
-                level[writeIndex] = levelIndex;
-                writeIndex++;
+                EulerianTour(node.left, levelIndex + 1);
+                if (writeIndex < arrSize)
+                {
+                    euler[writeIndex] = node;
+                    level[writeIndex] = levelIndex;
+                    writeIndex++;
+                }
+
             }
 
             if (node.right != null)
             {
-                EulerianTour(node.right, levelIndex + 1, writeIndex);
-                euler[writeIndex] = node;
-                level[writeIndex] = levelIndex;
-                writeIndex++;
+                EulerianTour(node.right, levelIndex + 1);
+                if (writeIndex < arrSize)
+                {
+                    euler[writeIndex] = node;
+                    level[writeIndex] = levelIndex;
+                    writeIndex++;
+                }
             }
         }
 
