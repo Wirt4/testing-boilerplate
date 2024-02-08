@@ -13,24 +13,27 @@ public class LowestCommonAncestorSolution
             q = temp;
         }
 
-        if (root.val == p.val || root.val == q.val)
-        {
-            return root;
-        }
+        Stack<TreeNode> nodeStack = new();
+        nodeStack.Push(root);
 
-        if (root.val > p.val && root.val < q.val)
+        while (nodeStack.Count > 0)
         {
-            return root;
-        }
+            TreeNode node = nodeStack.Pop();
+            if (node.val == p.val || node.val == q.val)
+            {
+                return node;
+            }
+            if (node.val > p.val && node.val < q.val)
+            {
+                return node;
+            }
+            if (node.val < p.val)
+            {
+                nodeStack.Push(node.left);
+                continue;
+            }
 
-        if (root.val < p.val)
-        {
-            return LowestCommonAncestor(root.left, p, q);
-        }
-
-        if (root.val > q.val)
-        {
-            return LowestCommonAncestor(root.right, p, q);
+            nodeStack.Push(node.right);
         }
 
         return null;
