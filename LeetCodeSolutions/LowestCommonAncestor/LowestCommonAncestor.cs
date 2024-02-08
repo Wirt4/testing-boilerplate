@@ -1,5 +1,7 @@
 
 
+using System.ComponentModel.Design.Serialization;
+
 namespace LeetCodeSolutions;
 public class LowestCommonAncestorSolution
 {
@@ -11,29 +13,16 @@ public class LowestCommonAncestorSolution
             (q, p) = (p, q);
         }
 
-        Stack<TreeNode> nodeStack = new();
-        nodeStack.Push(root);
-
-        while (nodeStack.Count > 0)
+        while (root.val != p.val && root.val != q.val && (root.val < p.val || root.val > q.val))
         {
-            TreeNode node = nodeStack.Pop();
-            if (node.val == p.val || node.val == q.val)
+            if (root.val < p.val)
             {
-                return node;
-            }
-            if (node.val > p.val && node.val < q.val)
-            {
-                return node;
-            }
-            if (node.val < p.val)
-            {
-                nodeStack.Push(node.left);
+                root = root.left;
                 continue;
             }
-
-            nodeStack.Push(node.right);
+            root = root.right;
         }
 
-        return null;
+        return root;
     }
 }
