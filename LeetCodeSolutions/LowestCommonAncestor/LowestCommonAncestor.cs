@@ -8,9 +8,7 @@ public class LowestCommonAncestorSolution
     {
         if (p.val > q.val)
         {
-            TreeNode temp = p;
-            p = q;
-            q = temp;
+            (q, p) = (p, q);
         }
 
         Stack<TreeNode> nodeStack = new();
