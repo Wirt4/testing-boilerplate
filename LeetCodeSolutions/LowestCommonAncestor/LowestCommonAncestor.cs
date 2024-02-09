@@ -3,7 +3,7 @@ public class LowestCommonAncestorSolution
 {
     private class IndexedTree
     {
-        private readonly int[] f_occur;
+        private Dictionary<int, int> f_occur;
         private readonly TreeNode[] euler;
         private readonly int[] level;
         private int writeIndex;
@@ -12,14 +12,10 @@ public class LowestCommonAncestorSolution
         public IndexedTree(TreeNode root, int HighestNodeValue)
         {
             arrSize = 2 * HighestNodeValue - 1;
-            f_occur = new int[arrSize];
+            f_occur = [];
             euler = new TreeNode[arrSize]; // for euler tour sequence
             level = new int[arrSize]; // level of nodes in tour sequence
 
-            for (int i = 0; i < arrSize; i++)
-            {
-                f_occur[i] = -1; // TODO: set a better "null" value here
-            }
 
             writeIndex = 0;
 
@@ -33,10 +29,9 @@ public class LowestCommonAncestorSolution
             level[writeIndex] = levelIndex;
             writeIndex++;
 
-            //if unvisited
-            if (f_occur[node.val] == -1)
+            if (!f_occur.ContainsKey(node.val))
             {
-                f_occur[node.val] = writeIndex - 1;
+                f_occur.Add(node.val, writeIndex - 1);
             }
 
             if (node.left != null)
@@ -77,7 +72,7 @@ public class LowestCommonAncestorSolution
 
             return new IndexRange(f_occur[nodeValue1], f_occur[nodeValue2]);
         }
-        public int[] Level => level; //TODO
+        public int[] Level => level;
     }
     private class SegmentTree
     {
