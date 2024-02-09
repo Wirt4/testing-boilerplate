@@ -3,11 +3,11 @@ public class LowestCommonAncestorSolution
 {
     private class IndexedTree
     {
-        private int[] f_occur;
-        private TreeNode[] euler;
-        private int[] level;
+        private readonly int[] f_occur;
+        private readonly TreeNode[] euler;
+        private readonly int[] level;
         private int writeIndex;
-        private int arrSize;
+        private readonly int arrSize;
 
         public IndexedTree(TreeNode root, int HighestNodeValue)
         {
