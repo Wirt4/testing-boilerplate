@@ -6,17 +6,16 @@ public class PathSumIIISolution
     private class TreeSearcher(int targetSum)
     {
         private int _numberOfMatchingPaths = 0;
-        private readonly Dictionary<long, int> _frequencyOfSums = FrequencyBaseCase();
         private readonly long _targetSum = targetSum;
+        private readonly Dictionary<long, int> _frequencyOfSums = BaseCase();
 
-        private static Dictionary<long, int> FrequencyBaseCase()
+        private static Dictionary<long, int> BaseCase()
         {
             return new()
             {
                 { 0, 1 }
             };
         }
-        public int NumberOfPaths => _numberOfMatchingPaths;
         private int LookUpExistingAnswer(long sum)
         {
             if (_frequencyOfSums.TryGetValue(sum, out int value))
@@ -61,6 +60,7 @@ public class PathSumIIISolution
             TraverseMemoized(node.right, currentPathSum);
             Remove(currentPathSum);
         }
+        public int NumberOfPaths => _numberOfMatchingPaths;
         public void TraverseTree(TreeNode node)
         {
             TraverseMemoized(node, 0);
