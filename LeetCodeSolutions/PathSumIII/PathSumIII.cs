@@ -34,10 +34,6 @@ public class PathSumIIISolution
             _frequencyOfSums.Add(sum, 1);
 
         }
-        private void Remove(long sum)
-        {
-            _frequencyOfSums[sum]--;
-        }
         private void TraverseMemoized(TreeNode node, long currentPathSum)
         {
             if (node == null)
@@ -56,7 +52,7 @@ public class PathSumIIISolution
             Add(currentPathSum);
             TraverseMemoized(node.left, currentPathSum);
             TraverseMemoized(node.right, currentPathSum);
-            Remove(currentPathSum);
+            _frequencyOfSums[currentPathSum]--;
         }
         public int NumberOfPaths => _numberOfMatchingPaths;
         public void TraverseTree(TreeNode node)
