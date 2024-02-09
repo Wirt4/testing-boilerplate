@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace LeetCodeSolutions;
 public class PathSumIIISolution
 {
@@ -17,12 +19,14 @@ public class PathSumIIISolution
             };
         }
         public int NumberOfPaths => _numberOfMatchingPaths;
-        private void Lookup(long sum)
+        private int Lookup(long sum)
         {
             if (_frequencyOfSums.TryGetValue(sum, out int value))
             {
-                _numberOfMatchingPaths += value;
+                return value;
             }
+
+            return -1;
         }
         private void Add(long sum)
         {
@@ -47,7 +51,13 @@ public class PathSumIIISolution
             }
 
             currentPathSum += node.val;
-            Lookup(currentPathSum - _targetSum);
+            int lookupValue = Lookup(currentPathSum - _targetSum);
+
+            if (lookupValue > 0)
+            {
+                _numberOfMatchingPaths += lookupValue;
+            }
+
             Add(currentPathSum);
             TraverseMemoized(node.left, currentPathSum);
             TraverseMemoized(node.right, currentPathSum);
