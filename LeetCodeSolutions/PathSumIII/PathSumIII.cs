@@ -3,23 +3,21 @@ using System.Runtime.InteropServices;
 namespace LeetCodeSolutions;
 public class PathSumIIISolution
 {
-    private class TreeSearcher
+    private class TreeSearcher(int targetSum)
     {
-        private int _numberOfMatchingPaths;
-        private readonly Dictionary<long, int> _frequencyOfSums;
-        private readonly long _targetSum;
-        public TreeSearcher(int targetSum)
+        private int _numberOfMatchingPaths = 0;
+        private readonly Dictionary<long, int> _frequencyOfSums = FrequencyBaseCase();
+        private readonly long _targetSum = targetSum;
+
+        private static Dictionary<long, int> FrequencyBaseCase()
         {
-            _targetSum = targetSum;
-            _numberOfMatchingPaths = 0;
-            //there is always one path of sum zero, the null set so to speak
-            _frequencyOfSums = new()
+            return new()
             {
                 { 0, 1 }
             };
         }
         public int NumberOfPaths => _numberOfMatchingPaths;
-        private int Lookup(long sum)
+        private int LookUpExistingAnswer(long sum)
         {
             if (_frequencyOfSums.TryGetValue(sum, out int value))
             {
@@ -51,7 +49,7 @@ public class PathSumIIISolution
             }
 
             currentPathSum += node.val;
-            int lookupValue = Lookup(currentPathSum - _targetSum);
+            int lookupValue = LookUpExistingAnswer(currentPathSum - _targetSum);
 
             if (lookupValue > 0)
             {
