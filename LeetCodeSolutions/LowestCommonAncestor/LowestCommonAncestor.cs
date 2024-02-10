@@ -6,10 +6,8 @@ public class LowestCommonAncestorSolution
         private readonly int p_value = p.val;
         private readonly int q_value = q.val;
 
-        private bool IsBaseCase(TreeNode? node)
-        {
-            return node == null || node.val == p_value || node.val == q_value;
-        }
+        private bool IsBaseCase(TreeNode? node) { return node == null || node.val == p_value || node.val == q_value; }
+
         public TreeNode? LCA(TreeNode? node)
         {
             if (IsBaseCase(node)) return node;
