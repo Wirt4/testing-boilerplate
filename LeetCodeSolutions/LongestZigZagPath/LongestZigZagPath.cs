@@ -5,6 +5,11 @@ public class LongestZigZagPathSolution
     {
         public int left = l;
         public int right = r;
+
+        public int MaxLength()
+        {
+            return Math.Max(left, right);
+        }
     }
 
     private int LongestZigZag_R(TreeNode node, Lengths lengths)
@@ -14,7 +19,7 @@ public class LongestZigZagPathSolution
             lengths.left = LongestZigZag_R(node.left, new(lengths.left + 1, 0));
             lengths.right = LongestZigZag_R(node.right, new(0, lengths.right + 1));
         }
-        return Math.Max(lengths.left, lengths.right);
+        return lengths.MaxLength();
     }
     public int LongestZigZag(TreeNode root)
     {
