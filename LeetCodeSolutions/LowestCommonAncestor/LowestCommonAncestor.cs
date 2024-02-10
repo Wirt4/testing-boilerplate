@@ -3,17 +3,17 @@ public class LowestCommonAncestorSolution
 {
     private class TreeTraveler
     {
-        private readonly int _p;
-        private readonly int _q;
+        private readonly int p_value;
+        private readonly int q_value;
         public TreeTraveler(TreeNode p, TreeNode q)
         {
-            _p = p.val;
-            _q = q.val;
+            p_value = p.val;
+            q_value = q.val;
         }
 
         private bool IsBaseCase(TreeNode? node)
         {
-            return node == null || node.val == _p || node.val == _q;
+            return node == null || node.val == p_value || node.val == q_value;
         }
         public TreeNode? LCA(TreeNode? node)
         {
