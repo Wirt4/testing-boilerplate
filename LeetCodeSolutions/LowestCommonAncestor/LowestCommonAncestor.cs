@@ -13,6 +13,7 @@ public class LowestCommonAncestorSolution
         public TreeNode? LCA(TreeNode? node)
         {
             if (IsBaseCase(node)) return node;
+
             TreeNode? left = LCA(node.left);
             TreeNode? right = LCA(node.right);
 
