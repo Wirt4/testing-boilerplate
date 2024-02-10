@@ -13,7 +13,7 @@ public class LowestCommonAncestorSolution
 
         private bool IsBaseCase(TreeNode? node)
         {
-            return node == null || node.val == _p.val || node.val == _q.val;
+            return node == null || node.val == _p || node.val == _q;
         }
         public TreeNode? LCA(TreeNode? node)
         {
