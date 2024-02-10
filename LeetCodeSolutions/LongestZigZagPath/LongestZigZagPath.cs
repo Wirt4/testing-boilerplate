@@ -1,13 +1,23 @@
 namespace LeetCodeSolutions;
 public class LongestZigZagPathSolution
 {
-    public int LongestZigZag(TreeNode root, int left = 0, int right = 0)
+    private class Lengths(int l = 0, int r = 0)
     {
-        if (root != null)
+        public int left = l;
+        public int right = r;
+    }
+
+    private int LongestZigZag_R(TreeNode node, Lengths lengths)
+    {
+        if (node != null)
         {
-            left = LongestZigZag(root.left, 0, left + 1);
-            right = LongestZigZag(root.right, right + 1, left);
+            lengths.left = LongestZigZag_R(node.left, new(lengths.left + 1, 0));
+            lengths.right = LongestZigZag_R(node.right, new(0, lengths.right + 1));
         }
-        return Math.Max(left, right);
+        return Math.Max(lengths.left, lengths.right);
+    }
+    public int LongestZigZag(TreeNode root)
+    {
+        return LongestZigZag_R(root, new());
     }
 }
