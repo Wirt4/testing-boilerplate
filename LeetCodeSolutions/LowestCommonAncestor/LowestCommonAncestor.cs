@@ -16,16 +16,20 @@ public class LowestCommonAncestorSolution
             {
                 return node;
             }
-            TreeNode? leftQuery = LCA(node.left);
-            TreeNode? rightQuery = LCA(node.right);
-            if (leftQuery == null)
+
+            TreeNode? left = LCA(node.left);
+            TreeNode? right = LCA(node.right);
+
+            if (left == null)
             {
-                return rightQuery;
+                return right;
             }
-            if (rightQuery == null)
+
+            if (right == null)
             {
-                return leftQuery;
+                return left;
             }
+
             return node;
         }
     }
