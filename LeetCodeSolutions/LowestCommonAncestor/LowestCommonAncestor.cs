@@ -3,12 +3,12 @@ public class LowestCommonAncestorSolution
 {
     private class TreeTraveler
     {
-        private TreeNode _p;
-        private TreeNode _q;
+        private readonly int _p;
+        private readonly int _q;
         public TreeTraveler(TreeNode p, TreeNode q)
         {
-            _p = p;
-            _q = q;
+            _p = p.val;
+            _q = q.val;
         }
 
         private bool IsBaseCase(TreeNode? node)
