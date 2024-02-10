@@ -17,10 +17,7 @@ public class LowestCommonAncestorSolution
             TreeNode? left = LCA(node.left);
             TreeNode? right = LCA(node.right);
 
-            if (left != null && right != null)
-            {
-                return node;
-            }
+            if (left != null && right != null) return node;
 
             return left ?? right;
         }
