@@ -12,25 +12,16 @@ public class LowestCommonAncestorSolution
         }
         public TreeNode? LCA(TreeNode? node)
         {
-            if (IsBaseCase(node))
+            if (IsBaseCase(node)) return node;
+            TreeNode? left = LCA(node.left);
+            TreeNode? right = LCA(node.right);
+
+            if (left != null && right != null)
             {
                 return node;
             }
 
-            TreeNode? left = LCA(node.left);
-            TreeNode? right = LCA(node.right);
-
-            if (left == null)
-            {
-                return right;
-            }
-
-            if (right == null)
-            {
-                return left;
-            }
-
-            return node;
+            return left ?? right;
         }
     }
 
