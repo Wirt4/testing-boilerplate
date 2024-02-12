@@ -1,45 +1,104 @@
 namespace LeetCodeSolutions;
 public class BinaryTreeRightSideViewSolution
 {
-    private class QueuePair
+    private class LeveledQueue
     {
-        public Queue<TreeNode> currentLevel;
-        public Queue<TreeNode> nextLevel;
-        public QueuePair(TreeNode root)
+        private Queue<TreeNode> currentLevel;
+        private Queue<TreeNode> nextLevel;
+        private TreeNode currentNode;
+        public LeveledQueue(TreeNode? root)
         {
             nextLevel = new();
             currentLevel = new();
-            currentLevel.Enqueue(root);
+            if (root != null)
+            {
+                currentLevel.Enqueue(root);
+            }
+            currentNode = new(-1);
+        }
+
+        public TreeNode Dequeue()
+        {
+            return currentLevel.Dequeue();
+        }
+
+        private void EnqueueToNextLevel(TreeNode? node)
+        {
+            if (node != null)
+            {
+                nextLevel.Enqueue(node);
+            }
+        }
+
+        public void EnqueChildrenToNextLevel(TreeNode node)
+        {
+            EnqueueToNextLevel(node.left);
+            EnqueueToNextLevel(node.right);
+        }
+
+        public bool HasTravesersedCurrentLevel()
+        {
+            return Count == 0;
+        }
+
+        public void ShiftToNextLevel()
+        {
+            currentLevel = nextLevel;
+            nextLevel = new();
+        }
+
+        public void GetNext()
+        {
+            currentNode = Dequeue();
+            EnqueChildrenToNextLevel(currentNode);
+        }
+
+        public int Count => currentLevel.Count;
+        public int CurrentNodeValue => currentNode.val;
+    }
+
+    private class ValueHistory
+    {
+        readonly Stack<int> allHistory;
+        readonly Stack<int> rightSideOnly;
+        public ValueHistory()
+        {
+            allHistory = new();
+            rightSideOnly = new();
+        }
+
+        public void Add(int value)
+        {
+            allHistory.Push(value);
+        }
+
+        public void Shift()
+        {
+            rightSideOnly.Push(allHistory.Pop());
+        }
+
+        public int[] ToArray()
+        {
+            return [.. rightSideOnly];
         }
     }
     public IList<int> RightSideView(TreeNode? root)
     {
-        QueuePair queues = new(root);
-        Stack<int> traversedHistory = new();
-        List<int> answer = new();
-        while (queues.currentLevel.Count > 0)
+        LeveledQueue enhancedQueue = new(root);
+        ValueHistory valueHistory = new();
+
+        while (enhancedQueue.Count > 0)
         {
-            TreeNode cur = queues.currentLevel.Dequeue();
-            traversedHistory.Push(cur.val);
+            enhancedQueue.GetNext();
+            valueHistory.Add(enhancedQueue.CurrentNodeValue);
 
-            if (cur.left != null)
+            if (enhancedQueue.HasTravesersedCurrentLevel())
             {
-                queues.nextLevel.Enqueue(cur.left);
-            }
-            if (cur.right != null)
-            {
-                queues.nextLevel.Enqueue(cur.right);
-            }
-
-            if (queues.currentLevel.Count == 0)
-            {
-                queues.currentLevel = queues.nextLevel;
-                queues.nextLevel = new();
-                answer.Add(traversedHistory.Pop());
+                enhancedQueue.ShiftToNextLevel();
+                valueHistory.Shift();
             }
         }
 
-        return [.. answer];
-
+        return valueHistory.ToArray();
     }
 }
