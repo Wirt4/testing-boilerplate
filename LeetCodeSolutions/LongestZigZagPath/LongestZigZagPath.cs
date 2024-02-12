@@ -12,6 +12,16 @@ public class LongestZigZagPathSolution
         }
 
         public int Longest => Math.Max(Left, Right);
+
+        public Paths ShiftLeft()
+        {
+            return new Paths(0, Left + 1);
+        }
+
+        public Paths ShiftRight()
+        {
+            return new Paths(Right + 1, 0);
+        }
     }
 
     private class TreeNavigator
@@ -30,9 +40,10 @@ public class LongestZigZagPathSolution
         private void RecursiveTraverse(TreeNode? node, Paths paths)
         {
             if (node == null) return;
+
             LongestPath = Math.Max(LongestPath, paths.Longest);
-            RecursiveTraverse(node.left, new Paths(0, paths.Left + 1));
-            RecursiveTraverse(node.right, new Paths(paths.Right + 1, 0));
+            RecursiveTraverse(node.left, paths.ShiftLeft());
+            RecursiveTraverse(node.right, paths.ShiftRight());
         }
     }
     public int LongestZigZag(TreeNode root)
