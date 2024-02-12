@@ -8,7 +8,7 @@ public class LongestZigZagPathTests
   {
     _solution = new();
   }
-  [Fact]
+  //[Fact]
   public void Example1()
   {
     TreeNode root = new(1);
@@ -46,7 +46,7 @@ public class LongestZigZagPathTests
 
   }
 
-  //[Fact]
+  [Fact]
   public void Example3()
   {
     TreeNode root = new(1);
