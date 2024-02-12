@@ -1,35 +1,44 @@
 namespace LeetCodeSolutions;
 public class BinaryTreeRightSideViewSolution
 {
+    private class QueuePair
+    {
+        public Queue<TreeNode> currentLevel;
+        public Queue<TreeNode> nextLevel;
+        public QueuePair(TreeNode root)
+        {
+            nextLevel = new();
+            currentLevel = new();
+            currentLevel.Enqueue(root);
+        }
+    }
     public IList<int> RightSideView(TreeNode? root)
     {
         if (root == null)
         {
             return [];
         }
-
-        Queue<TreeNode> currentLevel = new();
-        currentLevel.Enqueue(root);
-        Queue<TreeNode> nextLevel = new();
+        QueuePair queues = new(root);
         Stack<int> traversedHistory = new();
         List<int> answer = new();
-        while (currentLevel.Count > 0)
+        while (queues.currentLevel.Count > 0)
         {
-            TreeNode cur = currentLevel.Dequeue();
+            TreeNode cur = queues.currentLevel.Dequeue();
             traversedHistory.Push(cur.val);
+
             if (cur.left != null)
             {
-                nextLevel.Enqueue(cur.left);
+                queues.nextLevel.Enqueue(cur.left);
             }
             if (cur.right != null)
             {
-                nextLevel.Enqueue(cur.right);
+                queues.nextLevel.Enqueue(cur.right);
             }
 
-            if (currentLevel.Count == 0)
+            if (queues.currentLevel.Count == 0)
             {
-                currentLevel = nextLevel;
-                nextLevel = new();
+                queues.currentLevel = queues.nextLevel;
+                queues.nextLevel = new();
                 answer.Add(traversedHistory.Pop());
             }
         }
