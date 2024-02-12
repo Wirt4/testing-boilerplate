@@ -60,7 +60,7 @@ public class BinaryTreeRightSideViewSolution
     private class ValueHistory
     {
         readonly Stack<int> allHistory;
-        readonly Stack<int> rightSideOnly;
+        readonly List<int> rightSideOnly;
         public ValueHistory()
         {
             allHistory = new();
@@ -74,7 +74,7 @@ public class BinaryTreeRightSideViewSolution
 
         public void Shift()
         {
-            rightSideOnly.Push(allHistory.Pop());
+            rightSideOnly.Add(allHistory.Pop());
         }
 
         public int[] ToArray()
