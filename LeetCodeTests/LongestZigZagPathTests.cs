@@ -8,7 +8,7 @@ public class LongestZigZagPathTests
   {
     _solution = new();
   }
-  //[Fact]
+  [Fact]
   public void Example1()
   {
     TreeNode root = new(1);
@@ -28,7 +28,7 @@ public class LongestZigZagPathTests
     Assert.Equal(3, _solution.LongestZigZag(root));
   }
 
-  //[Fact]
+  [Fact]
   public void Example2()
   {
     TreeNode root = new(1);
@@ -57,7 +57,7 @@ public class LongestZigZagPathTests
   public void LengthOfOneRightSide()
   {
     TreeNode root = new(1);
-    root.left = new(1);
+    root.right = new(1);
     Assert.Equal(1, _solution.LongestZigZag(root));
   }
 
@@ -69,11 +69,20 @@ public class LongestZigZagPathTests
   }
 
   [Fact]
-  public void LenghtOfTwoLeft()
+  public void LengthOfTwoLeft()
   {
     TreeNode root = new(1);
     root.left = new(1);
     root.left.right = new(1);
+    Assert.Equal(2, _solution.LongestZigZag(root));
+  }
+
+  [Fact]
+  public void LengthOfTwoRight()
+  {
+    TreeNode root = new(1);
+    root.right = new(1);
+    root.right.left = new(1);
     Assert.Equal(2, _solution.LongestZigZag(root));
   }
 }

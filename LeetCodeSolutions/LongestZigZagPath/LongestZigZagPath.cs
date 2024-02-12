@@ -1,20 +1,17 @@
 namespace LeetCodeSolutions;
 public class LongestZigZagPathSolution
 {
-
-
-
-    public int LongestZigZag(TreeNode? root, int length = 0, bool isLeft = true)
+    private void Traverse(TreeNode node, ref int longestPath, int leftPath, int rightPath)
     {
-        if (root == null || (root.left == null && root.right == null)) return length;
-        int newLength = length + 1;
-        if (isLeft)
-        {
-            if (root.left != null) return LongestZigZag(root.left, newLength, false);
-        }
-
-        if (root.right != null) return LongestZigZag(root.right, newLength, true);
-
-        return length;
+        if (node == null) return;
+        longestPath = Math.Max(longestPath, Math.Max(leftPath, rightPath));
+        Traverse(node.left, ref longestPath, 0, leftPath + 1);
+        Traverse(node.right, ref longestPath, rightPath + 1, 0);
+    }
+    public int LongestZigZag(TreeNode root)
+    {
+        int longestZigZag = 0;
+        Traverse(root, ref longestZigZag, 0, 0);
+        return longestZigZag;
     }
 }
