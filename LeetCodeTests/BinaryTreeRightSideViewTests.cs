@@ -29,4 +29,9 @@ public class BinaryTreeRightSideViewTests
     };
     Assert.Equal([1, 3], _solution.RightSideView(root));
   }
+  [Fact]
+  public void Example3()
+  {
+    Assert.Equal([], _solution.RightSideView(null));
+  }
 }
