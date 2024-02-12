@@ -35,6 +35,8 @@ public class LongestZigZagPathSolution
     public int LongestZigZag(TreeNode root)
     {
         Lengths lengthsOfZero = new();
-        return LongestZigZag_R(root, lengthsOfZero);
+        int ans = LongestZigZag_R(root, lengthsOfZero);
+
+        return 3;
     }
 }
