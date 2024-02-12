@@ -1,4 +1,6 @@
 namespace Tests;
+
+using System.Security.Cryptography;
 using LeetCodeSolutions;
 public class BinaryTreeRightSideViewTests
 {
@@ -33,5 +35,13 @@ public class BinaryTreeRightSideViewTests
   public void Example3()
   {
     Assert.Equal([], _solution.RightSideView(null));
+  }
+
+  [Fact]
+  public void BreakingCase1()
+  {
+    TreeNode root = new(1);
+    root.left = new(2);
+    Assert.Equal([1, 2], _solution.RightSideView(root));
   }
 }
