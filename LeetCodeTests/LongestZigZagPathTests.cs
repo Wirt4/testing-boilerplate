@@ -54,10 +54,17 @@ public class LongestZigZagPathTests
   }
 
   [Fact]
-  public void LenghtOfOneRightSide()
+  public void LengthOfOneRightSide()
   {
     TreeNode root = new(1);
     root.left = new(1);
     Assert.Equal(1, _solution.LongestZigZag(root));
+  }
+
+  [Fact]
+
+  public void LengthOfNullReference()
+  {
+    Assert.Equal(0, _solution.LongestZigZag(null));
   }
 }
