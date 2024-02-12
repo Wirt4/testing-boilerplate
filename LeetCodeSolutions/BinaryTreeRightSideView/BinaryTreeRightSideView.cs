@@ -14,10 +14,6 @@ public class BinaryTreeRightSideViewSolution
     }
     public IList<int> RightSideView(TreeNode? root)
     {
-        if (root == null)
-        {
-            return [];
-        }
         QueuePair queues = new(root);
         Stack<int> traversedHistory = new();
         List<int> answer = new();
