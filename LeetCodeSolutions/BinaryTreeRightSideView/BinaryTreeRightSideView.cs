@@ -17,7 +17,7 @@ public class BinaryTreeRightSideViewSolution
             currentNode = new(-1);
         }
 
-        public TreeNode Dequeue()
+        private TreeNode Dequeue()
         {
             return currentLevel.Dequeue();
         }
@@ -30,7 +30,7 @@ public class BinaryTreeRightSideViewSolution
             }
         }
 
-        public void EnqueChildrenToNextLevel(TreeNode node)
+        private void EnqueChildrenToNextLevel(TreeNode node)
         {
             EnqueueToNextLevel(node.left);
             EnqueueToNextLevel(node.right);
