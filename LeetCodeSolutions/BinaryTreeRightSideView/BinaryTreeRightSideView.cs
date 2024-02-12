@@ -3,28 +3,38 @@ public class BinaryTreeRightSideViewSolution
 {
     public IList<int> RightSideView(TreeNode? root)
     {
-        List<int> returnList = new();
-        int level = 0;
-        Queue<TreeNode?> levelTraversalQueue = new();
-
-        levelTraversalQueue.Enqueue(root);
-        while (levelTraversalQueue.Count > 0)
+        if (root == null)
         {
-            Stack<int> valueStack = new();
-            for (int i = 0; i < (int)Math.Pow(2, level); i++)
+            return [];
+        }
+
+        Queue<TreeNode> currentLevel = new();
+        currentLevel.Enqueue(root);
+        Queue<TreeNode> nextLevel = new();
+        Stack<int> traversedHistory = new();
+        List<int> answer = new();
+        while (currentLevel.Count > 0)
+        {
+            TreeNode cur = currentLevel.Dequeue();
+            traversedHistory.Push(cur.val);
+            if (cur.left != null)
             {
-                TreeNode? cur = levelTraversalQueue.Dequeue();
-                if (cur == null) continue;
-                levelTraversalQueue.Enqueue(cur.left);
-                levelTraversalQueue.Enqueue(cur.right);
-                valueStack.Push(cur.val);
+                nextLevel.Enqueue(cur.left);
             }
-            if (valueStack.TryPop(out int value))
+            if (cur.right != null)
             {
-                returnList.Add(value);
+                nextLevel.Enqueue(cur.right);
+            }
+
+            if (currentLevel.Count == 0)
+            {
+                currentLevel = nextLevel;
+                nextLevel = new();
+                answer.Add(traversedHistory.Pop());
             }
         }
 
-        return [.. returnList];
+        return [.. answer];
+
     }
 }

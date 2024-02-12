@@ -18,7 +18,7 @@ public class BinaryTreeRightSideViewTests
     root.right = new TreeNode(3);
 
     root.left.right = new(5);
-    root.right.right = new(3);
+    root.right.right = new(4);
 
     Assert.Equal([1, 3, 4], _solution.RightSideView(root));
   }
