@@ -6,6 +6,7 @@ public class LongestZigZagPathSolution
 
     public int LongestZigZag(TreeNode root)
     {
-        return 0;
+        if (root.left == null && root.right == null) { return 0; }
+        return 1;
     }
 }
