@@ -3,8 +3,8 @@ public class LongestZigZagPathSolution
 {
     private class Paths
     {
-        public int Left;
-        public int Right;
+        private int Left;
+        private int Right;
         public Paths(int left = 0, int right = 0)
         {
             Left = left;
