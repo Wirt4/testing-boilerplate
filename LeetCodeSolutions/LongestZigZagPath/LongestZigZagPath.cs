@@ -1,40 +1,52 @@
 namespace LeetCodeSolutions;
 public class LongestZigZagPathSolution
 {
-    private class Lengths(int l = 0, int r = 0)
+    private class Paths(int left = 0, int right = 0)
     {
-        public int left = l;
-        public int right = r;
+        private readonly int _left = left;
+        private readonly int _right = right;
 
-        public int MaxLength()
+        public int Longest => Math.Max(_left, _right);
+
+
+        public Paths ShiftLeft()
         {
-            return Math.Max(left, right);
+            return new Paths(0, _left + 1);
         }
 
-        public Lengths ShiftLeft()
+        public Paths ShiftRight()
         {
-            return new Lengths(left + 1, 0);
-        }
-
-        public Lengths ShiftRight()
-        {
-            return new Lengths(0, right + 1);
+            return new Paths(_right + 1, 0);
         }
     }
 
-    private static int LongestZigZag_R(TreeNode node, Lengths lengths)
+    private class TreeNavigator
     {
-        if (node != null)
+        private int _longestPath;
+
+        public TreeNavigator()
         {
-            lengths.left = LongestZigZag_R(node.left, lengths.ShiftLeft());
-            lengths.right = LongestZigZag_R(node.right, lengths.ShiftRight());
+            _longestPath = 0;
         }
 
-        return lengths.MaxLength();
+        public int LongestZigZagPath(TreeNode root)
+        {
+            RecursiveTraverse(root, new Paths());
+            return _longestPath;
+        }
+
+        private void RecursiveTraverse(TreeNode? node, Paths paths)
+        {
+            if (node == null) return;
+
+            _longestPath = Math.Max(_longestPath, paths.Longest);
+            RecursiveTraverse(node.left, paths.ShiftLeft());
+            RecursiveTraverse(node.right, paths.ShiftRight());
+        }
     }
     public int LongestZigZag(TreeNode root)
     {
-        Lengths lengthsOfZero = new();
-        return LongestZigZag_R(root, lengthsOfZero);
+        TreeNavigator treeNav = new();
+        return treeNav.LongestZigZagPath(root);
     }
 }
