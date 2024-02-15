@@ -36,4 +36,15 @@ public class MaximumLevelSumTests
     root.right = new(2);
     Assert.Equal(10, _solution.MaxLevelSum(root));
   }
+
+  [Fact]
+  public void Example1()
+  {
+    TreeNode root = new(1);
+    root.left = new(7);
+    root.right = new(0);
+    root.left.left = new(7);
+    root.left.right = new(-8);
+    Assert.Equal(2, _solution.MaxLevelSum(root));
+  }
 }
