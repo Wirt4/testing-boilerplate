@@ -13,4 +13,11 @@ public class MaximumLevelSumTests
     TreeNode root = new(1);
     Assert.Equal(1, _solution.MaxLevelSum(root));
   }
+
+  [Fact]
+  public void MinimumCase2()
+  {
+    TreeNode root = new(-40);
+    Assert.Equal(-40, _solution.MaxLevelSum(root));
+  }
 }
