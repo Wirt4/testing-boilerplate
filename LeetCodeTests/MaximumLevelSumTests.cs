@@ -20,4 +20,11 @@ public class MaximumLevelSumTests
     TreeNode root = new(-40);
     Assert.Equal(-40, _solution.MaxLevelSum(root));
   }
+  [Fact]
+  public void TwoLevelTree1()
+  {
+    TreeNode root = new(4);
+    root.left = new(8);
+    Assert.Equal(8, _solution.MaxLevelSum(root));
+  }
 }
