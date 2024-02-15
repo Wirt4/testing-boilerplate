@@ -26,23 +26,23 @@ public class LongestZigZagPathSolution
 
     private class TreeNavigator
     {
-        public int LongestPath;
+        private int _longestPath;
         public TreeNavigator()
         {
-            LongestPath = 0;
+            _longestPath = 0;
         }
 
         public int LongestZigZagPath(TreeNode root)
         {
             RecursiveTraverse(root, new Paths());
-            return LongestPath;
+            return _longestPath;
         }
 
         private void RecursiveTraverse(TreeNode? node, Paths paths)
         {
             if (node == null) return;
 
-            LongestPath = Math.Max(LongestPath, paths.Longest);
+            _longestPath = Math.Max(_longestPath, paths.Longest);
             RecursiveTraverse(node.left, paths.ShiftLeft());
             RecursiveTraverse(node.right, paths.ShiftRight());
         }
