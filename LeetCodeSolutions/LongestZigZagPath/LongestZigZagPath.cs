@@ -3,24 +3,24 @@ public class LongestZigZagPathSolution
 {
     private class Paths
     {
-        private int Left;
-        private int Right;
+        private readonly int _left;
+        private readonly int _right;
         public Paths(int left = 0, int right = 0)
         {
-            Left = left;
-            Right = right;
+            _left = left;
+            _right = right;
         }
 
-        public int Longest => Math.Max(Left, Right);
+        public int Longest => Math.Max(_left, _right);
 
         public Paths ShiftLeft()
         {
-            return new Paths(0, Left + 1);
+            return new Paths(0, _left + 1);
         }
 
         public Paths ShiftRight()
         {
-            return new Paths(Right + 1, 0);
+            return new Paths(_right + 1, 0);
         }
     }
 
