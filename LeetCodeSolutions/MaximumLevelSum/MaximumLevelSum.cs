@@ -50,40 +50,46 @@ public class MaximumLevelSumSolution
         public bool HasChangedLevel => _levelChange;
     }
 
+    private class RowSum(int row)
+    {
+        private readonly int _level = row;
+        private int _sum = 0;
+
+        public void Add(int amount)
+        {
+            _sum += amount;
+        }
+
+        public int Level => _level;
+        public int Sum => _sum;
+    }
     private class RowSums
     {
-        private int _highestSum;
-        private int _currentSum;
-        private bool _onfirstTier;
-        private int _highestLevel;
-        private int _currentLevel;
+        private RowSum _highest;
+        private RowSum _current;
 
         public RowSums()
         {
-            _currentSum = 0;
-            _highestSum = _currentSum;
-            _onfirstTier = true;
-            _highestLevel = 1;
-            _currentLevel = 1;
+            _current = new(1);
+            _highest = _current;
         }
 
         public void Add(int nodeVal)
         {
-            _currentSum += nodeVal;
+            _current.Add(nodeVal);
         }
 
         public void UpdateHighest()
         {
-            if (_currentLevel > 1 && _currentSum > _highestSum)
+            if (_current.Sum > _highest.Sum)
             {
-                _highestSum = _currentSum;
-                _highestLevel = _currentLevel;
+                _highest = _current;
             }
-            _currentSum = 0;
-            _currentLevel++;
+
+            _current = new(_current.Level + 1);
         }
 
-        public int HighestLevel => _highestLevel;
+        public int HighestLevel => _highest.Level;
     }
     public int MaxLevelSum(TreeNode root)
     {
