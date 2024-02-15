@@ -52,33 +52,39 @@ public class MaximumLevelSumSolution
 
     private class RowSums
     {
-        private int _highest;
-        private int _current;
+        private int _highestSum;
+        private int _currentSum;
         private bool _onfirstTier;
+        private int _highestLevel;
+        private int _currentLevel;
 
         public RowSums()
         {
-            _current = 0;
-            _highest = _current;
+            _currentSum = 0;
+            _highestSum = _currentSum;
             _onfirstTier = true;
+            _highestLevel = 1;
+            _currentLevel = 1;
         }
 
         public void Add(int nodeVal)
         {
-            _current += nodeVal;
+            _currentSum += nodeVal;
         }
 
         public void UpdateHighest()
         {
-            if (_onfirstTier || _current > _highest)
+            if (_onfirstTier || _currentSum > _highestSum)
             {
-                _highest = _current;
+                _highestSum = _currentSum;
                 _onfirstTier = false;
+                _highestLevel = _currentLevel;
             }
-            _current = 0;
+            _currentSum = 0;
+            _currentLevel++;
         }
 
-        public int Highest => _highest;
+        public int HighestLevel => _highestLevel;
     }
     public int MaxLevelSum(TreeNode root)
     {
@@ -99,6 +105,6 @@ public class MaximumLevelSumSolution
             nodeStack.PushChildren(current);
         }
 
-        return sums.Highest;
+        return sums.HighestLevel;
     }
 }
