@@ -74,10 +74,9 @@ public class MaximumLevelSumSolution
 
         public void UpdateHighest()
         {
-            if (_onfirstTier || _currentSum > _highestSum)
+            if (_currentLevel > 1 && _currentSum > _highestSum)
             {
                 _highestSum = _currentSum;
-                _onfirstTier = false;
                 _highestLevel = _currentLevel;
             }
             _currentSum = 0;
