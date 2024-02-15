@@ -5,7 +5,7 @@ public class LongestZigZagPathSolution
     {
         public int Left;
         public int Right;
-        public Paths(int left, int right)
+        public Paths(int left = 0, int right = 0)
         {
             Left = left;
             Right = right;
@@ -34,7 +34,7 @@ public class LongestZigZagPathSolution
 
         public void Traverse(TreeNode root)
         {
-            RecursiveTraverse(root, new Paths(0, 0));
+            RecursiveTraverse(root, new Paths());
         }
 
         private void RecursiveTraverse(TreeNode? node, Paths paths)
