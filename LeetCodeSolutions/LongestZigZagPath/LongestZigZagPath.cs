@@ -1,17 +1,13 @@
 namespace LeetCodeSolutions;
 public class LongestZigZagPathSolution
 {
-    private class Paths
+    private class Paths(int left = 0, int right = 0)
     {
-        private readonly int _left;
-        private readonly int _right;
-        public Paths(int left = 0, int right = 0)
-        {
-            _left = left;
-            _right = right;
-        }
+        private readonly int _left = left;
+        private readonly int _right = right;
 
         public int Longest => Math.Max(_left, _right);
+
 
         public Paths ShiftLeft()
         {
@@ -27,6 +23,7 @@ public class LongestZigZagPathSolution
     private class TreeNavigator
     {
         private int _longestPath;
+
         public TreeNavigator()
         {
             _longestPath = 0;
