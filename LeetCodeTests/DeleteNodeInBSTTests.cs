@@ -75,6 +75,11 @@ public class DeleteNodeInBSTTests
     Assert.True(EqualTrees(root, _solution.DeleteNode(root, 0)));
   }
 
+  [Fact]
+  public void Example3()
+  {
+    Assert.Null(_solution.DeleteNode(null, 0));
+  }
   private bool EqualTrees(TreeNode? root1, TreeNode? root2)
   {
     Stack<TreeNode> stack1 = new();

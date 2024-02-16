@@ -55,8 +55,13 @@ public class DeleteNodeInBSTSolution
         }
         public TreeNode? Root => _root;
     }
-    public TreeNode? DeleteNode(TreeNode root, int key)
+    public TreeNode? DeleteNode(TreeNode? root, int key)
     {
+        if (root == null)
+        {
+            return null;
+        }
+
         Tree tree = new(key);
         Stack<TreeNode> stack = new();
         stack.Push(root);
@@ -69,6 +74,5 @@ public class DeleteNodeInBSTSolution
         }
 
         return tree.Root;
-
     }
 }
