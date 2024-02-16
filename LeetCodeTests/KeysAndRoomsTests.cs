@@ -12,4 +12,10 @@ public class KeysAndRoomsTests
   {
     Assert.True(_solution.CanVisitAllRooms([[1], [2], [3], []]));
   }
+
+  [Fact]
+  public void Example2()
+  {
+    Assert.False(_solution.CanVisitAllRooms([[1, 3], [3, 0, 1], [2], [0]]));
+  }
 }
