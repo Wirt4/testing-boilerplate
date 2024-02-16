@@ -13,37 +13,40 @@ public class DeleteNodeInBSTSolution
                 return;
             }
 
-            TreeNode node = new(value);
-            Insert(node);
+            Insert(value);
         }
 
-        private void Insert(TreeNode node)
+        private static bool InsertedOnLeaf(ref TreeNode? node, int value)
+        {
+            if (node == null)
+            {
+                node = new TreeNode(value);
+                return true;
+            }
+
+            return false;
+        }
+
+
+        private void Insert(int value)
         {
             if (_root == null)
             {
-                _root = node;
+                _root = new TreeNode(value);
                 return;
             }
 
             TreeNode? cur = _root;
-            while (true)
+            while (cur != null)
             {
-                if (node.val < cur.val)
+                if (value < cur.val)
                 {
-                    if (cur.left == null)
-                    {
-                        cur.left = node;
-                        return;
-                    }
+                    if (InsertedOnLeaf(ref cur.left, value)) return;
                     cur = cur.left;
                     continue;
                 }
 
-                if (cur.right == null)
-                {
-                    cur.right = node;
-                    return;
-                }
+                if (InsertedOnLeaf(ref cur.right, value)) return;
                 cur = cur.right;
             }
         }
