@@ -35,8 +35,8 @@ public class MaximumLevelSumSolution
 
         public TreeNode Pop()
         {
-            _levelChange = false;
             TreeNode cur = _currentLevel.Pop();
+            _levelChange = false;
 
             if (IsEmpty())
             {
@@ -50,9 +50,9 @@ public class MaximumLevelSumSolution
         public bool HasChangedLevel => _levelChange;
     }
 
-    private class RowSum(int row)
+    private class RowSum(int previousLevel = 0)
     {
-        private readonly int _level = row;
+        private readonly int _level = previousLevel + 1;
         private int _sum = 0;
 
         public void Add(int amount)
@@ -62,6 +62,11 @@ public class MaximumLevelSumSolution
 
         public int Level => _level;
         public int Sum => _sum;
+
+        public RowSum StartNextLevel()
+        {
+            return new RowSum(Level);
+        }
     }
     private class RowSums
     {
@@ -70,7 +75,7 @@ public class MaximumLevelSumSolution
 
         public RowSums()
         {
-            _current = new(1);
+            _current = new();
             _highest = _current;
         }
 
@@ -86,7 +91,7 @@ public class MaximumLevelSumSolution
                 _highest = _current;
             }
 
-            _current = new(_current.Level + 1);
+            _current = _current.StartNextLevel();
         }
 
         public int HighestLevel => _highest.Level;
