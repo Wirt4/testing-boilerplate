@@ -9,8 +9,6 @@ public class SearchInBinaryTreeSolution
             _stack = new();
             _stack.Push(root);
         }
-
-        public int Count => _stack.Count;
         public void Push(TreeNode? node)
         {
             if (node != null)
@@ -28,6 +26,8 @@ public class SearchInBinaryTreeSolution
 
             return null;
         }
+
+        public int Count => _stack.Count;
     }
 
     private enum Comparison
@@ -44,6 +44,7 @@ public class SearchInBinaryTreeSolution
         {
             return Comparison.Default;
         }
+
         if (baseValue == node.val)
         {
             return Comparison.Equal;
