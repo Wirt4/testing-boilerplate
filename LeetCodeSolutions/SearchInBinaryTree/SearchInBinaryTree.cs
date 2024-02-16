@@ -1,23 +1,82 @@
-using System.Security.AccessControl;
-
 namespace LeetCodeSolutions;
 public class SearchInBinaryTreeSolution
 {
+    private class TreeNodeStack
+    {
+        private Stack<TreeNode> _stack;
+        public TreeNodeStack(TreeNode root)
+        {
+            _stack = new();
+            _stack.Push(root);
+        }
+
+        public int Count => _stack.Count;
+        public void Push(TreeNode? node)
+        {
+            if (node != null)
+            {
+                _stack.Push(node);
+            }
+        }
+
+        public TreeNode? Pop()
+        {
+            try
+            {
+                return _stack.Pop();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+
+    private enum Comparison
+    {
+        Equal,
+        LessThan,
+        GreaterThan,
+        Default
+    }
+
+    private Comparison Compare(int baseValue, TreeNode? node)
+    {
+        if (node == null)
+        {
+            return Comparison.Default;
+        }
+        if (baseValue == node.val)
+        {
+            return Comparison.Equal;
+        }
+
+        if (baseValue < node.val)
+        {
+            return Comparison.LessThan;
+        }
+
+        return Comparison.GreaterThan;
+    }
     public TreeNode? SearchBST(TreeNode root, int val)
     {
-        Stack<TreeNode> stack = new();
-        TreeNode cur;
-        stack.Push(root);
-        while (stack.Count > 0)
+        TreeNodeStack stack = new(root);
+
+        while (true)
         {
-            cur = stack.Pop();
-            if (cur.val == val)
+            TreeNode? cur = stack.Pop();
+            switch (Compare(val, cur))
             {
-                return cur;
+                case Comparison.Equal:
+                case Comparison.Default:
+                    return cur;
+                case Comparison.LessThan:
+                    stack.Push(cur?.left);
+                    break;
+                case Comparison.GreaterThan:
+                    stack.Push(cur?.right);
+                    break;
             }
-            if (cur.left != null) stack.Push(cur.left);
-            if (cur.right != null) stack.Push(cur.right);
         }
-        return null;
     }
 }
