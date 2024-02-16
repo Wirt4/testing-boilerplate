@@ -11,48 +11,39 @@ public class KeysAndRoomsSolution
             _rooms = rooms;
         }
 
-        private bool DFSUtil(int v, bool[] visited)
+        private Boolean AllRoomsTraversed(bool[] visited)
         {
-            visited[v] = true;
-            bool traversed = true;
-            foreach (bool thing in visited)
+            foreach (bool room in visited)
             {
-                if (!thing)
-                {
-                    traversed = false;
-                    break;
-                }
+                if (room) continue;
+
+                return false;
             }
 
-            if (traversed)
+            return true;
+        }
+
+        private Boolean DFSUtil(bool[] visited, int roomNumber = 0)
+        {
+            visited[roomNumber] = true;
+
+            if (AllRoomsTraversed(visited)) return true;
+
+            foreach (var key in _rooms[roomNumber])
             {
-                return true;
+                if (!visited[key] && DFSUtil(visited, key)) return true;
             }
 
-            IList<int> vList = _rooms[v];
-            foreach (var n in vList)
-            {
-                if (!visited[n])
-                {
-                    bool path = DFSUtil(n, visited);
-                    if (path)
-                    {
-                        return true;
-                    }
-                }
-            }
             return false;
         }
         public Boolean DepthFirstSearch()
         {
-            return DFSUtil(0, new bool[_rooms.Count]);
+            return DFSUtil(new bool[_rooms.Count]);
         }
-
     }
     public bool CanVisitAllRooms(IList<IList<int>> rooms)
     {
         Rooms roomGraph = new(rooms);
         return roomGraph.DepthFirstSearch();
-
     }
 }
