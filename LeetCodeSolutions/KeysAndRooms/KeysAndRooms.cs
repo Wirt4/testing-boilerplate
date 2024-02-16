@@ -1,5 +1,3 @@
-using System.Dynamic;
-
 namespace LeetCodeSolutions;
 public class KeysAndRoomsSolution
 {
@@ -45,17 +43,16 @@ public class KeysAndRoomsSolution
             }
             return false;
         }
-        public Boolean DepthFirstSearch(int startRoom)
+        public Boolean DepthFirstSearch()
         {
-            bool[] visited = new bool[_rooms.Count];
-            return DFSUtil(startRoom, visited);
+            return DFSUtil(0, new bool[_rooms.Count]);
         }
 
     }
     public bool CanVisitAllRooms(IList<IList<int>> rooms)
     {
         Rooms roomGraph = new(rooms);
-        return roomGraph.DepthFirstSearch(0);
+        return roomGraph.DepthFirstSearch();
 
     }
 }
