@@ -32,20 +32,20 @@ public class DeleteNodeInBSTSolution
 
         private void Insert(int value)
         {
-            ValueWrapper foo = new(value);
-            bool nodeInserted = foo.Inserted(ref _root);
+            ValueWrapper wrapper = new(value);
+            bool nodeInserted = wrapper.Inserted(ref _root);
             TreeNode? cur = _root;
 
             while (cur != null && !nodeInserted)
             {
                 if (value < cur.val)
                 {
-                    nodeInserted = foo.Inserted(ref cur.left);
+                    nodeInserted = wrapper.Inserted(ref cur.left);
                     cur = cur.left;
                 }
                 else
                 {
-                    nodeInserted = foo.Inserted(ref cur.right);
+                    nodeInserted = wrapper.Inserted(ref cur.right);
                     cur = cur.right;
                 }
             }
