@@ -27,4 +27,14 @@ public class SearchInBinaryTreeTests
     TreeNode root = new(4);
     Assert.Equal(root, _solution.SearchBST(root, 4));
   }
+
+  [Fact]
+  public void ValueInLeftNode()
+  {
+    TreeNode root = new(1);
+    root.left = new(2);
+    Assert.Equal(root.left, _solution.SearchBST(root, 2));
+  }
+
+
 }
