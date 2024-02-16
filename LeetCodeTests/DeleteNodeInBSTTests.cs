@@ -39,7 +39,7 @@ public class DeleteNodeInBSTTests
   }
 
   [Fact]
-  private void Example1()
+  public void Example1()
   {
     TreeNode input = new(5);
 
@@ -58,6 +58,21 @@ public class DeleteNodeInBSTTests
     output.right.right = new(7);
 
     Assert.True(EqualTrees(output, _solution.DeleteNode(input, 3)));
+  }
+
+  [Fact]
+  public void Example2()
+  {
+    TreeNode root = new(5);
+
+    root.left = new(2);
+    root.right = new(6);
+
+    root.left.right = new(4);
+
+    root.right.right = new(7);
+
+    Assert.True(EqualTrees(root, _solution.DeleteNode(root, 0)));
   }
 
   private bool EqualTrees(TreeNode? root1, TreeNode? root2)

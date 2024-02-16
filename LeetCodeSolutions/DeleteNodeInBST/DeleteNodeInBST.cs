@@ -16,34 +16,41 @@ public class DeleteNodeInBSTSolution
             Insert(value);
         }
 
-        private static bool InsertedOnLeaf(ref TreeNode? node, int value)
+
+        private class Foo(int value)
         {
-            if (node == null)
+            private int _value = value;
+            public bool Inserted(ref TreeNode? node)
             {
-                node = new TreeNode(value);
-                return true;
+                if (node == null)
+                {
+                    node = new TreeNode(_value);
+                    return true;
+                }
+
+                return false;
             }
 
-            return false;
         }
-
 
         private void Insert(int value)
         {
-            bool nodeInserted = InsertedOnLeaf(ref _root, value);
+            Foo foo = new(value);
+            bool nodeInserted = foo.Inserted(ref _root);
             TreeNode? cur = _root;
 
             while (cur != null && !nodeInserted)
             {
                 if (value < cur.val)
                 {
-                    nodeInserted = InsertedOnLeaf(ref cur.left, value);
+                    nodeInserted = foo.Inserted(ref cur.left);
                     cur = cur.left;
-                    continue;
                 }
-
-                nodeInserted = InsertedOnLeaf(ref cur.right, value);
-                cur = cur.right;
+                else
+                {
+                    nodeInserted = foo.Inserted(ref cur.right);
+                    cur = cur.right;
+                }
             }
         }
         public TreeNode? Root => _root;
@@ -51,7 +58,7 @@ public class DeleteNodeInBSTSolution
     public TreeNode? DeleteNode(TreeNode root, int key)
     {
         Tree tree = new(key);
-        Stack<TreeNode?> stack = new();
+        Stack<TreeNode> stack = new();
         stack.Push(root);
         while (stack.Count > 0)
         {
