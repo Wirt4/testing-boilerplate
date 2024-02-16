@@ -30,23 +30,19 @@ public class DeleteNodeInBSTSolution
 
         private void Insert(int value)
         {
-            if (_root == null)
-            {
-                _root = new TreeNode(value);
-                return;
-            }
-
+            bool nodeInserted = InsertedOnLeaf(ref _root, value);
             TreeNode? cur = _root;
-            while (cur != null)
+
+            while (cur != null && !nodeInserted)
             {
                 if (value < cur.val)
                 {
-                    if (InsertedOnLeaf(ref cur.left, value)) return;
+                    nodeInserted = InsertedOnLeaf(ref cur.left, value);
                     cur = cur.left;
                     continue;
                 }
 
-                if (InsertedOnLeaf(ref cur.right, value)) return;
+                nodeInserted = InsertedOnLeaf(ref cur.right, value);
                 cur = cur.right;
             }
         }
