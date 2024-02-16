@@ -135,7 +135,7 @@ public class MaximumLevelSumSolution
 
             if (stacks.HasTraversedLevel())
             {
-                levelSums.UpdateHighest();//tiers.advanceToNextLevel
+                levelSums.UpdateHighest();
                 stacks.UpdateLevel();
             }
         }
