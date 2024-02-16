@@ -1,6 +1,20 @@
 namespace LeetCodeSolutions;
 public class DeleteNodeInBSTSolution
 {
+    private class Foo(int value)
+    {
+        private int _value = value;
+        public bool Inserted(ref TreeNode? node)
+        {
+            if (node == null)
+            {
+                node = new TreeNode(_value);
+                return true;
+            }
+
+            return false;
+        }
+    }
     private class Tree(int key)
     {
         private TreeNode? _root = null;
@@ -14,23 +28,6 @@ public class DeleteNodeInBSTSolution
             }
 
             Insert(value);
-        }
-
-
-        private class Foo(int value)
-        {
-            private int _value = value;
-            public bool Inserted(ref TreeNode? node)
-            {
-                if (node == null)
-                {
-                    node = new TreeNode(_value);
-                    return true;
-                }
-
-                return false;
-            }
-
         }
 
         private void Insert(int value)
