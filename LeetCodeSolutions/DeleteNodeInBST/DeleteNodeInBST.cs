@@ -1,7 +1,7 @@
 namespace LeetCodeSolutions;
 public class DeleteNodeInBSTSolution
 {
-    private class Foo(int value)
+    private class ValueWrapper(int value)
     {
         private int _value = value;
         public bool Inserted(ref TreeNode? node)
@@ -32,7 +32,7 @@ public class DeleteNodeInBSTSolution
 
         private void Insert(int value)
         {
-            Foo foo = new(value);
+            ValueWrapper foo = new(value);
             bool nodeInserted = foo.Inserted(ref _root);
             TreeNode? cur = _root;
 
