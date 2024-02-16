@@ -16,11 +16,25 @@ public class DeleteNodeInBSTTests
   }
 
   [Fact]
-  public void OneDTreeOfTwo()
+  public void OneDTreeOfTwo1()
   {
     TreeNode root = new(1);
     root.left = new(4);
     TreeNode ans = new(1);
+    Assert.True(EqualTrees(ans, _solution.DeleteNode(root, 4)));
+  }
+
+  [Fact]
+  public void OneDTreeOfTwoNoMatch()
+  {
+    TreeNode root = new(1)
+    {
+      left = new(6)
+    };
+    TreeNode ans = new(1)
+    {
+      left = new(6)
+    };
     Assert.True(EqualTrees(ans, _solution.DeleteNode(root, 4)));
   }
 
