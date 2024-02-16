@@ -3,7 +3,7 @@ public class SearchInBinaryTreeSolution
 {
     public TreeNode? SearchBST(TreeNode root, int val)
     {
-        if (val == 2)
+        if (root.val == val)
         {
             return root;
         }
