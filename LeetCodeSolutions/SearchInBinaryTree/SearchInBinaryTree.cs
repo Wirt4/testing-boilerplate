@@ -21,14 +21,12 @@ public class SearchInBinaryTreeSolution
 
         public TreeNode? Pop()
         {
-            try
+            if (_stack.TryPop(out TreeNode? result))
             {
-                return _stack.Pop();
+                return result;
             }
-            catch
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 
