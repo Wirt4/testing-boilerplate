@@ -12,7 +12,7 @@ public class DeleteNodeInBSTTests
   public void TreeOfOne1()
   {
     TreeNode root = new(1);
-    Assert.Equal(root, _solution.DeleteNode(root, 49));
+    Assert.True(EqualTrees(root, _solution.DeleteNode(root, 49)));
   }
 
   [Fact]
@@ -29,11 +29,11 @@ public class DeleteNodeInBSTTests
   {
     TreeNode root = new(1)
     {
-      left = new(6)
+      right = new(6)
     };
     TreeNode ans = new(1)
     {
-      left = new(6)
+      right = new(6)
     };
     Assert.True(EqualTrees(ans, _solution.DeleteNode(root, 4)));
   }
