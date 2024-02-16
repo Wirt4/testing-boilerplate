@@ -1,120 +1,46 @@
 namespace LeetCodeSolutions;
 public class MaximumLevelSumSolution
 {
-    private class NodeStack
-    {
-        private Stack<TreeNode> _currentLevel;
-        private Stack<TreeNode> _nextLevel;
-        private bool _levelChange;
-        public NodeStack(TreeNode root)
-        {
-            _currentLevel = new();
-            _currentLevel.Push(root);
-            _nextLevel = new();
-            _levelChange = false;
-        }
-
-        public bool IsEmpty()
-        {
-            return _currentLevel.Count == 0;
-        }
-
-        public void PushChildren(TreeNode node)
-        {
-            Push(node.left);
-            Push(node.right);
-        }
-
-        private void Push(TreeNode? node)
-        {
-            if (node != null)
-            {
-                _nextLevel.Push(node);
-            }
-        }
-
-        public TreeNode Pop()
-        {
-            TreeNode cur = _currentLevel.Pop();
-            _levelChange = false;
-
-            if (IsEmpty())
-            {
-                _currentLevel = _nextLevel;
-                _levelChange = true;
-
-            }
-            return cur;
-        }
-
-        public bool HasChangedLevel => _levelChange;
-    }
-
-    private class RowSum(int previousLevel = 0)
-    {
-        private readonly int _level = previousLevel + 1;
-        private int _sum = 0;
-
-        public void Add(int amount)
-        {
-            _sum += amount;
-        }
-
-        public int Level => _level;
-        public int Sum => _sum;
-
-        public RowSum StartNextLevel()
-        {
-            return new RowSum(Level);
-        }
-    }
-    private class RowSums
-    {
-        private RowSum _highest;
-        private RowSum _current;
-
-        public RowSums()
-        {
-            _current = new();
-            _highest = _current;
-        }
-
-        public void Add(int nodeVal)
-        {
-            _current.Add(nodeVal);
-        }
-
-        public void UpdateHighest()
-        {
-            if (_current.Sum > _highest.Sum)
-            {
-                _highest = _current;
-            }
-
-            _current = _current.StartNextLevel();
-        }
-
-        public int HighestLevel => _highest.Level;
-    }
     public int MaxLevelSum(TreeNode root)
     {
+        int maxLevel = 1;
+        int currentLevel = 1;
+        int highestSum = root.val;
+        int currentSum = 0;
+        Stack<TreeNode> currentTier = new();
+        currentTier.Push(root);
+        Stack<TreeNode> nextTier = new();
 
-        RowSums sums = new();
-        NodeStack nodeStack = new(root);
-
-        while (!nodeStack.IsEmpty())
+        while (currentTier.Count > 0)
         {
-            TreeNode current = nodeStack.Pop();
-            sums.Add(current.val);
+            TreeNode node = currentTier.Pop();
+            currentSum += node.val;
 
-            if (nodeStack.HasChangedLevel)
+            if (node.left != null)
             {
-                sums.UpdateHighest();
+                nextTier.Push(node.left);
             }
 
-            nodeStack.PushChildren(current);
+            if (node.right != null)
+            {
+                nextTier.Push(node.right);
+            }
+
+            if (currentTier.Count == 0)
+            {
+                if (currentSum > highestSum)
+                {
+                    maxLevel = currentLevel;
+                    highestSum = currentSum;
+                }
+
+                currentSum = 0;
+                currentLevel++;
+                currentTier = nextTier;
+                nextTier = new();
+            }
         }
 
-        return sums.HighestLevel;
+        return maxLevel;
     }
 }
