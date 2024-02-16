@@ -3,16 +3,13 @@ public class DeleteNodeInBSTSolution
 {
     private class ValueWrapper(int value)
     {
-        private int _value = value;
+        private readonly int _value = value;
         public bool Inserted(ref TreeNode? node)
         {
-            if (node == null)
-            {
-                node = new TreeNode(_value);
-                return true;
-            }
+            if (node != null) return false;
 
-            return false;
+            node = new TreeNode(_value);
+            return true;
         }
     }
     private class Tree(int key)
@@ -22,12 +19,7 @@ public class DeleteNodeInBSTSolution
 
         public void AddToTree(int value)
         {
-            if (value == _key)
-            {
-                return;
-            }
-
-            Insert(value);
+            if (value != _key) Insert(value);
         }
 
         private void Insert(int value)
@@ -42,32 +34,50 @@ public class DeleteNodeInBSTSolution
                 {
                     nodeInserted = wrapper.Inserted(ref cur.left);
                     cur = cur.left;
+                    continue;
                 }
-                else
-                {
-                    nodeInserted = wrapper.Inserted(ref cur.right);
-                    cur = cur.right;
-                }
+
+                nodeInserted = wrapper.Inserted(ref cur.right);
+                cur = cur.right;
             }
         }
         public TreeNode? Root => _root;
     }
-    public TreeNode? DeleteNode(TreeNode? root, int key)
+
+    private class StackWrapper
     {
-        if (root == null)
+        private Stack<TreeNode> stack;
+        public StackWrapper(TreeNode root)
         {
-            return null;
+            stack = new();
+            stack.Push(root);
         }
 
+        public void PushIfValid(TreeNode? node)
+        {
+            if (node != null) stack.Push(node);
+        }
+
+        public TreeNode Pop()
+        {
+            return stack.Pop();
+        }
+
+        public int Count => stack.Count;
+    }
+    public TreeNode? DeleteNode(TreeNode? root, int key)
+    {
+        if (root == null) return null;
+
         Tree tree = new(key);
-        Stack<TreeNode> stack = new();
-        stack.Push(root);
+        StackWrapper stack = new(root);
+
         while (stack.Count > 0)
         {
             TreeNode cur = stack.Pop();
             tree.AddToTree(cur.val);
-            if (cur.left != null) stack.Push(cur.left);
-            if (cur.right != null) stack.Push(cur.right);
+            stack.PushIfValid(cur.left);
+            stack.PushIfValid(cur.right);
         }
 
         return tree.Root;
