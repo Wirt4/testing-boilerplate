@@ -1,5 +1,3 @@
-using System.Diagnostics.Contracts;
-
 namespace LeetCodeSolutions;
 public class MaximumLevelSumSolution
 {
@@ -91,29 +89,54 @@ public class MaximumLevelSumSolution
 
         public int HighestSumLevel => _highest.Level;
     }
+
+    private class StackPair
+    {
+        private NodeStack _current;
+        private NodeStack _next;
+        public StackPair(TreeNode root)
+        {
+            _current = new();
+            _current.Push(root);
+            _next = new();
+        }
+
+        public bool IsEmpty()
+        {
+            return _current.IsEmpty() && _next.IsEmpty();
+        }
+
+        public int GetNextValue()
+        {
+            TreeNode n = _current.Pop();
+            _next.PushChildren(n);
+            return n.val;
+        }
+
+        public bool HasTraversedLevel()
+        {
+            return _current.IsEmpty();
+        }
+
+        public void UpdateLevel()
+        {
+            _current = _next;
+            _next = new();
+        }
+    }
     public int MaxLevelSum(TreeNode root)
     {
-
         LevelSums levelSums = new(root.val);
+        StackPair stacks = new(root);
 
-        NodeStack currentTier = new(); //LevelTiers = new(root)
-        currentTier.Push(root);
-        NodeStack nextTier = new();
-
-        while (!currentTier.IsEmpty())
+        while (!stacks.IsEmpty())
         {
-            TreeNode node = currentTier.Pop();
-            levelSums.Add(node.val);
-            nextTier.PushChildren(node);
+            levelSums.Add(stacks.GetNextValue());
 
-            if (currentTier.IsEmpty()) //tiers.HasTraversedLevel
+            if (stacks.HasTraversedLevel())
             {
-                levelSums.UpdateHighest();
-                //tiers.advanceToNextLevel
-
-
-                currentTier = nextTier;
-                nextTier = new();
+                levelSums.UpdateHighest();//tiers.advanceToNextLevel
+                stacks.UpdateLevel();
             }
         }
 
