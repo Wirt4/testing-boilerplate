@@ -1,3 +1,5 @@
+using System.Security.AccessControl;
+
 namespace LeetCodeSolutions;
 public class SearchInBinaryTreeSolution
 {
@@ -14,6 +16,7 @@ public class SearchInBinaryTreeSolution
                 return cur;
             }
             if (cur.left != null) stack.Push(cur.left);
+            if (cur.right != null) stack.Push(cur.right);
         }
         return null;
     }
