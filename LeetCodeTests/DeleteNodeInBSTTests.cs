@@ -62,16 +62,29 @@ public class DeleteNodeInBSTTests
 
   private bool EqualTrees(TreeNode? root1, TreeNode? root2)
   {
-    if (root1 == null && root2 == null)
+    Stack<TreeNode> stack1 = new();
+    Stack<TreeNode> stack2 = new();
+    if (root1 != null) stack1.Push(root1);
+    if (root2 != null) stack2.Push(root2);
+
+    while (stack1.Count > 0 && stack2.Count > 0)
     {
-      return true;
+
+
+      if (stack1.TryPop(out TreeNode node1) && stack2.TryPop(out TreeNode node2))
+      {
+        if (node1.val != node2.val)
+        {
+          return false;
+        }
+      }
+      else if (stack1.Count > 0 || stack2.Count > 0)
+      {
+        return false;
+      }
+
     }
 
-    if (root1 == null || root2 == null || root1.val != root2.val)
-    {
-      return false;
-    }
-
-    return EqualTrees(root1.left, root2.left) && EqualTrees(root1.right, root2.right);
+    return true;
   }
 }

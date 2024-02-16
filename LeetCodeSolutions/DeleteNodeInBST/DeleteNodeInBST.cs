@@ -55,8 +55,8 @@ public class DeleteNodeInBSTSolution
         {
             TreeNode cur = stack.Pop();
             tree.AddToTree(cur.val);
-            if (cur.right != null) stack.Push(cur.right);
             if (cur.left != null) stack.Push(cur.left);
+            if (cur.right != null) stack.Push(cur.right);
         }
 
         return tree.Root;
