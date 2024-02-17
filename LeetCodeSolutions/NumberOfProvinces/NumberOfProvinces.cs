@@ -4,21 +4,23 @@ public class NumberOfProvincesSolution
 {
     private class GraphTraveler
     {
-        private HashSet<int> remaining;
-        private Stack<int> adjacent;
-        public GraphTraveler(int n)
+        private readonly HashSet<int> remaining;
+        private readonly Stack<int> adjacent;
+        private readonly int[][] graph;
+        public GraphTraveler(int[][] graph)
         {
-            remaining = new(n);
-            for (int i = 0; i < n; i++)
+            remaining = new();
+            for (int i = 0; i < graph.Length; i++)
             {
                 remaining.Add(i);
             }
 
             adjacent = new();
             adjacent.Push(0);
+            this.graph = graph;
         }
 
-        public void TraverseNextProvence(ref int[][] isConnected)
+        public void TraverseNextProvence()
         {
             while (adjacent.Count > 0)
             {
@@ -27,7 +29,7 @@ public class NumberOfProvincesSolution
 
                 foreach (int j in remaining)
                 {
-                    if (isConnected[i][j] == 1)
+                    if (graph[i][j] == 1)
                     {
                         adjacent.Push(j);
                     }
@@ -50,12 +52,12 @@ public class NumberOfProvincesSolution
     }
     public int FindCircleNum(int[][] isConnected)
     {
-        GraphTraveler graphTraveler = new(isConnected.Length);
+        GraphTraveler graphTraveler = new(isConnected);
         int provinces = 0;
 
         while (!graphTraveler.Traversed)
         {
-            graphTraveler.TraverseNextProvence(ref isConnected);
+            graphTraveler.TraverseNextProvence();
             provinces++;
             graphTraveler.GetNextCity();
         }
