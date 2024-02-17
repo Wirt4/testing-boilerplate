@@ -1,2 +1,8 @@
 namespace LeetCodeSolutions;
-public class NumberOfProvincesSolution {}
+public class NumberOfProvincesSolution
+{
+    public int FindCircleNum(int[][] isConnected)
+    {
+        return -1;
+    }
+}
