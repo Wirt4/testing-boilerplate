@@ -2,41 +2,62 @@
 namespace LeetCodeSolutions;
 public class NumberOfProvincesSolution
 {
-
-    public int FindCircleNum(int[][] isConnected)
+    private class GraphTraveler
     {
-        HashSet<int> remaining = new();
-        for (int i = 0; i < isConnected.Length; i++)
+        private HashSet<int> remaining;
+        private Stack<int> adjacent;
+        public GraphTraveler(int n)
         {
-            remaining.Add(i);
-        }
-        Stack<int> adjacent = new();
-        adjacent.Push(0);
-        int provinces = 0;
-        int curNdex;
+            remaining = new(n);
+            for (int i = 0; i < n; i++)
+            {
+                remaining.Add(i);
+            }
 
-        while (remaining.Count > 0)
+            adjacent = new();
+            adjacent.Push(0);
+        }
+
+        public void TraverseNextProvence(ref int[][] isConnected)
         {
             while (adjacent.Count > 0)
             {
-                curNdex = adjacent.Pop();
-                remaining.Remove(curNdex);
-                for (int j = 0; j < isConnected.Length; j++)
+                int i = adjacent.Pop();
+                remaining.Remove(i);
+
+                foreach (int j in remaining)
                 {
-                    if (remaining.Contains(j) && isConnected[curNdex][j] == 1)
+                    if (isConnected[i][j] == 1)
                     {
                         adjacent.Push(j);
                     }
                 }
             }
+        }
 
-            provinces++;
-
-            foreach (int unVisited in remaining)
+        public void GetNextCity()
+        {
+            if (remaining.Count > 0)
             {
-                adjacent.Push(unVisited);
-                break;
+                foreach (int unVisited in remaining)
+                {
+                    adjacent.Push(unVisited);
+                    return;
+                }
             }
+        }
+        public bool Traversed => remaining.Count == 0;
+    }
+    public int FindCircleNum(int[][] isConnected)
+    {
+        GraphTraveler graphTraveler = new(isConnected.Length);
+        int provinces = 0;
+
+        while (!graphTraveler.Traversed)
+        {
+            graphTraveler.TraverseNextProvence(ref isConnected);
+            provinces++;
+            graphTraveler.GetNextCity();
         }
 
         return provinces;
