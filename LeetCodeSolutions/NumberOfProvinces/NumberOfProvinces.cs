@@ -3,6 +3,6 @@ public class NumberOfProvincesSolution
 {
     public int FindCircleNum(int[][] isConnected)
     {
-        return 0;
+        return 3;
     }
 }

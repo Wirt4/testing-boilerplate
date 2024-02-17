@@ -11,6 +11,6 @@ public class NumberOfProvincesTests
   public void Example2()
   {
     int[][] cities = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
-    Assert.Equal(0, _solution.FindCircleNum(cities));
+    Assert.Equal(3, _solution.FindCircleNum(cities));
   }
 }
