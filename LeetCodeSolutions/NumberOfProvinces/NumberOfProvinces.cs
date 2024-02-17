@@ -9,7 +9,8 @@ public class NumberOfProvincesSolution
         private readonly int[][] graph;
         public GraphTraveler(int[][] graph)
         {
-            remaining = new();
+            remaining = [];
+
             for (int i = 0; i < graph.Length; i++)
             {
                 remaining.Add(i);
