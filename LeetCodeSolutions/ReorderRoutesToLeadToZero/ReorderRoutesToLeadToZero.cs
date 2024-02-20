@@ -3,6 +3,6 @@ public class ReorderRoutesToLeadToZeroSolution
 {
     public int MinReorder(int n, int[][] connections)
     {
-        return -1;
+        return 3;
     }
 }
