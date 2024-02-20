@@ -4,35 +4,44 @@ public class NumberOfProvincesSolution
 {
     private class GraphTraveler
     {
-        private readonly HashSet<int> remaining;
-        private readonly Stack<int> adjacent;
-        private readonly int[][] graph;
+        private readonly int[][] cityGraph;
+        private HashSet<int> unvisitedCities;
+        private Stack<int> adjacentCities;
+
         public GraphTraveler(int[][] graph)
         {
-            remaining = [];
+            cityGraph = graph;
+            InitializeRemaining();
+            InitializeAdjacentCities();
+        }
 
-            for (int i = 0; i < graph.Length; i++)
+        private void InitializeRemaining()
+        {
+            unvisitedCities = [];
+            for (int i = 0; i < cityGraph.Length; i++)
             {
-                remaining.Add(i);
+                unvisitedCities.Add(i);
             }
+        }
 
-            adjacent = new();
-            adjacent.Push(0);
-            this.graph = graph;
+        private void InitializeAdjacentCities()
+        {
+            adjacentCities = new();
+            adjacentCities.Push(0);
         }
 
         public void TraverseNextProvence()
         {
-            while (adjacent.Count > 0)
+            while (adjacentCities.Count > 0)
             {
-                int i = adjacent.Pop();
-                remaining.Remove(i);
+                int i = adjacentCities.Pop();
+                unvisitedCities.Remove(i);
 
-                foreach (int j in remaining)
+                foreach (int j in unvisitedCities)
                 {
-                    if (graph[i][j] == 1)
+                    if (cityGraph[i][j] == 1)
                     {
-                        adjacent.Push(j);
+                        adjacentCities.Push(j);
                     }
                 }
             }
@@ -40,17 +49,19 @@ public class NumberOfProvincesSolution
 
         public void GetNextCity()
         {
-            if (remaining.Count > 0)
+            if (unvisitedCities.Count > 0)
             {
-                foreach (int unVisited in remaining)
+                foreach (int unVisited in unvisitedCities)
                 {
-                    adjacent.Push(unVisited);
+                    adjacentCities.Push(unVisited);
                     return;
                 }
             }
         }
-        public bool Traversed => remaining.Count == 0;
+
+        public bool Traversed => unvisitedCities.Count == 0;
     }
+
     public int FindCircleNum(int[][] isConnected)
     {
         GraphTraveler graphTraveler = new(isConnected);
