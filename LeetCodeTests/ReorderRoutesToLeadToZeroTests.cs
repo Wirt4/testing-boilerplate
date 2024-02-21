@@ -18,4 +18,10 @@ public class ReorderRoutesToLeadToZeroTests
   {
     Assert.Equal(2, _solution.MinReorder(5, [[1, 0], [1, 2], [3, 2], [3, 4]]));
   }
+
+  [Fact]
+  public void Example3()
+  {
+    Assert.Equal(0, _solution.MinReorder(3, [[1, 0], [2, 0]]));
+  }
 }
