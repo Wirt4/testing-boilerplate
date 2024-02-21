@@ -28,10 +28,11 @@ public class ReorderRoutesToLeadToZeroSolution
 
         private void AddConnection(int ndx, int[] connection)
         {
-            bool correctionNeeded = ndx == 0;
-            int ndx2 = correctionNeeded ? 1 : 0;
+            bool directionChangeNeeded = ndx == 0;
+            int nextNode = directionChangeNeeded ? connection[1] : connection[0];
+            int prevNode = connection[ndx];
 
-            adjacents[connection[ndx]].Add(new Connection(connection[ndx2], correctionNeeded));
+            adjacents[prevNode].Add(new Connection(nextNode, directionChangeNeeded));
 
         }
 
