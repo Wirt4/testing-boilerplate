@@ -21,9 +21,19 @@ public class ReorderRoutesToLeadToZeroSolution
 
             foreach (int[] connection in connections)
             {
-                AddConnection(0, connection);
-                AddConnection(1, connection);
+                AddFromTo(connection);
+                AddToFrom(connection);
             }
+        }
+
+        private void AddFromTo(int[] connection)
+        {
+            AddConnection(0, connection);
+        }
+
+        private void AddToFrom(int[] connection)
+        {
+            AddConnection(1, connection);
         }
 
         private void AddConnection(int ndx, int[] connection)
