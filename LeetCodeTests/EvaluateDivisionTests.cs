@@ -8,7 +8,7 @@ public class EvaluateDivisionTests
     _solution = new();
   }
   [Fact]
-  public void Example1()
+  public void DescriptionExample1()
   {
     double[] desiredAnswer = [6.00000, 0.50000, -1.00000, 1.00000, -1.00000];
 
@@ -18,6 +18,19 @@ public class EvaluateDivisionTests
 
     double[] actual = _solution.CalcEquation(equations, values, queries);
 
+    Assert.Equal(desiredAnswer, actual);
+  }
+
+  [Fact]
+  public void DescriptionExample2()
+  {
+    double[] desiredAnswer = [3.75000, 0.40000, 5.00000, 0.20000];
+
+    string[][] equations = [["a", "b"], ["b", "c"], ["bc", "cd"]];
+    double[] values = [1.5, 2.5, 5.0];
+    string[][] queries = [["a", "c"], ["c", "b"], ["bc", "cd"], ["cd", "bc"]];
+
+    double[] actual = _solution.CalcEquation(equations, values, queries);
     Assert.Equal(desiredAnswer, actual);
   }
 }
