@@ -7,14 +7,14 @@ public class ReorderRoutesToLeadToZeroSolution
         public bool CorrectionNeeded = correctionNeeded;
     }
 
-    private class GraphSearcher
+    private class Graph
     {
-        public int Count;
+        public int DirectionReversalsNeeded;
 
         private readonly List<List<Connection>> adjacents;
-        public GraphSearcher(int n, ref int[][] connections)
+        public Graph(int n, ref int[][] connections)
         {
-            Count = 0;
+            DirectionReversalsNeeded = 0;
             adjacents = [];
 
             for (int i = 0; i < n; i++) { adjacents.Add([]); }
@@ -35,15 +35,15 @@ public class ReorderRoutesToLeadToZeroSolution
 
         }
 
-        public void DepthFirstSearch(int node = 0, int parent = -1)
+        public void DepthFirstTraversal(int node = 0, int parent = -1)
         {
             foreach (Connection connection in adjacents[node])
             {
                 if (connection.Neighbor != parent)
                 {
-                    if (connection.CorrectionNeeded) Count++;
+                    if (connection.CorrectionNeeded) DirectionReversalsNeeded++;
 
-                    DepthFirstSearch(connection.Neighbor, node);
+                    DepthFirstTraversal(connection.Neighbor, node);
                 }
             }
         }
@@ -52,8 +52,8 @@ public class ReorderRoutesToLeadToZeroSolution
 
     public int MinReorder(int n, int[][] connections)
     {
-        GraphSearcher searcher = new(n, ref connections);
-        searcher.DepthFirstSearch();
-        return searcher.Count;
+        Graph searcher = new(n, ref connections);
+        searcher.DepthFirstTraversal();
+        return searcher.DirectionReversalsNeeded;
     }
 }
