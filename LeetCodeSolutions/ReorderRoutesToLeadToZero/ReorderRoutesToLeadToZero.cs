@@ -1,12 +1,17 @@
 namespace LeetCodeSolutions;
 public class ReorderRoutesToLeadToZeroSolution
 {
+    private class Connection(int neighbor, bool correctDirection)
+    {
+        public int Neighbor = neighbor;
+        public bool CorrectDirection = correctDirection;
+    }
 
     private class GraphSearcher
     {
         public int Count;
 
-        private readonly List<List<Tuple<int, int>>> adjacents;
+        private readonly List<List<Connection>> adjacents;
         public GraphSearcher(int n, ref int[][] connections)
         {
             Count = 0;
@@ -28,18 +33,23 @@ public class ReorderRoutesToLeadToZeroSolution
         {
             int ndx2 = ndx == 0 ? 1 : 0;
 
-            adjacents[connection[ndx]].Add(new Tuple<int, int>(connection[ndx2], ndx2));
+            adjacents[connection[ndx]].Add(new Connection(connection[ndx2], ndx2 == 0));
 
         }
 
         public void DepthFirstSearch(int node = 0, int parent = -1)
         {
-            foreach (Tuple<int, int> pair in adjacents[node])
+            foreach (Connection connection in adjacents[node])
             {
-                if (pair.Item1 != parent)
+                if (connection.Neighbor != parent)
                 {
-                    Count += pair.Item2;
-                    DepthFirstSearch(pair.Item1, node);
+
+                    if (!connection.CorrectDirection)
+                    {
+                        Count++;
+                    }
+
+                    DepthFirstSearch(connection.Neighbor, node);
                 }
             }
         }
