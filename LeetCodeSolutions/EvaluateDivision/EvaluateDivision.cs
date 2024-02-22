@@ -6,6 +6,7 @@ public class EvaluateDivisionSolution
     {
         public double Cost;
         public string Next;
+        public string Source;
     }
 
     private class QueryBox
@@ -23,7 +24,8 @@ public class EvaluateDivisionSolution
                 Connection connection1 = new()
                 {
                     Cost = values[i],
-                    Next = equations[i][1]
+                    Next = equations[i][1],
+                    Source = equations[i][0]
                 };
 
                 table[equations[i][0]].Add(connection1);
@@ -36,7 +38,8 @@ public class EvaluateDivisionSolution
                 Connection connection2 = new()
                 {
                     Cost = Math.Pow(values[i], -1),
-                    Next = equations[i][0]
+                    Next = equations[i][0],
+                    Source = equations[i][1]
                 };
 
                 table[equations[i][1]].Add(connection2);
@@ -48,25 +51,39 @@ public class EvaluateDivisionSolution
             return table.ContainsKey(key);
         }
 
-        public double FindPath(string n1, string n2)
+        public double FindPath(IList<string> query)
         {
-            return Find(n1, n2, 1.0, []);
+            Connection starter = new()
+            {
+                Source = query[0],
+                Next = query[1],
+                Cost = 1.0
+            };
+            return Find(starter, []);
         }
 
-        private double Find(string q1, string q2, double cost, HashSet<string> visited)
+        private double Find(Connection c, HashSet<string> visited)
         {
-            if (table.ContainsKey(q1) && table.ContainsKey(q2) && !visited.Contains(q1) && !visited.Contains(q2))
+            if (table.ContainsKey(c.Source) && table.ContainsKey(c.Next) && !visited.Contains(c.Source) && !visited.Contains(c.Next))
             {
-                if (q1 == q2)
+                if (c.Source == c.Next)
                 {
-                    return cost;
+                    return c.Cost;
                 }
 
-                visited.Add(q1);
+                visited.Add(c.Source);
 
-                for (int i = 0; i < table[q1].Count; i++)
+                List<Connection> adjacentConnection = table[c.Source];
+
+                foreach (Connection connection in adjacentConnection)
                 {
-                    double path = Find(table[q1][i].Next, q2, table[q1][i].Cost * cost, visited);
+                    Connection nextConnection = new()
+                    {
+                        Source = connection.Next,
+                        Next = c.Next,
+                        Cost = connection.Cost * c.Cost
+                    };
+                    double path = Find(nextConnection, visited);
                     if (path > 0)
                     {
                         return path;
@@ -84,17 +101,7 @@ public class EvaluateDivisionSolution
 
         foreach (IList<string> query in queries)
         {
-            if (!qBox.Contains(query[0]) || !qBox.Contains(query[1]))
-            {
-                answers.Add(-1);
-                continue;
-            }
-
-            double path = qBox.FindPath(query[0], query[1]);
-
-
-            answers.Add(path);
-
+            answers.Add(qBox.FindPath(query));
         }
 
         return answers.ToArray();
