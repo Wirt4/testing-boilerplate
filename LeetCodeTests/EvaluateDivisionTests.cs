@@ -33,4 +33,17 @@ public class EvaluateDivisionTests
     double[] actual = _solution.CalcEquation(equations, values, queries);
     Assert.Equal(desiredAnswer, actual);
   }
+
+  [Fact]
+  public void DescriptionExample3()
+  {
+    double[] desiredAnswer = [0.50000, 2.00000, -1.00000, -1.00000];
+
+    string[][] equations = [["a", "b"]];
+    double[] values = [5.0];
+    string[][] queries = [["a", "b"], ["b", "a"], ["a", "c"], ["x", "y"]];
+
+    double[] actual = _solution.CalcEquation(equations, values, queries);
+    Assert.Equal(desiredAnswer, actual);
+  }
 }
