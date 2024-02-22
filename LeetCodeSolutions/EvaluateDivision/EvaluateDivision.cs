@@ -36,7 +36,7 @@ public class EvaluateDivisionSolution
 
             Connection connection2 = new()
             {
-                Cost = 1.0 / values[i],
+                Cost = Math.Pow(values[i], -1),
                 Next = equations[i][0]
             };
 
@@ -50,18 +50,18 @@ public class EvaluateDivisionSolution
                 answers.Add(-1);
                 continue;
             }
-            double path = FindPath(query[0], query[1], 1.0, table, new());
+
+            double path = FindPath(query[0], query[1], 1.0, table, []);
+
             if (path > 0)
             {
                 answers.Add(path);
             }
             else
             {
-                answers.Add(path * FindPath(query[1], query[0], 1.0, table, new()));
+                answers.Add(path * FindPath(query[1], query[0], 1.0, table, []));
             }
         }
-
-
 
         return answers.ToArray();
     }

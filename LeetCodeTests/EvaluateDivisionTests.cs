@@ -40,7 +40,7 @@ public class EvaluateDivisionTests
     double[] desiredAnswer = [0.50000, 2.00000, -1.00000, -1.00000];
 
     string[][] equations = [["a", "b"]];
-    double[] values = [5.0];
+    double[] values = [0.5];
     string[][] queries = [["a", "b"], ["b", "a"], ["a", "c"], ["x", "y"]];
 
     double[] actual = _solution.CalcEquation(equations, values, queries);
