@@ -92,14 +92,9 @@ public class EvaluateDivisionSolution
 
             double path = qBox.FindPath(query[0], query[1]);
 
-            if (path > 0)
-            {
-                answers.Add(path);
-            }
-            else
-            {
-                answers.Add(path * qBox.FindPath(query[1], query[0]));
-            }
+
+            answers.Add(path);
+
         }
 
         return answers.ToArray();
