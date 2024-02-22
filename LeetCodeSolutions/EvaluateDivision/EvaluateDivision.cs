@@ -16,11 +16,6 @@ public class EvaluateDivisionSolution
         {
             for (int i = 0; i < equations.Count; i++)
             {
-                if (!table.ContainsKey(equations[i][0]))
-                {
-                    table.Add(equations[i][0], []);
-                }
-
                 Connection connection1 = new()
                 {
                     Cost = values[i],
@@ -28,12 +23,7 @@ public class EvaluateDivisionSolution
                     Source = equations[i][0]
                 };
 
-                table[equations[i][0]].Add(connection1);
-
-                if (!table.ContainsKey(equations[i][1]))
-                {
-                    table.Add(equations[i][1], []);
-                }
+                AddToTable(connection1);
 
                 Connection connection2 = new()
                 {
@@ -42,8 +32,18 @@ public class EvaluateDivisionSolution
                     Source = equations[i][1]
                 };
 
-                table[equations[i][1]].Add(connection2);
+                AddToTable(connection2);
             }
+        }
+
+        private void AddToTable(Connection connection)
+        {
+            if (!table.ContainsKey(connection.Source))
+            {
+                table.Add(connection.Source, []);
+            }
+
+            table[connection.Source].Add(connection);
         }
 
         public bool Contains(string key)
