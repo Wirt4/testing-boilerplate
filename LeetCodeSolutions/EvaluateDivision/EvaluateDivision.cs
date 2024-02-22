@@ -11,7 +11,8 @@ public class EvaluateDivisionSolution
 
     private class QueryBox
     {
-        private Dictionary<string, List<Connection>> table = [];
+        private readonly Dictionary<string, List<Connection>> table = [];
+        private readonly double noAnswer = -1;
         public QueryBox(IList<IList<string>> equations, double[] values)
         {
             for (int i = 0; i < equations.Count; i++)
@@ -62,36 +63,52 @@ public class EvaluateDivisionSolution
             return Find(starter, []);
         }
 
+        private bool IsValidConnection(Connection c, HashSet<string> visited)
+        {
+            if (table.ContainsKey(c.Source) && table.ContainsKey(c.Next))
+            {
+                return !visited.Contains(c.Source) && !visited.Contains(c.Next);
+            }
+
+            return false;
+        }
         private double Find(Connection c, HashSet<string> visited)
         {
-            if (table.ContainsKey(c.Source) && table.ContainsKey(c.Next) && !visited.Contains(c.Source) && !visited.Contains(c.Next))
+            if (!IsValidConnection(c, visited))
             {
-                if (c.Source == c.Next)
+                return noAnswer;
+            }
+
+            if (c.Source == c.Next)
+            {
+                return c.Cost;
+            }
+
+            visited.Add(c.Source);
+
+            return RecursiveCall(table[c.Source], c, visited);
+        }
+
+        private double RecursiveCall(List<Connection> connections, Connection current, HashSet<string> visited)
+        {
+            foreach (Connection connection in connections)
+            {
+                Connection nextConnection = new()
                 {
-                    return c.Cost;
-                }
+                    Source = connection.Next,
+                    Next = current.Next,
+                    Cost = connection.Cost * current.Cost
+                };
 
-                visited.Add(c.Source);
+                double path = Find(nextConnection, visited);
 
-                List<Connection> adjacentConnection = table[c.Source];
-
-                foreach (Connection connection in adjacentConnection)
+                if (path > 0)
                 {
-                    Connection nextConnection = new()
-                    {
-                        Source = connection.Next,
-                        Next = c.Next,
-                        Cost = connection.Cost * c.Cost
-                    };
-                    double path = Find(nextConnection, visited);
-                    if (path > 0)
-                    {
-                        return path;
-                    }
+                    return path;
                 }
             }
 
-            return -1;
+            return noAnswer;
         }
     }
     public double[] CalcEquation(IList<IList<string>> equations, double[] values, IList<IList<string>> queries)
