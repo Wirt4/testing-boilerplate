@@ -1,94 +1,92 @@
 namespace LeetCodeSolutions;
 public class EvaluateDivisionSolution
 {
-    private class MathNode
+
+    private class Connection
     {
-        public List<double> Values;
-        public List<string> Variables;
-        public MathNode()
-        {
-            Values = [];
-            Variables = [];
-        }
+        public double Cost;
+        public string Next;
     }
 
-    private Dictionary<string, MathNode> CreateTable(IList<IList<string>> equations, double[] values)
-    {
-        Dictionary<string, MathNode> table = [];
-        for (int i = 0; i < equations.Count; i++)
-        {
-            //add forward track
-            if (!table.ContainsKey(equations[i][0]))
-            {
-                table.Add(equations[i][0], new MathNode());
-            }
 
-            table[equations[i][0]].Values.Add(values[i]);
-            table[equations[i][0]].Variables.Add(equations[i][1]);
-
-            //add refverse track
-            if (!table.ContainsKey(equations[i][1]))
-            {
-                table.Add(equations[i][1], new MathNode());
-            }
-
-            table[equations[i][1]].Values.Add(1.0 / values[i]);
-            table[equations[i][1]].Variables.Add(equations[i][0]);
-
-
-        }
-        return table;
-    }
-
-    private double PathCost(string target, string currentNode, double cost, Dictionary<string, MathNode> table, HashSet<string> visited)
-    {
-        if (target == currentNode)
-        {
-            return cost;
-        }
-        if (table.ContainsKey(currentNode) && !visited.Contains(currentNode))
-        {
-            visited.Add(currentNode);
-
-            for (int i = 0; i < table[currentNode].Variables.Count; i++)
-            {
-                string neighbor = table[currentNode].Variables[i];
-                double multiplier = table[currentNode].Values[i];
-
-                double temp = PathCost(target, neighbor, cost * multiplier, table, visited);
-                if (temp > 0)
-                {
-                    return temp;
-                }
-            }
-
-        }
-
-        return -1;
-    }
-    private double Foo(IList<string> query, Dictionary<string, MathNode> table)
-    {
-        if (!table.ContainsKey(query[0]) || !table.ContainsKey(query[1]))
-        {
-            return -1;
-        }
-
-        HashSet<string> visited = [query[0]];
-
-        return PathCost(query[0], query[1], table[query[0]].Values[0], table, visited);
-
-    }
     public double[] CalcEquation(IList<IList<string>> equations, double[] values, IList<IList<string>> queries)
     {
-        // create a lookup table
-        Dictionary<string, MathNode> table = CreateTable(equations, values);
         List<double> answers = [];
+        Dictionary<string, List<Connection>> table = [];
+
+        for (int i = 0; i < equations.Count; i++)
+        {
+            if (!table.ContainsKey(equations[i][0]))
+            {
+                table.Add(equations[i][0], []);
+            }
+
+            Connection connection1 = new()
+            {
+                Cost = values[i],
+                Next = equations[i][1]
+            };
+
+            table[equations[i][0]].Add(connection1);
+
+            if (!table.ContainsKey(equations[i][1]))
+            {
+                table.Add(equations[i][1], []);
+            }
+
+            Connection connection2 = new()
+            {
+                Cost = 1.0 / values[i],
+                Next = equations[i][0]
+            };
+
+            table[equations[i][1]].Add(connection2);
+        }
 
         foreach (IList<string> query in queries)
         {
-            answers.Add(Foo(query, table));
+            if (!table.ContainsKey(query[0]) || !table.ContainsKey(query[1]))
+            {
+                answers.Add(-1);
+                continue;
+            }
+            double path = FindPath(query[0], query[1], 1.0, table, new());
+            if (path > 0)
+            {
+                answers.Add(path);
+            }
+            else
+            {
+                answers.Add(path * FindPath(query[1], query[0], 1.0, table, new()));
+            }
         }
 
+
+
         return answers.ToArray();
+    }
+
+    private double FindPath(string q1, string q2, double cost, Dictionary<string, List<Connection>> table, HashSet<string> visited)
+    {
+        if (table.ContainsKey(q1) && table.ContainsKey(q2) && !visited.Contains(q1) && !visited.Contains(q2))
+        {
+            if (q1 == q2)
+            {
+                return cost;
+            }
+
+            visited.Add(q1);
+
+            for (int i = 0; i < table[q1].Count; i++)
+            {
+                double path = FindPath(table[q1][i].Next, q2, table[q1][i].Cost * cost, table, visited);
+                if (path > 0)
+                {
+                    return path;
+                }
+            }
+        }
+
+        return -1;
     }
 }
