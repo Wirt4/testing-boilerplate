@@ -16,4 +16,14 @@ public class NearestExitFromMazeTests
     int expected = 1;
     Assert.Equal(expected, answer);
   }
+
+  [Fact]
+  public void LCExample2()
+  {
+    char[][] maze = [['+', '+', '+'], ['.', '.', '.'], ['+', '+', '+']];
+    int[] entrance = [1, 0];
+    int answer = _solution.NearestExit(maze, entrance);
+    int expected = 2;
+    Assert.Equal(expected, answer);
+  }
 }
