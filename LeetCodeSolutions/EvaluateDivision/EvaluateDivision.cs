@@ -91,6 +91,7 @@ public class EvaluateDivisionSolution
 
         private double RecursiveCall(List<Connection> connections, Connection current, HashSet<string> visited)
         {
+            double path = noAnswer;
             foreach (Connection connection in connections)
             {
                 Connection nextConnection = new()
@@ -100,15 +101,15 @@ public class EvaluateDivisionSolution
                     Cost = connection.Cost * current.Cost
                 };
 
-                double path = Find(nextConnection, visited);
+                path = Find(nextConnection, visited);
 
-                if (path > 0)
+                if (path != noAnswer)
                 {
-                    return path;
+                    break;
                 }
             }
 
-            return noAnswer;
+            return path;
         }
     }
     public double[] CalcEquation(IList<IList<string>> equations, double[] values, IList<IList<string>> queries)
