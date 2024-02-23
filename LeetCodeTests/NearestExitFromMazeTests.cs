@@ -1,11 +1,19 @@
 namespace Tests;
 using LeetCodeSolutions;
- public class NearestExitFromMazeTests {
+public class NearestExitFromMazeTests
+{
   private NearestExitFromMazeSolution _solution;
-  public NearestExitFromMazeTests (){
-      _solution = new();
+  public NearestExitFromMazeTests()
+  {
+    _solution = new();
   }
   [Fact]
-  public void Test1(){
+  public void LCExample1()
+  {
+    char[][] maze = [['+', '+', '.', '+'], ['.', '.', '.', '+'], ['+', '+', '+', '.']];
+    int[] entrance = [1, 2];
+    int answer = _solution.NearestExit(maze, entrance);
+    int expected = 1;
+    Assert.Equal(expected, answer);
   }
 }
