@@ -1,50 +1,52 @@
 namespace LeetCodeSolutions;
 public class EvaluateDivisionSolution
 {
-
-    private class Connection
+    /**
+represents equation "y = mx"
+    **/
+    private class Equation
     {
-        public double Cost;
-        public string Next;
-        public string Source;
+        public double m;
+        public string x;
+        public string y;
     }
 
     private class QueryBox
     {
-        private readonly Dictionary<string, List<Connection>> table = [];
+        private readonly Dictionary<string, List<Equation>> table = [];
         private readonly double noAnswer = -1;
         public QueryBox(IList<IList<string>> equations, double[] values)
         {
             for (int i = 0; i < equations.Count; i++)
             {
-                Connection connection1 = new()
+                Equation connection1 = new()
                 {
-                    Cost = values[i],
-                    Next = equations[i][1],
-                    Source = equations[i][0]
+                    m = values[i],
+                    x = equations[i][1],
+                    y = equations[i][0]
                 };
 
                 AddToTable(connection1);
 
-                Connection connection2 = new()
+                Equation connection2 = new()
                 {
-                    Cost = Math.Pow(values[i], -1),
-                    Next = equations[i][0],
-                    Source = equations[i][1]
+                    m = Math.Pow(values[i], -1),
+                    x = equations[i][0],
+                    y = equations[i][1]
                 };
 
                 AddToTable(connection2);
             }
         }
 
-        private void AddToTable(Connection connection)
+        private void AddToTable(Equation connection)
         {
-            if (!table.ContainsKey(connection.Source))
+            if (!table.ContainsKey(connection.y))
             {
-                table.Add(connection.Source, []);
+                table.Add(connection.y, []);
             }
 
-            table[connection.Source].Add(connection);
+            table[connection.y].Add(connection);
         }
 
         public bool Contains(string key)
@@ -54,51 +56,51 @@ public class EvaluateDivisionSolution
 
         public double FindPath(IList<string> query)
         {
-            Connection starter = new()
+            Equation starter = new()
             {
-                Source = query[0],
-                Next = query[1],
-                Cost = 1.0
+                y = query[0],
+                x = query[1],
+                m = 1.0
             };
             return Find(starter, []);
         }
 
-        private bool IsValidConnection(Connection c, HashSet<string> visited)
+        private bool IsValidConnection(Equation c, HashSet<string> visited)
         {
-            if (table.ContainsKey(c.Source) && table.ContainsKey(c.Next))
+            if (table.ContainsKey(c.y) && table.ContainsKey(c.x))
             {
-                return !visited.Contains(c.Source) && !visited.Contains(c.Next);
+                return !visited.Contains(c.y) && !visited.Contains(c.x);
             }
 
             return false;
         }
-        private double Find(Connection c, HashSet<string> visited)
+        private double Find(Equation c, HashSet<string> visited)
         {
             if (!IsValidConnection(c, visited))
             {
                 return noAnswer;
             }
 
-            if (c.Source == c.Next)
+            if (c.y == c.x)
             {
-                return c.Cost;
+                return c.m;
             }
 
-            visited.Add(c.Source);
+            visited.Add(c.y);
 
-            return RecursiveCall(table[c.Source], c, visited);
+            return RecursiveCall(table[c.y], c, visited);
         }
 
-        private double RecursiveCall(List<Connection> connections, Connection current, HashSet<string> visited)
+        private double RecursiveCall(List<Equation> connections, Equation current, HashSet<string> visited)
         {
             double path = noAnswer;
-            foreach (Connection connection in connections)
+            foreach (Equation connection in connections)
             {
-                Connection nextConnection = new()
+                Equation nextConnection = new()
                 {
-                    Source = connection.Next,
-                    Next = current.Next,
-                    Cost = connection.Cost * current.Cost
+                    y = connection.x,
+                    x = current.x,
+                    m = connection.m * current.m
                 };
 
                 path = Find(nextConnection, visited);
