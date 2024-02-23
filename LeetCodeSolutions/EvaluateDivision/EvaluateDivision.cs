@@ -4,90 +4,87 @@ public class EvaluateDivisionSolution
     /**
 represents equation "y = mx"
     **/
-    private class Equation
+    private class Equation(string y, double m, string x)
     {
-        public Equation(string y, double m, string x)
-        {
-            this.y = y;
-            this.m = m;
-            this.x = x;
-        }
-        public double m;
-        public string x;
-        public string y;
+        public double m = m;
+        public string x = x;
+        public string y = y;
     }
 
     private class QueryBox
     {
-        private readonly Dictionary<string, List<Equation>> table = [];
+        private readonly Dictionary<string, List<Equation>> EquationTable = [];
         private readonly double noAnswer = -1;
         public QueryBox(IList<IList<string>> equations, double[] values)
         {
             for (int i = 0; i < equations.Count; i++)
             {
-                Equation connection1 = new(equations[i][0], values[i], equations[i][1]);
-                AddToTable(connection1);
-                Equation connection2 = new(equations[i][1], Math.Pow(values[i], -1), equations[i][0]);
-                AddToTable(connection2);
+                string y = equations[i][0];
+                double m = values[i];
+                string x = equations[i][1];
+
+                Equation yInTermsOfX = new(y, m, x);
+                AddToTable(yInTermsOfX);
+                Equation XInTermsOfY = new(x, 1 / m, y);
+                AddToTable(XInTermsOfY);
             }
         }
 
-        private void AddToTable(Equation connection)
+        private void AddToTable(Equation equation)
         {
-            if (!table.ContainsKey(connection.y))
+            string key = equation.y;
+            if (!EquationTable.ContainsKey(key))
             {
-                table.Add(connection.y, []);
+                EquationTable.Add(key, []);
             }
 
-            table[connection.y].Add(connection);
+            EquationTable[key].Add(equation);
         }
 
         public bool Contains(string key)
         {
-            return table.ContainsKey(key);
+            return EquationTable.ContainsKey(key);
         }
 
-        public double FindPath(IList<string> query)
+        public double FindFactor(string a, string b)
         {
-            string y = query[0];
-            Equation starter = new(y, 1.0, query[1]);
-            return Find(starter, []);
+            Equation baseCase = new(a, 1.0, b);
+            HashSet<string> visitedVariables = [];
+            return IsolateMultiplier(baseCase, visitedVariables);
         }
 
         private bool IsValidConnection(Equation c, HashSet<string> visited)
         {
-            if (table.ContainsKey(c.y) && table.ContainsKey(c.x))
+            if (EquationTable.ContainsKey(c.y) && EquationTable.ContainsKey(c.x))
             {
                 return !visited.Contains(c.y) && !visited.Contains(c.x);
             }
 
             return false;
         }
-        private double Find(Equation c, HashSet<string> visited)
+        private double IsolateMultiplier(Equation currentEquation, HashSet<string> visited)
         {
-            if (!IsValidConnection(c, visited))
+            if (!IsValidConnection(currentEquation, visited))
             {
                 return noAnswer;
             }
 
-            if (c.y == c.x)
+            string currentVariable = currentEquation.y;
+
+            if (currentVariable == currentEquation.x)
             {
-                return c.m;
+                return currentEquation.m;
             }
 
-            visited.Add(c.y);
+            visited.Add(currentVariable);
 
-            return RecursiveCall(table[c.y], c, visited);
-        }
-
-        private double RecursiveCall(List<Equation> connections, Equation current, HashSet<string> visited)
-        {
             double path = noAnswer;
-            foreach (Equation connection in connections)
-            {
-                Equation nextConnection = new(connection.x, connection.m * current.m, current.x);
 
-                path = Find(nextConnection, visited);
+            foreach (Equation adjacentEquasion in EquationTable[currentVariable])
+            {
+                Equation nextEquation = GetNextEquation(currentEquation, adjacentEquasion);
+
+                path = IsolateMultiplier(nextEquation, visited);
 
                 if (path != noAnswer)
                 {
@@ -97,6 +94,10 @@ represents equation "y = mx"
 
             return path;
         }
+        private Equation GetNextEquation(Equation current, Equation adjacent)
+        {
+            return new(adjacent.x, adjacent.m * current.m, current.x);
+        }
     }
     public double[] CalcEquation(IList<IList<string>> equations, double[] values, IList<IList<string>> queries)
     {
@@ -105,7 +106,7 @@ represents equation "y = mx"
 
         foreach (IList<string> query in queries)
         {
-            answers.Add(qBox.FindPath(query));
+            answers.Add(qBox.FindFactor(query[0], query[1]));
         }
 
         return answers.ToArray();
