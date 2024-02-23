@@ -46,3 +46,4 @@ Constraints:
     0 <= entrancecol < n
     entrance will always be an empty cell.
 
+https://leetcode.com/problems/nearest-exit-from-entrance-in-maze
