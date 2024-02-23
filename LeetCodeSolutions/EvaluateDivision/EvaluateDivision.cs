@@ -6,6 +6,12 @@ represents equation "y = mx"
     **/
     private class Equation
     {
+        public Equation(string y, double m, string x)
+        {
+            this.y = y;
+            this.m = m;
+            this.x = x;
+        }
         public double m;
         public string x;
         public string y;
@@ -19,22 +25,9 @@ represents equation "y = mx"
         {
             for (int i = 0; i < equations.Count; i++)
             {
-                Equation connection1 = new()
-                {
-                    m = values[i],
-                    x = equations[i][1],
-                    y = equations[i][0]
-                };
-
+                Equation connection1 = new(equations[i][0], values[i], equations[i][1]);
                 AddToTable(connection1);
-
-                Equation connection2 = new()
-                {
-                    m = Math.Pow(values[i], -1),
-                    x = equations[i][0],
-                    y = equations[i][1]
-                };
-
+                Equation connection2 = new(equations[i][1], Math.Pow(values[i], -1), equations[i][0]);
                 AddToTable(connection2);
             }
         }
@@ -56,12 +49,8 @@ represents equation "y = mx"
 
         public double FindPath(IList<string> query)
         {
-            Equation starter = new()
-            {
-                y = query[0],
-                x = query[1],
-                m = 1.0
-            };
+            string y = query[0];
+            Equation starter = new(y, 1.0, query[1]);
             return Find(starter, []);
         }
 
@@ -96,12 +85,7 @@ represents equation "y = mx"
             double path = noAnswer;
             foreach (Equation connection in connections)
             {
-                Equation nextConnection = new()
-                {
-                    y = connection.x,
-                    x = current.x,
-                    m = connection.m * current.m
-                };
+                Equation nextConnection = new(connection.x, connection.m * current.m, current.x);
 
                 path = Find(nextConnection, visited);
 
