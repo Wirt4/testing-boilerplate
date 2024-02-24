@@ -42,4 +42,13 @@ public class RottingOrangesTests
     int output = _solution.OrangesRotting(grid);
     Assert.Equal(desiredOutput, output);
   }
+
+  [Fact]
+  public void BreakingCase12()
+  {
+    int[][] grid = [[2], [2], [1], [0], [1], [1]];
+    int desiredOutput = -1;
+    int output = _solution.OrangesRotting(grid);
+    Assert.Equal(desiredOutput, output);
+  }
 }
