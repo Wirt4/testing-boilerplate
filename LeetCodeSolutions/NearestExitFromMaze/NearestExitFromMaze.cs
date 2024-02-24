@@ -7,19 +7,48 @@ public class NearestExitFromMazeSolution
         public int y;
     }
 
+    private class Maze
+    {
+        private char[][] maze;
+        private int width;
+        private int height;
+
+        public Maze(char[][] maze)
+        {
+            this.maze = maze;
+            width = maze.Length;
+            height = maze[0].Length;
+        }
+
+        public bool AreValidCoords(TravelNode node)
+        {
+            return node.x >= 0 && node.x < width && node.y >= 0 && node.y < height && maze[node.x][node.y] == '.';
+        }
+
+        public void MarkAsVisited(TravelNode node)
+        {
+            maze[node.x][node.y] = '+';
+        }
+
+        public bool AtExit(TravelNode node)
+        {
+            return node.x == 0 || node.y == 0 || node.x == width - 1 || node.y == width - 1;
+        }
+    }
+
     private bool IsValid(int x, int y, int n, int m)
     {
         return x >= 0 && x < n && y >= 0 && y < m;
     }
     public int NearestExit(char[][] maze, int[] entrance)
     {
-        int n = maze.Length;
-        int m = maze[0].Length;
-
+        Maze mazeObj = new(maze);
         Queue<TravelNode> queue = new();
-        queue.Enqueue(new() { x = entrance[0], y = entrance[1] });
-        maze[entrance[0]][entrance[1]] = '+';
+        TravelNode starter = new() { x = entrance[0], y = entrance[1] };
+        queue.Enqueue(starter);
+        mazeObj.MarkAsVisited(starter);
         int steps = 0;
+
         while (queue.Count > 0)
         {
             int size = queue.Count;
@@ -27,7 +56,7 @@ public class NearestExitFromMazeSolution
             for (int i = 0; i < size; i++)
             {
                 TravelNode currentNode = queue.Dequeue();
-                if (currentNode.x == 0 || currentNode.y == 0 || currentNode.x == n - 1 || currentNode.y == m - 1)
+                if (mazeObj.AtExit(currentNode))
                 {
                     if (currentNode.x != entrance[0] || currentNode.y != entrance[1])
                     {
@@ -35,28 +64,32 @@ public class NearestExitFromMazeSolution
                     }
                 }
 
-                if (IsValid(currentNode.x + 1, currentNode.y, n, m) && maze[currentNode.x + 1][currentNode.y] == '.')
+                TravelNode eastNode = new() { x = currentNode.x + 1, y = currentNode.y };
+                if (mazeObj.AreValidCoords(eastNode))
                 {
-                    maze[currentNode.x + 1][currentNode.y] = '+';
-                    queue.Enqueue(new() { x = currentNode.x + 1, y = currentNode.y });
+                    mazeObj.MarkAsVisited(eastNode);
+                    queue.Enqueue(eastNode);
                 }
 
-                if (IsValid(currentNode.x - 1, currentNode.y, n, m) && maze[currentNode.x - 1][currentNode.y] == '.')
+                TravelNode westNode = new() { x = currentNode.x - 1, y = currentNode.y };
+                if (mazeObj.AreValidCoords(westNode))
                 {
-                    maze[currentNode.x - 1][currentNode.y] = '+';
-                    queue.Enqueue(new() { x = currentNode.x - 1, y = currentNode.y });
+                    mazeObj.MarkAsVisited(westNode);
+                    queue.Enqueue(westNode);
                 }
 
-                if (IsValid(currentNode.x, currentNode.y + 1, n, m) && maze[currentNode.x][currentNode.y + 1] == '.')
+                TravelNode northNode = new() { x = currentNode.x, y = currentNode.y + 1 };
+                if (mazeObj.AreValidCoords(northNode))
                 {
-                    maze[currentNode.x][currentNode.y + 1] = '+';
-                    queue.Enqueue(new() { x = currentNode.x, y = currentNode.y + 1 });
+                    mazeObj.MarkAsVisited(northNode);
+                    queue.Enqueue(northNode);
                 }
 
-                if (IsValid(currentNode.x, currentNode.y - 1, n, m) && maze[currentNode.x][currentNode.y - 1] == '.')
+                TravelNode southNode = new() { x = currentNode.x, y = currentNode.y - 1 };
+                if (mazeObj.AreValidCoords(southNode))
                 {
-                    maze[currentNode.x][currentNode.y - 1] = '+';
-                    queue.Enqueue(new() { x = currentNode.x, y = currentNode.y - 1 });
+                    mazeObj.MarkAsVisited(southNode);
+                    queue.Enqueue(southNode);
                 }
             }
             steps++;
