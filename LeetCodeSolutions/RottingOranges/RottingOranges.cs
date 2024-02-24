@@ -7,6 +7,7 @@ public class RottingOrangesSolution
         private int[][] grid;
         public bool FreshOrangesFound;
         public bool RottenOrangesFound;
+        Stack<int[]> rotPoints;
 
         public int Width => grid.Length;
         public int Height => grid[0].Length;
@@ -16,9 +17,10 @@ public class RottingOrangesSolution
             this.grid = grid;
             FreshOrangesFound = true;
             RottenOrangesFound = false;
+            rotPoints = new();
         }
 
-        public void MarkRotten(int[] rotPoint)
+        private void MarkRotten(int[] rotPoint)
         {
             grid[rotPoint[0]][rotPoint[1]] = 2;
         }
@@ -55,24 +57,51 @@ public class RottingOrangesSolution
 
         public bool Isolated(int x, int y)
         {
+            FreshOrangesFound = true;
             return IsNullOrEmpty(x - 1, y) && IsNullOrEmpty(x + 1, y) && IsNullOrEmpty(x, y - 1) && IsNullOrEmpty(x, y + 1);
+        }
+
+        public void SpoilAdjacentOranges()
+        {
+            FreshOrangesFound = false;
+            while (rotPoints.Count > 0)
+            {
+                MarkRotten(rotPoints.Pop());
+            }
+        }
+
+        public void MarkAdjacentFresh(int i, int j)
+        {
+            RottenOrangesFound = true;
+            if (InBoundsAndFresh(i - 1, j))
+            {
+                rotPoints.Push([i - 1, j]);
+            }
+
+            if (InBoundsAndFresh(i + 1, j))
+            {
+                rotPoints.Push([i + 1, j]);
+            }
+
+            if (InBoundsAndFresh(i, j - 1))
+            {
+                rotPoints.Push([i, j - 1]);
+            }
+
+            if (InBoundsAndFresh(i, j + 1))
+            {
+                rotPoints.Push([i, j + 1]);
+            }
         }
     }
     public int OrangesRotting(int[][] grid)
     {
         int minutes = 0;
-
         OrangeGrove orangeGrove = new(grid);
-        Stack<int[]> rotPoints = new();
 
         while (true)
         {
-            while (rotPoints.Count > 0)
-            {
-                orangeGrove.MarkRotten(rotPoints.Pop());
-            }
-
-            orangeGrove.FreshOrangesFound = false;
+            orangeGrove.SpoilAdjacentOranges();
 
             for (int i = 0; i < orangeGrove.Width; i++)
             {
@@ -81,36 +110,15 @@ public class RottingOrangesSolution
                     switch (orangeGrove.Orange(i, j))
                     {
                         case 1:
-                            orangeGrove.FreshOrangesFound = true;
                             if (orangeGrove.Isolated(i, j))
                             {
                                 return -1;
                             }
                             break;
                         case 2:
-                            orangeGrove.RottenOrangesFound = true;
-                            if (orangeGrove.InBoundsAndFresh(i - 1, j))
-                            {
-                                rotPoints.Push([i - 1, j]);
-                            }
-
-                            if (orangeGrove.InBoundsAndFresh(i + 1, j))
-                            {
-                                rotPoints.Push([i + 1, j]);
-                            }
-
-                            if (orangeGrove.InBoundsAndFresh(i, j - 1))
-                            {
-                                rotPoints.Push([i, j - 1]);
-                            }
-
-                            if (orangeGrove.InBoundsAndFresh(i, j + 1))
-                            {
-                                rotPoints.Push([i, j + 1]);
-                            }
+                            orangeGrove.MarkAdjacentFresh(i, j);
                             break;
                     }
-
                 }
 
                 if (!orangeGrove.RottenOrangesFound)
@@ -118,11 +126,14 @@ public class RottingOrangesSolution
                     return -1;
                 }
             }
-            if (!orangeGrove.FreshOrangesFound)
+
+            if (orangeGrove.FreshOrangesFound)
             {
-                return minutes;
+                minutes++;
+                continue;
             }
-            minutes++;
+
+            return minutes;
         }
     }
 }
