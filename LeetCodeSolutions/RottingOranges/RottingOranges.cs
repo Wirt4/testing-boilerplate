@@ -55,54 +55,90 @@ public class RottingOrangesSolution
 
         return grid[x - 1][y] == 0 && grid[x + 1][y] == 0 && grid[x][y - 1] == 0 && grid[x][y + 1] == 0;
     }
+
+    private class OrangeGrove
+    {
+        private int[][] grid;
+        public bool FreshOrangesFound;
+        public bool RottenOrangesFound;
+
+        public int Width => grid.Length;
+        public int Height => grid[0].Length;
+
+        public OrangeGrove(int[][] grid)
+        {
+            this.grid = grid;
+            FreshOrangesFound = true;
+            RottenOrangesFound = false;
+        }
+
+        public void MarkRotten(int[] rotPoint)
+        {
+            grid[rotPoint[0]][rotPoint[1]] = 2;
+        }
+
+        public int Orange(int x, int y)
+        {
+            return grid[x][y];
+        }
+
+        public bool InBoundsAndFresh(int x, int y)
+        {
+            if (x < 0 || y < 0 || x >= Width || y >= Height)
+            {
+                return false;
+            }
+
+            return Orange(x, y) == 1;
+        }
+    }
     public int OrangesRotting(int[][] grid)
     {
         int minutes = 0;
 
-        bool freshOrangesFoud = true;
-        bool rottenOrangesFound = false;
+        OrangeGrove orangeGrove = new(grid);
         Stack<int[]> rotPoints = new();
-        while (freshOrangesFoud)
+
+        while (true)
         {
             while (rotPoints.Count > 0)
             {
-                int[] rotPoint = rotPoints.Pop();
-                grid[rotPoint[0]][rotPoint[1]] = 2;
+                orangeGrove.MarkRotten(rotPoints.Pop());
             }
 
-            freshOrangesFoud = false;
+            orangeGrove.FreshOrangesFound = false;
 
-            for (int i = 0; i < grid.Length; i++)
+            for (int i = 0; i < orangeGrove.Width; i++)
             {
-                for (int j = 0; j < grid[0].Length; j++)
+                for (int j = 0; j < orangeGrove.Height; j++)
                 {
-                    switch (grid[i][j])
+                    switch (orangeGrove.Orange(i, j))
                     {
                         case 1:
-                            freshOrangesFoud = true;
+                            orangeGrove.FreshOrangesFound = true;
                             if (Isolated(i, j, ref grid))
                             {
                                 return -1;
                             }
                             break;
                         case 2:
-                            rottenOrangesFound = true;
-                            if (i > 0 && grid[i - 1][j] == 1)
+                            orangeGrove.RottenOrangesFound = true;
+                            if (orangeGrove.InBoundsAndFresh(i - 1, j))
                             {
                                 rotPoints.Push([i - 1, j]);
                             }
 
-                            if (i < grid.Length - 1 && grid[i + 1][j] == 1)
+                            if (orangeGrove.InBoundsAndFresh(i + 1, j))
                             {
                                 rotPoints.Push([i + 1, j]);
                             }
 
-                            if (j > 0 && grid[i][j - 1] == 1)
+                            if (orangeGrove.InBoundsAndFresh(i, j - 1))
                             {
                                 rotPoints.Push([i, j - 1]);
                             }
 
-                            if (j < grid[0].Length - 1 && grid[i][j + 1] == 1)
+                            if (orangeGrove.InBoundsAndFresh(i, j + 1))
                             {
                                 rotPoints.Push([i, j + 1]);
                             }
@@ -111,19 +147,17 @@ public class RottingOrangesSolution
 
                 }
 
-                if (!rottenOrangesFound)
+                if (!orangeGrove.RottenOrangesFound)
                 {
                     return -1;
                 }
             }
-            if (!freshOrangesFoud)
+            if (!orangeGrove.FreshOrangesFound)
             {
                 return minutes;
             }
             minutes++;
         }
-
-        return -1;
     }
 }
 
