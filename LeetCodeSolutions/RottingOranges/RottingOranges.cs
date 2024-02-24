@@ -71,7 +71,6 @@ public class RottingOrangesSolution
             }
 
             freshOrangesFoud = false;
-            HashSet<int[]> visited = [];
 
             for (int i = 0; i < grid.Length; i++)
             {
