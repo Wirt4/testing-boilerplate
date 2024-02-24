@@ -9,37 +9,33 @@ public class NearestExitFromMazeSolution
 
     private class Maze
     {
-        private char[][] maze;
-        private int width;
-        private int height;
+        private readonly char[][] _maze;
+        private readonly int _width;
+        private readonly int _height;
 
         public Maze(char[][] maze)
         {
-            this.maze = maze;
-            width = maze.Length;
-            height = maze[0].Length;
+            _maze = maze;
+            _width = maze.Length;
+            _height = maze[0].Length;
         }
 
         public bool AreValidCoords(TravelNode node)
         {
-            return node.x >= 0 && node.x < width && node.y >= 0 && node.y < height && maze[node.x][node.y] == '.';
+            return node.x >= 0 && node.x < _width && node.y >= 0 && node.y < _height && _maze[node.x][node.y] == '.';
         }
 
         public void MarkAsVisited(TravelNode node)
         {
-            maze[node.x][node.y] = '+';
+            _maze[node.x][node.y] = '+';
         }
 
         public bool AtExit(TravelNode node)
         {
-            return node.x == 0 || node.y == 0 || node.x == width - 1 || node.y == width - 1;
+            return node.x == 0 || node.y == 0 || node.x == _width - 1 || node.y == _width - 1;
         }
     }
 
-    private bool IsValid(int x, int y, int n, int m)
-    {
-        return x >= 0 && x < n && y >= 0 && y < m;
-    }
     public int NearestExit(char[][] maze, int[] entrance)
     {
         Maze mazeObj = new(maze);
