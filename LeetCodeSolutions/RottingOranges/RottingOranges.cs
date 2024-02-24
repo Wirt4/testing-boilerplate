@@ -2,9 +2,13 @@
 namespace LeetCodeSolutions;
 public class RottingOrangesSolution
 {
+    private string Encode(int num)
+    {
+        return num.ToString("000000");
+    }
     private string CoordinatesToString(int x, int y)
     {
-        return x.ToString("000000") + y.ToString("000000");
+        return Encode(x) + Encode(y);
     }
 
     public int OrangesRotting(int[][] grid)
