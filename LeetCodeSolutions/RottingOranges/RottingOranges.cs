@@ -15,10 +15,12 @@ public class RottingOrangesSolution
     {
         HashSet<string> allFresh = new();
         Queue<int[]> rottingNeighbors = new();
+        int width = grid.Length;
+        int height = grid[0].Length;
 
-        for (int i = 0; i < grid.Length; i++)
+        for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < grid[0].Length; j++)
+            for (int j = 0; j < height; j++)
             {
                 if (grid[i][j] == 1)
                 {
@@ -31,7 +33,7 @@ public class RottingOrangesSolution
                         rottingNeighbors.Enqueue([i - 1, j]);
                     }
 
-                    if (i < grid.Length - 1 && grid[i + 1][j] == 1)
+                    if (i < width - 1 && grid[i + 1][j] == 1)
                     {
                         rottingNeighbors.Enqueue([i + 1, j]);
                     }
@@ -41,7 +43,7 @@ public class RottingOrangesSolution
                         rottingNeighbors.Enqueue([i, j - 1]);
                     }
 
-                    if (j < grid[0].Length - 1 && grid[i][j + 1] == 1)
+                    if (j < height - 1 && grid[i][j + 1] == 1)
                     {
                         rottingNeighbors.Enqueue([i, j + 1]);
                     }
@@ -67,7 +69,7 @@ public class RottingOrangesSolution
                     rottingNeighbors.Enqueue([x - 1, y]);
                 }
 
-                if (x < grid.Length - 1 && allFresh.Contains(CoordinatesToString(x + 1, y)))
+                if (x < width - 1 && allFresh.Contains(CoordinatesToString(x + 1, y)))
                 {
                     rottingNeighbors.Enqueue([x + 1, y]);
                 }
@@ -77,7 +79,7 @@ public class RottingOrangesSolution
                     rottingNeighbors.Enqueue([x, y - 1]);
                 }
 
-                if (y < grid[0].Length - 1 && allFresh.Contains(CoordinatesToString(x, y + 1)))
+                if (y < height - 1 && allFresh.Contains(CoordinatesToString(x, y + 1)))
                 {
                     rottingNeighbors.Enqueue([x, y + 1]);
                 }
