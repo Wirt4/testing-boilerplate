@@ -5,6 +5,11 @@ public class NearestExitFromMazeSolution
     {
         public int x;
         public int y;
+
+        public bool EquivalentTo(int[] coords)
+        {
+            return x == coords[0] && y == coords[1];
+        }
     }
 
     private class Maze
@@ -13,83 +18,103 @@ public class NearestExitFromMazeSolution
         private readonly int _width;
         private readonly int _height;
 
-        public Maze(char[][] maze)
+        private Queue<TravelNode> _queue;
+
+        public int Steps;
+
+        public Maze(char[][] maze, int[] entrance)
         {
             _maze = maze;
             _width = maze.Length;
             _height = maze[0].Length;
+            _queue = new();
+            Steps = 0;
+
+            PushIfValid(new() { x = entrance[0], y = entrance[1] });
         }
 
-        public bool AreValidCoords(TravelNode node)
+        private void PushIfValid(TravelNode node)
         {
-            return node.x >= 0 && node.x < _width && node.y >= 0 && node.y < _height && _maze[node.x][node.y] == '.';
+            if (AreValidCoords(node))
+            {
+                MarkAsVisited(node);
+                _queue.Enqueue(node);
+            }
         }
 
-        public void MarkAsVisited(TravelNode node)
+        public void PushNeighborsToQueue(TravelNode node)
+        {
+            int x = node.x;
+            int y = node.y;
+            PushIfValid(new() { x = x + 1, y = y });
+            PushIfValid(new() { x = x - 1, y = y });
+            PushIfValid(new() { x = x, y = y + 1 });
+            PushIfValid(new() { x = x, y = y - 1 });
+        }
+
+        public TravelNode PopFromQueue()
+        {
+            return _queue.Dequeue();
+        }
+        private bool AreValidCoords(TravelNode node)
+        {
+            return IsWithinRange(node.x, _width) && IsWithinRange(node.y, _height) && _maze[node.x][node.y] == '.';
+        }
+
+        public bool HasUnexploredSquares()
+        {
+            return _queue.Count > 0;
+        }
+
+        public int NumberOfAdjacentSquares()
+        {
+            return _queue.Count;
+        }
+
+        private static bool IsWithinRange(int index, int length)
+        {
+            return index >= 0 && index < length;
+        }
+
+        private void MarkAsVisited(TravelNode node)
         {
             _maze[node.x][node.y] = '+';
         }
 
         public bool AtExit(TravelNode node)
         {
-            return node.x == 0 || node.y == 0 || node.x == _width - 1 || node.y == _width - 1;
+            return FirstOrLastIndex(node.x, _width) || FirstOrLastIndex(node.y, _height);
+        }
+
+        private static bool FirstOrLastIndex(int ndx, int length)
+        {
+            return ndx == 0 || ndx == length - 1;
         }
     }
 
     public int NearestExit(char[][] maze, int[] entrance)
     {
-        Maze mazeObj = new(maze);
-        Queue<TravelNode> queue = new();
-        TravelNode starter = new() { x = entrance[0], y = entrance[1] };
-        queue.Enqueue(starter);
-        mazeObj.MarkAsVisited(starter);
-        int steps = 0;
+        Maze mazeRunner = new(maze, entrance);
 
-        while (queue.Count > 0)
+        while (mazeRunner.HasUnexploredSquares())
         {
-            int size = queue.Count;
+            int squares = mazeRunner.NumberOfAdjacentSquares();
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < squares; i++)
             {
-                TravelNode currentNode = queue.Dequeue();
-                if (mazeObj.AtExit(currentNode))
+                TravelNode currentNode = mazeRunner.PopFromQueue();
+
+                if (mazeRunner.AtExit(currentNode) && !currentNode.EquivalentTo(entrance))
                 {
-                    if (currentNode.x != entrance[0] || currentNode.y != entrance[1])
-                    {
-                        return steps;
-                    }
+                    return mazeRunner.Steps;
                 }
 
-                TravelNode eastNode = new() { x = currentNode.x + 1, y = currentNode.y };
-                if (mazeObj.AreValidCoords(eastNode))
-                {
-                    mazeObj.MarkAsVisited(eastNode);
-                    queue.Enqueue(eastNode);
-                }
-
-                TravelNode westNode = new() { x = currentNode.x - 1, y = currentNode.y };
-                if (mazeObj.AreValidCoords(westNode))
-                {
-                    mazeObj.MarkAsVisited(westNode);
-                    queue.Enqueue(westNode);
-                }
-
-                TravelNode northNode = new() { x = currentNode.x, y = currentNode.y + 1 };
-                if (mazeObj.AreValidCoords(northNode))
-                {
-                    mazeObj.MarkAsVisited(northNode);
-                    queue.Enqueue(northNode);
-                }
-
-                TravelNode southNode = new() { x = currentNode.x, y = currentNode.y - 1 };
-                if (mazeObj.AreValidCoords(southNode))
-                {
-                    mazeObj.MarkAsVisited(southNode);
-                    queue.Enqueue(southNode);
-                }
+                mazeRunner.PushNeighborsToQueue(currentNode);
             }
-            steps++;
+
+            mazeRunner.Steps++;
         }
+
         return -1;
     }
 }
