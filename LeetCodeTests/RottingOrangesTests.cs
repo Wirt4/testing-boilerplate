@@ -24,4 +24,13 @@ public class RottingOrangesTests
     int output = _solution.OrangesRotting(grid);
     Assert.Equal(desiredOutput, output);
   }
+
+  [Fact]
+  public void LCExample3()
+  {
+    int[][] grid = [[0, 2]];
+    int desiredOutput = 0;
+    int output = _solution.OrangesRotting(grid);
+    Assert.Equal(desiredOutput, output);
+  }
 }

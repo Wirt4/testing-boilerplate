@@ -77,8 +77,6 @@ public class RottingOrangesSolution
             {
                 for (int j = 0; j < grid[0].Length; j++)
                 {
-                    visited.Add([i, j]);
-
                     switch (grid[i][j])
                     {
                         case 0:
