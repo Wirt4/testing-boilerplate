@@ -44,10 +44,19 @@ public class RottingOrangesTests
   }
 
   [Fact]
-  public void BreakingCase12()
+  public void BreakingCase2()
   {
     int[][] grid = [[2], [2], [1], [0], [1], [1]];
     int desiredOutput = -1;
+    int output = _solution.OrangesRotting(grid);
+    Assert.Equal(desiredOutput, output);
+  }
+
+  [Fact]
+  public void BreakingCase3()
+  {
+    int[][] grid = [[2, 2], [1, 1], [0, 0], [2, 0]];
+    int desiredOutput = 1;
     int output = _solution.OrangesRotting(grid);
     Assert.Equal(desiredOutput, output);
   }
