@@ -1,152 +1,89 @@
+
 namespace LeetCodeSolutions;
 public class RottingOrangesSolution
 {
-
-    private class OrangeGrove
+    private string CoordinatesToString(int x, int y)
     {
-        private class Coordinates(int x, int y)
-        {
-            public int X = x;
-            public int Y = y;
-        }
-        private int[][] grid;
-        public bool FreshOrangesFound;
-        public bool RottenOrangesFound;
-        Stack<Coordinates> rotPoints;
-
-        public int Width => grid.Length;
-        public int Height => grid[0].Length;
-
-        public OrangeGrove(int[][] grid)
-        {
-            this.grid = grid;
-            FreshOrangesFound = true;
-            RottenOrangesFound = false;
-            rotPoints = new();
-        }
-
-        private void MarkRotten(Coordinates rotPoint)
-        {
-            grid[rotPoint.X][rotPoint.Y] = 2;
-        }
-
-        public int Orange(int x, int y)
-        {
-            return grid[x][y];
-        }
-
-
-        private bool OutsideBounds(Coordinates coords)
-        {
-            return coords.X < 0 || coords.Y < 0 || coords.X >= Width || coords.Y >= Height;
-        }
-
-
-        private bool IsNullOrEmpty(Coordinates coords)
-        {
-            if (OutsideBounds(coords))
-            {
-                return true;
-            }
-
-            return grid[coords.X][coords.Y] == 0;
-
-        }
-        public bool InBoundsAndFresh(int x, int y)
-        {
-            if (OutsideBounds(new(x, y)))
-            {
-                return false;
-            }
-
-            return Orange(x, y) == 1;
-        }
-
-        public bool Isolated(int x, int y)
-        {
-            FreshOrangesFound = true;
-            Coordinates left = new(x - 1, y);
-            Coordinates right = new(x + 1, y);
-            Coordinates top = new(x, y - 1);
-            Coordinates bottom = new(x, y + 1);
-            return IsNullOrEmpty(left) && IsNullOrEmpty(right) && IsNullOrEmpty(top) && IsNullOrEmpty(bottom);
-        }
-
-        public void SpoilAdjacentOranges()
-        {
-            FreshOrangesFound = false;
-            while (rotPoints.Count > 0)
-            {
-                MarkRotten(rotPoints.Pop());
-            }
-        }
-
-        public void MarkAdjacentFresh(int i, int j)
-        {
-            RottenOrangesFound = true;
-            Coordinates left = new(i - 1, j);
-            if (InBoundsAndFresh(i - 1, j))
-            {
-                rotPoints.Push(left);
-            }
-            Coordinates right = new(i + 1, j);
-            if (InBoundsAndFresh(i + 1, j))
-            {
-                rotPoints.Push(right);
-            }
-
-            Coordinates top = new(i, j - 1);
-            if (InBoundsAndFresh(i, j - 1))
-            {
-                rotPoints.Push(top);
-            }
-            Coordinates bottom = new(i, j + 1);
-            if (InBoundsAndFresh(i, j + 1))
-            {
-                rotPoints.Push(bottom);
-            }
-        }
+        return x.ToString("000000") + y.ToString("000000");
     }
+
     public int OrangesRotting(int[][] grid)
     {
-        int minutes = 0;
-        OrangeGrove orangeGrove = new(grid);
+        HashSet<string> allFresh = new();
+        Queue<int[]> rottingNeighbors = new();
 
-        while (true)
+        for (int i = 0; i < grid.Length; i++)
         {
-            orangeGrove.SpoilAdjacentOranges();
-
-            for (int i = 0; i < orangeGrove.Width; i++)
+            for (int j = 0; j < grid[0].Length; j++)
             {
-                for (int j = 0; j < orangeGrove.Height; j++)
+                if (grid[i][j] == 1)
                 {
-                    switch (orangeGrove.Orange(i, j))
+                    allFresh.Add(CoordinatesToString(i, j));
+                }
+                if (grid[i][j] == 2)
+                {
+                    if (i > 0 && grid[i - 1][j] == 1)
                     {
-                        case 1:
-                            if (orangeGrove.Isolated(i, j))
-                            {
-                                return -1;
-                            }
-                            break;
-                        case 2:
-                            orangeGrove.MarkAdjacentFresh(i, j);
-                            break;
+                        rottingNeighbors.Enqueue([i - 1, j]);
+                    }
+
+                    if (i < grid.Length - 1 && grid[i + 1][j] == 1)
+                    {
+                        rottingNeighbors.Enqueue([i + 1, j]);
+                    }
+
+                    if (j > 0 && grid[i][j - 1] == 1)
+                    {
+                        rottingNeighbors.Enqueue([i, j - 1]);
+                    }
+
+                    if (j < grid[0].Length - 1 && grid[i][j + 1] == 1)
+                    {
+                        rottingNeighbors.Enqueue([i, j + 1]);
                     }
                 }
             }
-
-            if (orangeGrove.FreshOrangesFound)
-            {
-                if (!orangeGrove.RottenOrangesFound)
-                {
-                    return -1;
-                }
-                minutes++;
-                continue;
-            }
-
-            return minutes;
         }
-    }
-}
 
+        int minutes = 0;
+
+        while (rottingNeighbors.Count > 0)
+        {
+            int neighborCount = rottingNeighbors.Count;
+            for (int i = 0; i < neighborCount; i++)
+            {
+                int[] current = rottingNeighbors.Dequeue();
+                int x = current[0];
+                int y = current[1];
+
+                allFresh.Remove(CoordinatesToString(x, y));
+
+                if (x > 0 && allFresh.Contains(CoordinatesToString(x - 1, y)))
+                {
+                    rottingNeighbors.Enqueue([x - 1, y]);
+                }
+
+                if (x < grid.Length - 1 && allFresh.Contains(CoordinatesToString(x + 1, y)))
+                {
+                    rottingNeighbors.Enqueue([x + 1, y]);
+                }
+
+                if (y > 0 && allFresh.Contains(CoordinatesToString(x, y - 1)))
+                {
+                    rottingNeighbors.Enqueue([x, y - 1]);
+                }
+
+                if (y < grid[0].Length - 1 && allFresh.Contains(CoordinatesToString(x, y + 1)))
+                {
+                    rottingNeighbors.Enqueue([x, y + 1]);
+                }
+
+            }
+            minutes++;
+        }
+
+
+        return allFresh.Count == 0 ? minutes : -1;
+    }
+
+}
