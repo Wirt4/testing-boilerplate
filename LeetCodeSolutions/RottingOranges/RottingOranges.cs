@@ -28,9 +28,24 @@ public class RottingOrangesSolution
             return grid[x][y];
         }
 
+        private bool OutsideBounds(int x, int y)
+        {
+            return x < 0 || y < 0 || x >= Width || y >= Height;
+        }
+
+        private bool IsNullOrEmpty(int x, int y)
+        {
+            if (OutsideBounds(x, y))
+            {
+                return true;
+            }
+
+            return grid[x][y] == 0;
+
+        }
         public bool InBoundsAndFresh(int x, int y)
         {
-            if (x < 0 || y < 0 || x >= Width || y >= Height)
+            if (OutsideBounds(x, y))
             {
                 return false;
             }
@@ -40,57 +55,7 @@ public class RottingOrangesSolution
 
         public bool Isolated(int x, int y)
         {
-            if (grid.Length == 1 && grid[0].Length == 1)
-            {
-                return true;
-            }
-
-            //corner cases
-            //top right
-            if (x == 0 && y == 0)
-            {
-                return grid[0][1] == 0 && grid[1][0] == 0;
-            }
-
-            //top left
-            if (x == 0 && y == grid[0].Length - 1)
-            {
-                return grid[0][1] == 0 && grid[0][y + 1] == 0;
-            }
-
-
-            //bottom right
-            if (x == grid.Length - 1 && y == 0)
-            {
-                return grid[grid.Length - 1][1] == 0 && grid[grid.Length - 2][0] == 0;
-            }
-            //bottom left
-            if (x == grid.Length - 1 && y == grid[0].Length - 1)
-            {
-                return grid[grid.Length - 1][grid[0].Length - 2] == 0 && grid[grid.Length - 2][grid[0].Length - 1] == 0;
-            }
-
-            //edges 
-            if (x == 0)
-            {
-                return grid[x + 1][y] == 0 && grid[x][y - 1] == 0 && grid[x][y + 1] == 0;
-            }
-
-            if (x == grid.Length - 1)
-            {
-                return grid[x - 1][y] == 0 && grid[x][y - 1] == 0 && grid[x][y + 1] == 0;
-            }
-
-            if (y == 0)
-            {
-                return grid[x - 1][y] == 0 && grid[x + 1][y] == 0 && grid[x][y + 1] == 0;
-            }
-            if (y == grid.Length - 1)
-            {
-                return grid[x - 1][y] == 0 && grid[x + 1][y] == 0 && grid[x][y - 1] == 0;
-            }
-
-            return grid[x - 1][y] == 0 && grid[x + 1][y] == 0 && grid[x][y - 1] == 0 && grid[x][y + 1] == 0;
+            return IsNullOrEmpty(x - 1, y) && IsNullOrEmpty(x + 1, y) && IsNullOrEmpty(x, y - 1) && IsNullOrEmpty(x, y + 1);
         }
     }
     public int OrangesRotting(int[][] grid)
