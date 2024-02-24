@@ -55,14 +55,18 @@ public class RottingOrangesSolution
 
         while (rottingNeighbors.Count > 0)
         {
+
+            foreach (int[] neighbor in rottingNeighbors)
+            {
+                allFresh.Remove(CoordinatesToString(neighbor[0], neighbor[1]));
+            }
+
             int neighborCount = rottingNeighbors.Count;
             for (int i = 0; i < neighborCount; i++)
             {
                 int[] current = rottingNeighbors.Dequeue();
                 int x = current[0];
                 int y = current[1];
-
-                allFresh.Remove(CoordinatesToString(x, y));
 
                 if (x > 0 && allFresh.Contains(CoordinatesToString(x - 1, y)))
                 {
