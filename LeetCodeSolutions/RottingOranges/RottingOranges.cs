@@ -59,10 +59,10 @@ public class RottingOrangesSolution
     {
         int minutes = 0;
 
-        bool freshOrangesFoud;
+        bool freshOrangesFoud = true;
         bool rottenOrangesFound = false;
         Stack<int[]> rotPoints = new();
-        do
+        while (freshOrangesFoud)
         {
             while (rotPoints.Count > 0)
             {
@@ -106,7 +106,6 @@ public class RottingOrangesSolution
                             {
                                 rotPoints.Push([i, j + 1]);
                             }
-
                             break;
                     }
 
@@ -117,10 +116,14 @@ public class RottingOrangesSolution
                     return -1;
                 }
             }
+            if (!freshOrangesFoud)
+            {
+                return minutes;
+            }
             minutes++;
-        } while (freshOrangesFoud);
+        }
 
-        return minutes - 1;
+        return -1;
     }
 }
 
