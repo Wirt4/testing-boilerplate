@@ -4,10 +4,15 @@ public class RottingOrangesSolution
 
     private class OrangeGrove
     {
+        private class Coordinates(int x, int y)
+        {
+            public int X = x;
+            public int Y = y;
+        }
         private int[][] grid;
         public bool FreshOrangesFound;
         public bool RottenOrangesFound;
-        Stack<int[]> rotPoints;
+        Stack<Coordinates> rotPoints;
 
         public int Width => grid.Length;
         public int Height => grid[0].Length;
@@ -20,9 +25,9 @@ public class RottingOrangesSolution
             rotPoints = new();
         }
 
-        private void MarkRotten(int[] rotPoint)
+        private void MarkRotten(Coordinates rotPoint)
         {
-            grid[rotPoint[0]][rotPoint[1]] = 2;
+            grid[rotPoint.X][rotPoint.Y] = 2;
         }
 
         public int Orange(int x, int y)
@@ -30,24 +35,26 @@ public class RottingOrangesSolution
             return grid[x][y];
         }
 
-        private bool OutsideBounds(int x, int y)
+
+        private bool OutsideBounds(Coordinates coords)
         {
-            return x < 0 || y < 0 || x >= Width || y >= Height;
+            return coords.X < 0 || coords.Y < 0 || coords.X >= Width || coords.Y >= Height;
         }
 
-        private bool IsNullOrEmpty(int x, int y)
+
+        private bool IsNullOrEmpty(Coordinates coords)
         {
-            if (OutsideBounds(x, y))
+            if (OutsideBounds(coords))
             {
                 return true;
             }
 
-            return grid[x][y] == 0;
+            return grid[coords.X][coords.Y] == 0;
 
         }
         public bool InBoundsAndFresh(int x, int y)
         {
-            if (OutsideBounds(x, y))
+            if (OutsideBounds(new(x, y)))
             {
                 return false;
             }
@@ -58,7 +65,11 @@ public class RottingOrangesSolution
         public bool Isolated(int x, int y)
         {
             FreshOrangesFound = true;
-            return IsNullOrEmpty(x - 1, y) && IsNullOrEmpty(x + 1, y) && IsNullOrEmpty(x, y - 1) && IsNullOrEmpty(x, y + 1);
+            Coordinates left = new(x - 1, y);
+            Coordinates right = new(x + 1, y);
+            Coordinates top = new(x, y - 1);
+            Coordinates bottom = new(x, y + 1);
+            return IsNullOrEmpty(left) && IsNullOrEmpty(right) && IsNullOrEmpty(top) && IsNullOrEmpty(bottom);
         }
 
         public void SpoilAdjacentOranges()
@@ -73,24 +84,26 @@ public class RottingOrangesSolution
         public void MarkAdjacentFresh(int i, int j)
         {
             RottenOrangesFound = true;
+            Coordinates left = new(i - 1, j);
             if (InBoundsAndFresh(i - 1, j))
             {
-                rotPoints.Push([i - 1, j]);
+                rotPoints.Push(left);
             }
-
+            Coordinates right = new(i + 1, j);
             if (InBoundsAndFresh(i + 1, j))
             {
-                rotPoints.Push([i + 1, j]);
+                rotPoints.Push(right);
             }
 
+            Coordinates top = new(i, j - 1);
             if (InBoundsAndFresh(i, j - 1))
             {
-                rotPoints.Push([i, j - 1]);
+                rotPoints.Push(top);
             }
-
+            Coordinates bottom = new(i, j + 1);
             if (InBoundsAndFresh(i, j + 1))
             {
-                rotPoints.Push([i, j + 1]);
+                rotPoints.Push(bottom);
             }
         }
     }
@@ -120,15 +133,14 @@ public class RottingOrangesSolution
                             break;
                     }
                 }
-
-                if (!orangeGrove.RottenOrangesFound)
-                {
-                    return -1;
-                }
             }
 
             if (orangeGrove.FreshOrangesFound)
             {
+                if (!orangeGrove.RottenOrangesFound)
+                {
+                    return -1;
+                }
                 minutes++;
                 continue;
             }
