@@ -78,15 +78,12 @@ public class RottingOrangesSolution
                 {
                     switch (grid[i][j])
                     {
-                        case 0:
-                            continue;
                         case 1:
                             freshOrangesFoud = true;
                             if (Isolated(i, j, ref grid))
                             {
                                 return -1;
                             }
-
                             break;
                         case 2:
                             rottenOrangesFound = true;
