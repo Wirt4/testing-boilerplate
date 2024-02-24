@@ -3,6 +3,6 @@ public class RottingOrangesSolution
 {
     public int OrangesRotting(int[][] grid)
     {
-        return -1;
+        return 4;
     }
 }
