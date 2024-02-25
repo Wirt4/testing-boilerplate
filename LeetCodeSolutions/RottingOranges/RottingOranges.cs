@@ -111,10 +111,29 @@ public class RottingOrangesSolution
         private readonly HashSet<string> allFresh;
         private readonly Queue<Coordinates> rottingNeighbors;
 
-        public Oranges()
+        public Oranges(GridWrapper grid)
         {
             allFresh = new();
             rottingNeighbors = new();
+
+            while (!grid.Traversed)
+            {
+                Coordinates current = grid.GetCurrentCoordinates();
+                if (grid.IsFresh(current))
+                {
+                    AddFresh(current);
+                }
+                if (grid.IsRotten(current))
+                {
+                    List<Coordinates> neighbors = grid.FreshNeighbors(current);
+                    foreach (Coordinates neighbor in neighbors)
+                    {
+                        Enqueue(neighbor);
+                    }
+                }
+
+                grid.Iterate();
+            }
         }
         public void EnqueueIfFresh(Coordinates coords)
         {
@@ -155,31 +174,12 @@ public class RottingOrangesSolution
         }
 
     }
+
     public int OrangesRotting(int[][] grid)
     {
-        Oranges oranges = new();
         GridWrapper gridWrapper = new(grid);
-        while (!gridWrapper.Traversed)
-        {
-            Coordinates current = gridWrapper.GetCurrentCoordinates();
-            if (gridWrapper.IsFresh(current))
-            {
-                oranges.AddFresh(current);
-            }
-            if (gridWrapper.IsRotten(current))
-            {
-                List<Coordinates> neighbors = gridWrapper.FreshNeighbors(current);
-                foreach (Coordinates neighbor in neighbors)
-                {
-                    oranges.Enqueue(neighbor);
-                }
-            }
-
-            gridWrapper.Iterate();
-        }
-
+        Oranges oranges = new(gridWrapper);
         int minutes = 0;
-
         while (oranges.RottenCount > 0)
         {
             oranges.RotAdjacentOranges();
@@ -187,8 +187,7 @@ public class RottingOrangesSolution
             int rottingOranges = oranges.RottenCount;
             for (int i = 0; i < rottingOranges; i++)
             {
-                Coordinates current = oranges.Dequeue();
-                List<Coordinates> neighbors = gridWrapper.FreshNeighbors(current);
+                List<Coordinates> neighbors = gridWrapper.FreshNeighbors(oranges.Dequeue());
                 foreach (Coordinates neighbor in neighbors)
                 {
                     oranges.EnqueueIfFresh(neighbor);
@@ -196,6 +195,7 @@ public class RottingOrangesSolution
             }
             minutes++;
         }
+
         if (oranges.HasFresh())
         {
             return -1;
