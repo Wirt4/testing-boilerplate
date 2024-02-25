@@ -28,4 +28,15 @@ public class KthLargestElementTests
     int actual = _solution.FindKthLargest(nums, k);
     Assert.Equal(desired, actual);
   }
+
+  [Fact]
+  public void BreakingCase1()
+  {
+    int[] nums = [1];
+    int k = 1;
+    int desired = 1;
+
+    int actual = _solution.FindKthLargest(nums, k);
+    Assert.Equal(desired, actual);
+  }
 }

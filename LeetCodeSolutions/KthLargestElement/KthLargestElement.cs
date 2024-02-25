@@ -3,15 +3,11 @@ namespace LeetCodeSolutions;
 public class KthLargestElementSolution
 {
 
-    private class Heap
+    private class Heap(int size)
     {
-        private int[] _arr;
-        private int _treeSize;
-        public Heap(int size)
-        {
-            _arr = new int[size];
-            _treeSize = 0;
-        }
+        private readonly int[] _arr = new int[size + 1];
+        private int _treeSize = 0;
+
         public void Insert(int num)
         {
             _treeSize++;
@@ -24,9 +20,7 @@ public class KthLargestElementSolution
         {
             if (_arr[childIndx] < _arr[parentNdx])
             {
-                int tmp = _arr[childIndx];
-                _arr[childIndx] = _arr[parentNdx];
-                _arr[parentNdx] = tmp;
+                (_arr[parentNdx], _arr[childIndx]) = (_arr[childIndx], _arr[parentNdx]);
             }
         }
         private void HeapifyUp(int index)
@@ -51,7 +45,7 @@ public class KthLargestElementSolution
         private void HeapifyDown(int index)
         {
             int left = index * 2;
-            //no childrent
+            //no children
             if (_treeSize < left) { return; }
             //only the left node
             if (_treeSize == left)
