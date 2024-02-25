@@ -1,8 +1,13 @@
+
 namespace LeetCodeSolutions;
 public class KthLargestElementSolution
 {
+
+
     public int FindKthLargest(int[] nums, int k)
     {
-        return 5;
+        Array.Sort(nums);
+        Array.Reverse(nums);// stupid solution
+        return nums[k - 1];
     }
 }
