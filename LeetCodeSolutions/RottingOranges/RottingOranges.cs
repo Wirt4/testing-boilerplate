@@ -1,3 +1,5 @@
+using System.Reflection.PortableExecutable;
+
 namespace LeetCodeSolutions;
 public class RottingOrangesSolution
 {
@@ -73,6 +75,37 @@ public class RottingOrangesSolution
             return AreValidCoordinates(coords) && _grid[coords.X][coords.Y] == 2;
         }
 
+        public List<Coordinates> FreshNeighbors(Coordinates coords)
+        {
+            List<Coordinates> neighbors = new();
+            Coordinates left = new(coords.X - 1, coords.Y);
+            if (IsFresh(left))
+            {
+                neighbors.Add(left);
+            }
+
+            Coordinates right = new(coords.X + 1, coords.Y);
+
+            if (IsFresh(right))
+            {
+                neighbors.Add(right);
+            }
+
+            Coordinates top = new(coords.X, coords.Y - 1);
+            if (IsFresh(top))
+            {
+                neighbors.Add(top);
+            }
+
+            Coordinates bottom = new(coords.X, coords.Y + 1);
+            if (IsFresh(bottom))
+            {
+                neighbors.Add(bottom);
+            }
+
+            return neighbors;
+        }
+
     }
 
     public int OrangesRotting(int[][] grid)
@@ -89,29 +122,10 @@ public class RottingOrangesSolution
             }
             if (gridWrapper.IsRotten(current))
             {
-                Coordinates left = new(current.X - 1, current.Y);
-                if (gridWrapper.IsFresh(left))
+                List<Coordinates> neighbors = gridWrapper.FreshNeighbors(current);
+                foreach (Coordinates neighbor in neighbors)
                 {
-                    rottingNeighbors.Enqueue(left);
-                }
-
-                Coordinates right = new(current.X + 1, current.Y);
-
-                if (gridWrapper.IsFresh(right))
-                {
-                    rottingNeighbors.Enqueue(right);
-                }
-
-                Coordinates top = new(current.X, current.Y - 1);
-                if (gridWrapper.IsFresh(top))
-                {
-                    rottingNeighbors.Enqueue(top);
-                }
-
-                Coordinates bottom = new(current.X, current.Y + 1);
-                if (gridWrapper.IsFresh(bottom))
-                {
-                    rottingNeighbors.Enqueue(bottom);
+                    rottingNeighbors.Enqueue(neighbor);
                 }
             }
 
