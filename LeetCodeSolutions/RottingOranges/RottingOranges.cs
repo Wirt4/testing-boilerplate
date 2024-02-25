@@ -1,5 +1,3 @@
-using System.Reflection.PortableExecutable;
-
 namespace LeetCodeSolutions;
 public class RottingOrangesSolution
 {
@@ -108,24 +106,80 @@ public class RottingOrangesSolution
 
     }
 
+    private class Oranges
+    {
+        private HashSet<string> allFresh;
+        private Queue<Coordinates> rottingNeighbors;
+
+        public Oranges()
+        {
+            allFresh = new();
+            rottingNeighbors = new();
+        }
+        public void EnqueueIfFresh(Coordinates coords)
+        {
+            if (allFresh.Contains(coords.ToString()))
+            {
+                Enqueue(coords);
+            }
+        }
+
+        public bool HasFresh()
+        {
+            return allFresh.Count > 0;
+        }
+
+        public void RotAdjacentOranges()
+        {
+            foreach (Coordinates neighbor in rottingNeighbors)
+            {
+                allFresh.Remove(neighbor.ToString());
+            }
+        }
+
+        public void AddFresh(Coordinates coords)
+        {
+            allFresh.Add(coords.ToString());
+        }
+
+        public void Enqueue(Coordinates coords)
+        {
+            rottingNeighbors.Enqueue(coords);
+        }
+
+        public bool IsRotting()
+        {
+            return rottingNeighbors.Count > 0;
+        }
+
+        public int CurrentlyRottingOranges()
+        {
+            return rottingNeighbors.Count;
+        }
+
+        public Coordinates GetRottingOrange()
+        {
+            return rottingNeighbors.Dequeue();
+        }
+
+    }
     public int OrangesRotting(int[][] grid)
     {
-        HashSet<string> allFresh = new();
-        Queue<Coordinates> rottingNeighbors = new();
+        Oranges oranges = new();
         GridWrapper gridWrapper = new(grid);
         while (!gridWrapper.Traversed)
         {
             Coordinates current = gridWrapper.GetCurrentCoordinates();
             if (gridWrapper.IsFresh(current))
             {
-                allFresh.Add(current.ToString());
+                oranges.AddFresh(current);
             }
             if (gridWrapper.IsRotten(current))
             {
                 List<Coordinates> neighbors = gridWrapper.FreshNeighbors(current);
                 foreach (Coordinates neighbor in neighbors)
                 {
-                    rottingNeighbors.Enqueue(neighbor);
+                    oranges.Enqueue(neighbor);
                 }
             }
 
@@ -134,33 +188,28 @@ public class RottingOrangesSolution
 
         int minutes = 0;
 
-        while (rottingNeighbors.Count > 0)
+        while (oranges.IsRotting())
         {
+            oranges.RotAdjacentOranges();
 
-            foreach (Coordinates neighbor in rottingNeighbors)
+            int rottingOranges = oranges.CurrentlyRottingOranges();
+            for (int i = 0; i < rottingOranges; i++)
             {
-                allFresh.Remove(neighbor.ToString());
-            }
-
-            int neighborCount = rottingNeighbors.Count;
-            for (int i = 0; i < neighborCount; i++)
-            {
-                Coordinates current = rottingNeighbors.Dequeue();
+                Coordinates current = oranges.GetRottingOrange();
                 List<Coordinates> neighbors = gridWrapper.FreshNeighbors(current);
                 foreach (Coordinates neighbor in neighbors)
                 {
-                    if (allFresh.Contains(neighbor.ToString()))
-                    {
-                        rottingNeighbors.Enqueue(neighbor);
-                    }
-
+                    oranges.EnqueueIfFresh(neighbor);
                 }
             }
             minutes++;
         }
+        if (oranges.HasFresh())
+        {
+            return -1;
+        }
 
-
-        return allFresh.Count == 0 ? minutes : -1;
+        return minutes;
     }
 
 }
