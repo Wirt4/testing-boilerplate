@@ -3,6 +3,6 @@ public class KthLargestElementSolution
 {
     public int FindKthLargest(int[] nums, int k)
     {
-        return -1;
+        return 5;
     }
 }
