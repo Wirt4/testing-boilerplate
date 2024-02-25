@@ -51,32 +51,32 @@ public class RottingOrangesSolution
             for (int j = 0; j < height; j++)
             {
                 Coordinates current = new(i, j);
-                if (grid[i][j] == 1)
+                if (current.IsFresh(grid))
                 {
                     allFresh.Add(CoordinatesToString(current));
                 }
                 if (grid[i][j] == 2)
                 {
                     Coordinates left = new(current.X - 1, current.Y);
-                    if (i > 0 && grid[i - 1][j] == 1)
+                    if (left.IsFresh(grid))
                     {
                         rottingNeighbors.Enqueue(left);
                     }
 
                     Coordinates right = new(current.X + 1, current.Y);
 
-                    if (i < width - 1 && grid[i + 1][j] == 1)
+                    if (right.IsFresh(grid))
                     {
                         rottingNeighbors.Enqueue(right);
                     }
 
                     Coordinates top = new(current.X, current.Y - 1);
-                    if (j > 0 && grid[i][j - 1] == 1)
+                    if (top.IsFresh(grid))
                     {
                         rottingNeighbors.Enqueue(top);
                     }
                     Coordinates bottom = new(current.X, current.Y + 1);
-                    if (j < height - 1 && grid[i][j + 1] == 1)
+                    if (bottom.IsFresh(grid))
                     {
                         rottingNeighbors.Enqueue(bottom);
                     }
@@ -100,23 +100,23 @@ public class RottingOrangesSolution
                 Coordinates current = rottingNeighbors.Dequeue();
 
                 Coordinates left = new(current.X - 1, current.Y);
-                if (current.X > 0 && allFresh.Contains(CoordinatesToString(left)))
+                if (allFresh.Contains(CoordinatesToString(left)))
                 {
                     rottingNeighbors.Enqueue(left);
                 }
                 Coordinates right = new(current.X + 1, current.Y);
-                if (current.X < width - 1 && allFresh.Contains(CoordinatesToString(right)))
+                if (allFresh.Contains(CoordinatesToString(right)))
                 {
                     rottingNeighbors.Enqueue(right);
                 }
 
                 Coordinates top = new(current.X, current.Y - 1);
-                if (current.Y > 0 && allFresh.Contains(CoordinatesToString(top)))
+                if (allFresh.Contains(CoordinatesToString(top)))
                 {
                     rottingNeighbors.Enqueue(top);
                 }
                 Coordinates bottom = new(current.X, current.Y + 1);
-                if (current.Y < height - 1 && allFresh.Contains(CoordinatesToString(bottom)))
+                if (allFresh.Contains(CoordinatesToString(bottom)))
                 {
                     rottingNeighbors.Enqueue(bottom);
                 }
