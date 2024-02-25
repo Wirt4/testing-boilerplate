@@ -196,12 +196,7 @@ public class RottingOrangesSolution
             minutes++;
         }
 
-        if (oranges.HasFresh())
-        {
-            return -1;
-        }
-
-        return minutes;
+        return oranges.HasFresh() ? -1 : minutes;
     }
 
 }
