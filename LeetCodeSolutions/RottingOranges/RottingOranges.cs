@@ -4,8 +4,8 @@ public class RottingOrangesSolution
 {
     private class Coordinates
     {
-        private int _x;
-        private int _y;
+        private readonly int _x;
+        private readonly int _y;
         public int X => _x;
         public int Y => _y;
         public Coordinates(int[] arr)
@@ -18,6 +18,16 @@ public class RottingOrangesSolution
         {
             _x = x;
             _y = y;
+        }
+
+        private bool IsValid(int[][] grid)
+        {
+            return _x >= 0 && _y >= 0 && _x < grid.Length && _y < grid[0].Length;
+        }
+
+        public bool IsFresh(int[][] grid)
+        {
+            return IsValid(grid) && grid[_x][_y] == 1;
         }
     }
     private string Encode(int num)
