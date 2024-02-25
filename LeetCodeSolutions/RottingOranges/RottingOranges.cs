@@ -76,29 +76,16 @@ public class RottingOrangesSolution
         public List<Coordinates> FreshNeighbors(Coordinates coords)
         {
             List<Coordinates> neighbors = new();
-            Coordinates left = new(coords.X - 1, coords.Y);
-            if (IsFresh(left))
-            {
-                neighbors.Add(left);
-            }
 
-            Coordinates right = new(coords.X + 1, coords.Y);
+            Coordinates[] candidates = [new(coords.X - 1, coords.Y), new(coords.X + 1, coords.Y),
+                new(coords.X, coords.Y - 1), new(coords.X, coords.Y + 1)];
 
-            if (IsFresh(right))
+            foreach (Coordinates candidate in candidates)
             {
-                neighbors.Add(right);
-            }
-
-            Coordinates top = new(coords.X, coords.Y - 1);
-            if (IsFresh(top))
-            {
-                neighbors.Add(top);
-            }
-
-            Coordinates bottom = new(coords.X, coords.Y + 1);
-            if (IsFresh(bottom))
-            {
-                neighbors.Add(bottom);
+                if (IsFresh(candidate))
+                {
+                    neighbors.Add(candidate);
+                }
             }
 
             return neighbors;
