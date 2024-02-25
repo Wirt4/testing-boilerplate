@@ -146,27 +146,14 @@ public class RottingOrangesSolution
             for (int i = 0; i < neighborCount; i++)
             {
                 Coordinates current = rottingNeighbors.Dequeue();
+                List<Coordinates> neighbors = gridWrapper.FreshNeighbors(current);
+                foreach (Coordinates neighbor in neighbors)
+                {
+                    if (allFresh.Contains(neighbor.ToString()))
+                    {
+                        rottingNeighbors.Enqueue(neighbor);
+                    }
 
-                Coordinates left = new(current.X - 1, current.Y);
-                if (allFresh.Contains(left.ToString()))
-                {
-                    rottingNeighbors.Enqueue(left);
-                }
-                Coordinates right = new(current.X + 1, current.Y);
-                if (allFresh.Contains(right.ToString()))
-                {
-                    rottingNeighbors.Enqueue(right);
-                }
-
-                Coordinates top = new(current.X, current.Y - 1);
-                if (allFresh.Contains(top.ToString()))
-                {
-                    rottingNeighbors.Enqueue(top);
-                }
-                Coordinates bottom = new(current.X, current.Y + 1);
-                if (allFresh.Contains(bottom.ToString()))
-                {
-                    rottingNeighbors.Enqueue(bottom);
                 }
             }
             minutes++;
