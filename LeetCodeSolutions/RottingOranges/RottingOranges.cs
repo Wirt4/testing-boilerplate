@@ -1,4 +1,6 @@
 
+using System.Security.Cryptography;
+
 namespace LeetCodeSolutions;
 public class RottingOrangesSolution
 {
@@ -29,15 +31,21 @@ public class RottingOrangesSolution
         {
             return IsValid(grid) && grid[_x][_y] == 1;
         }
+
+        public bool IsRotten(int[][] grid)
+        {
+            return IsValid(grid) && grid[_x][_y] == 2;
+        }
+        private static string Encode(int num)
+        {
+            return num.ToString("000000");
+        }
+        public string ToString()
+        {
+            return Encode(_x) + Encode(_y);
+        }
     }
-    private string Encode(int num)
-    {
-        return num.ToString("000000");
-    }
-    private string CoordinatesToString(Coordinates coord)
-    {
-        return Encode(coord.X) + Encode(coord.Y);
-    }
+
 
     public int OrangesRotting(int[][] grid)
     {
@@ -53,9 +61,9 @@ public class RottingOrangesSolution
                 Coordinates current = new(i, j);
                 if (current.IsFresh(grid))
                 {
-                    allFresh.Add(CoordinatesToString(current));
+                    allFresh.Add(current.ToString());
                 }
-                if (grid[i][j] == 2)
+                if (current.IsRotten(grid))
                 {
                     Coordinates left = new(current.X - 1, current.Y);
                     if (left.IsFresh(grid))
@@ -75,6 +83,7 @@ public class RottingOrangesSolution
                     {
                         rottingNeighbors.Enqueue(top);
                     }
+
                     Coordinates bottom = new(current.X, current.Y + 1);
                     if (bottom.IsFresh(grid))
                     {
@@ -91,7 +100,7 @@ public class RottingOrangesSolution
 
             foreach (Coordinates neighbor in rottingNeighbors)
             {
-                allFresh.Remove(CoordinatesToString(neighbor));
+                allFresh.Remove(neighbor.ToString());
             }
 
             int neighborCount = rottingNeighbors.Count;
@@ -100,27 +109,26 @@ public class RottingOrangesSolution
                 Coordinates current = rottingNeighbors.Dequeue();
 
                 Coordinates left = new(current.X - 1, current.Y);
-                if (allFresh.Contains(CoordinatesToString(left)))
+                if (allFresh.Contains(left.ToString()))
                 {
                     rottingNeighbors.Enqueue(left);
                 }
                 Coordinates right = new(current.X + 1, current.Y);
-                if (allFresh.Contains(CoordinatesToString(right)))
+                if (allFresh.Contains(right.ToString()))
                 {
                     rottingNeighbors.Enqueue(right);
                 }
 
                 Coordinates top = new(current.X, current.Y - 1);
-                if (allFresh.Contains(CoordinatesToString(top)))
+                if (allFresh.Contains(top.ToString()))
                 {
                     rottingNeighbors.Enqueue(top);
                 }
                 Coordinates bottom = new(current.X, current.Y + 1);
-                if (allFresh.Contains(CoordinatesToString(bottom)))
+                if (allFresh.Contains(bottom.ToString()))
                 {
                     rottingNeighbors.Enqueue(bottom);
                 }
-
             }
             minutes++;
         }
