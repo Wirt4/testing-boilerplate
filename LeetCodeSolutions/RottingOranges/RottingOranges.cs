@@ -2,19 +2,37 @@
 namespace LeetCodeSolutions;
 public class RottingOrangesSolution
 {
+    private class Coordinates
+    {
+        private int _x;
+        private int _y;
+        public int X => _x;
+        public int Y => _y;
+        public Coordinates(int[] arr)
+        {
+            _x = arr[0];
+            _y = arr[0];
+        }
+
+        public Coordinates(int x, int y)
+        {
+            _x = x;
+            _y = y;
+        }
+    }
     private string Encode(int num)
     {
         return num.ToString("000000");
     }
-    private string CoordinatesToString(int x, int y)
+    private string CoordinatesToString(Coordinates coord)
     {
-        return Encode(x) + Encode(y);
+        return Encode(coord.X) + Encode(coord.Y);
     }
 
     public int OrangesRotting(int[][] grid)
     {
         HashSet<string> allFresh = new();
-        Queue<int[]> rottingNeighbors = new();
+        Queue<Coordinates> rottingNeighbors = new();
         int width = grid.Length;
         int height = grid[0].Length;
 
@@ -22,30 +40,35 @@ public class RottingOrangesSolution
         {
             for (int j = 0; j < height; j++)
             {
+                Coordinates current = new(i, j);
                 if (grid[i][j] == 1)
                 {
-                    allFresh.Add(CoordinatesToString(i, j));
+                    allFresh.Add(CoordinatesToString(current));
                 }
                 if (grid[i][j] == 2)
                 {
+                    Coordinates left = new(current.X - 1, current.Y);
                     if (i > 0 && grid[i - 1][j] == 1)
                     {
-                        rottingNeighbors.Enqueue([i - 1, j]);
+                        rottingNeighbors.Enqueue(left);
                     }
+
+                    Coordinates right = new(current.X + 1, current.Y);
 
                     if (i < width - 1 && grid[i + 1][j] == 1)
                     {
-                        rottingNeighbors.Enqueue([i + 1, j]);
+                        rottingNeighbors.Enqueue(right);
                     }
 
+                    Coordinates top = new(current.X, current.Y - 1);
                     if (j > 0 && grid[i][j - 1] == 1)
                     {
-                        rottingNeighbors.Enqueue([i, j - 1]);
+                        rottingNeighbors.Enqueue(top);
                     }
-
+                    Coordinates bottom = new(current.X, current.Y + 1);
                     if (j < height - 1 && grid[i][j + 1] == 1)
                     {
-                        rottingNeighbors.Enqueue([i, j + 1]);
+                        rottingNeighbors.Enqueue(bottom);
                     }
                 }
             }
@@ -56,36 +79,36 @@ public class RottingOrangesSolution
         while (rottingNeighbors.Count > 0)
         {
 
-            foreach (int[] neighbor in rottingNeighbors)
+            foreach (Coordinates neighbor in rottingNeighbors)
             {
-                allFresh.Remove(CoordinatesToString(neighbor[0], neighbor[1]));
+                allFresh.Remove(CoordinatesToString(neighbor));
             }
 
             int neighborCount = rottingNeighbors.Count;
             for (int i = 0; i < neighborCount; i++)
             {
-                int[] current = rottingNeighbors.Dequeue();
-                int x = current[0];
-                int y = current[1];
+                Coordinates current = rottingNeighbors.Dequeue();
 
-                if (x > 0 && allFresh.Contains(CoordinatesToString(x - 1, y)))
+                Coordinates left = new(current.X - 1, current.Y);
+                if (current.X > 0 && allFresh.Contains(CoordinatesToString(left)))
                 {
-                    rottingNeighbors.Enqueue([x - 1, y]);
+                    rottingNeighbors.Enqueue(left);
+                }
+                Coordinates right = new(current.X + 1, current.Y);
+                if (current.X < width - 1 && allFresh.Contains(CoordinatesToString(right)))
+                {
+                    rottingNeighbors.Enqueue(right);
                 }
 
-                if (x < width - 1 && allFresh.Contains(CoordinatesToString(x + 1, y)))
+                Coordinates top = new(current.X, current.Y - 1);
+                if (current.Y > 0 && allFresh.Contains(CoordinatesToString(top)))
                 {
-                    rottingNeighbors.Enqueue([x + 1, y]);
+                    rottingNeighbors.Enqueue(top);
                 }
-
-                if (y > 0 && allFresh.Contains(CoordinatesToString(x, y - 1)))
+                Coordinates bottom = new(current.X, current.Y + 1);
+                if (current.Y < height - 1 && allFresh.Contains(CoordinatesToString(bottom)))
                 {
-                    rottingNeighbors.Enqueue([x, y - 1]);
-                }
-
-                if (y < height - 1 && allFresh.Contains(CoordinatesToString(x, y + 1)))
-                {
-                    rottingNeighbors.Enqueue([x, y + 1]);
+                    rottingNeighbors.Enqueue(bottom);
                 }
 
             }
