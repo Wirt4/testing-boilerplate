@@ -18,4 +18,16 @@ public class MaximumSubsequenceScoreTests
     long actualAnswer = _solution.MaxScore(nums1, nums2, k);
     Assert.Equal(expectedAnswer, actualAnswer);
   }
+
+  [Fact]
+  public void SmallNonZeroCase()
+  {
+    int[] nums1 = [1, 2];
+    int[] nums2 = [1, 2];
+    int k = 2;
+    int expectedAnswer = 3;
+
+    long actualAnswer = _solution.MaxScore(nums1, nums2, k);
+    Assert.Equal(expectedAnswer, actualAnswer);
+  }
 }
