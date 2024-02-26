@@ -21,6 +21,21 @@ public class SmallestNumberInInifiniteSetTests
     Assert.Equal(1, set.PopSmallest());
     Assert.Equal(4, set.PopSmallest());
     Assert.Equal(5, set.PopSmallest());
+  }
+
+  [Fact]
+  public void StupidEdgeCase()
+  {
+    SmallestInfiniteSet set = new();
+
+    for (int i = 1; i <= 1000; i++)
+    {
+      Assert.Equal(i, set.PopSmallest());
+    }
+
+    set.AddBack(1);
+    Assert.Equal(1, set.PopSmallest());
+    Assert.Equal(1001, set.PopSmallest());
 
   }
 
