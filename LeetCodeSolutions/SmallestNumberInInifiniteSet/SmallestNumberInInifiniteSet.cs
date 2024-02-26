@@ -3,24 +3,44 @@
 namespace LeetCodeSolutions;
 public class SmallestInfiniteSet
 {
-    SortedSet<int> set;
+    readonly SortedSet<int> addedBack;
+    readonly SortedSet<int> popped;
 
     public SmallestInfiniteSet()
     {
-        int[] n = Enumerable.Range(1, 1000).ToArray();
-        set = new SortedSet<int>(n);
+        addedBack = new();
+        popped = new();
     }
 
     public int PopSmallest()
     {
-        int num = set.First();
-        set.Remove(num);
-        return num;
+        if (addedBack.Count > 0)
+        {
+            int min = addedBack.Min();
+            addedBack.Remove(min);
+            popped.Add(min);
+            return min;
+        }
+
+        if (popped.Count == 0)
+        {
+            int first = 1;
+            popped.Add(first);
+            return first;
+        }
+
+        int next = popped.Max() + 1;
+        popped.Add(next);
+        return next;
     }
 
     public void AddBack(int num)
     {
-        set.Add(num);
+        if (popped.Contains(num))
+        {
+            popped.Remove(num);
+            addedBack.Add(num);
+        }
     }
 }
 
