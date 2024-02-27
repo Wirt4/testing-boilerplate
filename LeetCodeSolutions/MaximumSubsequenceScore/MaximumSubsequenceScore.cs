@@ -31,7 +31,6 @@ public class MaximumSubsequenceScoreSolution
             {
                 (long, int) current = _sortedByMultiplier[i];
                 _sum += current.Item1;
-
                 if (i >= _capacity - 1)
                 {
                     if (i >= _capacity)
@@ -40,7 +39,6 @@ public class MaximumSubsequenceScoreSolution
                     }
                     _maxValue = Math.Max(_maxValue, _sum * current.Item2);
                 }
-
                 _minAdders.Enqueue(current.Item1, current.Item1);
             }
         }
