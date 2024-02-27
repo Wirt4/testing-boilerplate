@@ -1,11 +1,8 @@
-using System.Reflection.Metadata.Ecma335;
-
 namespace LeetCodeSolutions;
 public class MaximumSubsequenceScoreSolution
 {
-    public long MaxScore(int[] nums1, int[] nums2, int k)
+    private int[][] getSortedPairs(int[] nums1, int[] nums2)
     {
-
         PriorityQueue<int[], int> pQueue = new();
         for (int i = 0; i < nums1.Length; i++)
         {
@@ -21,6 +18,16 @@ public class MaximumSubsequenceScoreSolution
             allPairs[j] = pQueue.Dequeue();
             j++;
         }
+
+        return allPairs;
+    }
+    public long MaxScore(int[] nums1, int[] nums2, int k)
+    {
+
+
+        int[][] allPairs = getSortedPairs(nums1, nums2);
+        PriorityQueue<int[], int> pQueue = new();
+
 
         int sum = 0;
 
