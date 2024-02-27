@@ -78,5 +78,19 @@ public class MaximumSubsequenceScoreTests
 
     TestFunction(p, expectedAnswer);
   }
+  [Fact]
+  public void BreakingCase1()
+  {
+    Parameters p = new()
+    {
+      nums1 = [2, 1, 14, 12],
+      nums2 = [11, 7, 13, 6],
+      k = 3
+    };
+
+    int expectedAnswer = 168;
+
+    TestFunction(p, expectedAnswer);
+  }
 
 }
