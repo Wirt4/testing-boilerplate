@@ -7,6 +7,11 @@ public class MaximumSubsequenceScoreTests
   {
     _solution = new();
   }
+
+  private void TestFunction(int[] nums1, int[] nums2, int k, int expectedAnswer)
+  {
+    Assert.Equal(expectedAnswer, _solution.MaxScore(nums1, nums2, k));
+  }
   [Fact]
   public void MinimumValuesCase()
   {
@@ -15,8 +20,7 @@ public class MaximumSubsequenceScoreTests
     int k = 1;
     int expectedAnswer = 0;
 
-    long actualAnswer = _solution.MaxScore(nums1, nums2, k);
-    Assert.Equal(expectedAnswer, actualAnswer);
+    TestFunction(nums1, nums2, k, expectedAnswer);
   }
 
   [Fact]
@@ -27,8 +31,7 @@ public class MaximumSubsequenceScoreTests
     int k = 2;
     int expectedAnswer = 3;
 
-    long actualAnswer = _solution.MaxScore(nums1, nums2, k);
-    Assert.Equal(expectedAnswer, actualAnswer);
+    TestFunction(nums1, nums2, k, expectedAnswer);
   }
 
   [Fact]
@@ -39,8 +42,7 @@ public class MaximumSubsequenceScoreTests
     int k = 3;
     int expectedAnswer = 12;
 
-    long actualAnswer = _solution.MaxScore(nums1, nums2, k);
-    Assert.Equal(expectedAnswer, actualAnswer);
+    TestFunction(nums1, nums2, k, expectedAnswer);
   }
 
 }
