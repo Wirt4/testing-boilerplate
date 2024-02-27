@@ -1,4 +1,5 @@
 
+using System.Globalization;
 using System.Reflection.Metadata.Ecma335;
 
 namespace LeetCodeSolutions;
@@ -29,6 +30,30 @@ public class TotalCostToHireKWorkersSolution
         return q;
     }
 
+    private int DequeueEnqueueRightSet(int[] costs, int i, ref int j, ref PriorityQueue<int, int> set)
+    {
+        int ans = set.Dequeue();
+
+        if (i <= j)
+        {
+            set.Enqueue(costs[j], costs[j]);
+            j--;
+        }
+        return ans;
+    }
+
+    private int DequeueEnqueueLeftSet(int[] costs, ref int i, int j, ref PriorityQueue<int, int> set)
+    {
+        int ans = set.Dequeue();
+
+        if (i <= j)
+        {
+            set.Enqueue(costs[i], costs[i]);
+            i++;
+        }
+        return ans;
+    }
+
 
     public long TotalCost(int[] costs, int k, int n)
     {
@@ -48,47 +73,22 @@ public class TotalCostToHireKWorkersSolution
 
             if (leftSet.Count == 0 && rightSet.Count > 0)
             {
-                total += rightSet.Dequeue();
-
-                if (i <= j)
-                {
-                    rightSet.Enqueue(costs[j], costs[j]);
-                    j--;
-                }
+                total += DequeueEnqueueRightSet(costs, i, ref j, ref rightSet);
                 continue;
             }
             if (leftSet.Count > 0 && rightSet.Count == 0)
             {
-                total += leftSet.Dequeue();
-
-                if (i <= j)
-                {
-                    leftSet.Enqueue(costs[i], costs[i]);
-                    i++;
-                }
+                total += DequeueEnqueueLeftSet(costs, ref i, j, ref leftSet);
                 continue;
             }
             if (leftSet.Count > 0 && rightSet.Count > 0)
             {
                 if (leftSet.Peek() <= rightSet.Peek())
                 {
-                    total += leftSet.Dequeue();
-
-                    if (i <= j)
-                    {
-                        leftSet.Enqueue(costs[i], costs[i]);
-                        i++;
-                    }
+                    total += DequeueEnqueueLeftSet(costs, ref i, j, ref leftSet);
                     continue;
                 }
-
-                total += rightSet.Dequeue();
-                if (i <= j)
-                {
-                    rightSet.Enqueue(costs[j], costs[j]);
-                    j--;
-                }
-
+                total += DequeueEnqueueRightSet(costs, i, ref j, ref rightSet);
             }
         }
 
