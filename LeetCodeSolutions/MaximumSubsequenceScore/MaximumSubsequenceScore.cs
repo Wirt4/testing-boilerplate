@@ -8,26 +8,19 @@ public class MaximumSubsequenceScoreSolution
     }
     private PairOfOperands[] NumsDescendingByMultiplier(int[] nums1, int[] nums2)
     {
-        int arrLength = nums1.Length;
-        PairOfOperands[] sortedDescendingByMultiplier = new PairOfOperands[arrLength];
-        PriorityQueue<PairOfOperands, int> sortingHeap = new();
+        int size = nums1.Length;
+        List<PairOfOperands> PairList = new(size);
 
-        for (int i = 0; i < arrLength; i++)
+        for (int i = 0; i < size; i++)
         {
-            PairOfOperands p = new()
+            PairList.Add(new()
             {
                 adder = nums1[i],
                 multiplier = nums2[i]
-            };
-            sortingHeap.Enqueue(p, p.multiplier);
+            });
         }
 
-        for (int j = arrLength - 1; j >= 0; j--)
-        {
-            sortedDescendingByMultiplier[j] = sortingHeap.Dequeue();
-        }
-
-        return sortedDescendingByMultiplier;
+        return PairList.OrderByDescending(x => x.multiplier).ToArray();
     }
     public long MaxScore(int[] nums1, int[] nums2, int k)
     {
@@ -35,27 +28,23 @@ public class MaximumSubsequenceScoreSolution
         PriorityQueue<PairOfOperands, int> minAdders = new();
         long maxSum = 0;
 
-
-
-        int minMultiplier = 0;
+        PairOfOperands current = new();
 
         for (int i = 0; i < k; i++)
         {
-            PairOfOperands p = sortedByMultiplier[i];
-            minAdders.Enqueue(p, p.adder);
-            maxSum += p.adder;
-            minMultiplier = p.multiplier;
+            current = sortedByMultiplier[i];
+            maxSum += current.adder;
+            minAdders.Enqueue(current, current.adder);
         }
 
-        long result = maxSum * minMultiplier;
+        long result = maxSum * current.multiplier;
 
         for (int i = k; i < sortedByMultiplier.Length; i++)
         {
-            PairOfOperands currentPair = sortedByMultiplier[i];
-            maxSum += currentPair.adder - minAdders.Dequeue().adder;
-            minMultiplier = currentPair.multiplier;
-            result = Math.Max(result, maxSum * minMultiplier);
-            minAdders.Enqueue(currentPair, currentPair.adder);
+            current = sortedByMultiplier[i];
+            maxSum += current.adder - minAdders.Dequeue().adder;
+            result = Math.Max(result, maxSum * current.multiplier);
+            minAdders.Enqueue(current, current.adder);
         }
 
         return result;
