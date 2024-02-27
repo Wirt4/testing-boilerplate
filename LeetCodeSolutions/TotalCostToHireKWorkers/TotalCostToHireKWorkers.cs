@@ -2,88 +2,133 @@
 namespace LeetCodeSolutions;
 public class TotalCostToHireKWorkersSolution
 {
-    private PriorityQueue<int, int> CreateLeftSet(int[] costs, ref int i, int n)
-    {
-        PriorityQueue<int, int> leftSet = new();
 
-        while (i < n)
-        {
-            leftSet.Enqueue(costs[i], costs[i]);
-            i++;
-        }
-
-        return leftSet;
-    }
-    private PriorityQueue<int, int> CreateRightSet(int[] costs, int n, int i, ref int j)
+    private class LRIndeces(int length)
     {
-        PriorityQueue<int, int> q = new();
-        while (j >= i && j > costs.Length - 1 - n)
+        public int i = 0;
+        public int j = length - 1;
+
+        public bool IsValid()
         {
-            q.Enqueue(costs[j], costs[j]);
-            j--;
+            return i <= j;
         }
-        return q;
     }
 
-    private int DequeueEnqueueRightSet(int[] costs, int i, ref int j, ref PriorityQueue<int, int> set)
+    private class DualQueues
     {
-        int ans = set.Dequeue();
+        private PriorityQueue<int, int> _left;
+        private PriorityQueue<int, int> _right;
+        private int[] _costs;
+        private LRIndeces _indeces;
 
-        if (i <= j)
+        public DualQueues(int[] costs, int n)
         {
-            set.Enqueue(costs[j], costs[j]);
-            j--;
+            _costs = costs;
+            _indeces = new(costs.Length);
+            _left = CreateLeftSet(costs, n, ref _indeces);
+            _right = CreateRightSet(costs, n, ref _indeces);
         }
-        return ans;
-    }
 
-    private int DequeueEnqueueLeftSet(int[] costs, ref int i, int j, ref PriorityQueue<int, int> set)
-    {
-        int ans = set.Dequeue();
+        public int LeftCount => _left.Count;
+        public int RightCount => _right.Count;
 
-        if (i <= j)
+        public int LeftPeek()
         {
-            set.Enqueue(costs[i], costs[i]);
-            i++;
+            return _left.Peek();
         }
-        return ans;
+
+        public int RightPeek()
+        {
+            return _right.Peek();
+        }
+
+        private PriorityQueue<int, int> CreateLeftSet(int[] costs, int n, ref LRIndeces indeces)
+        {
+            PriorityQueue<int, int> leftSet = new();
+
+            while (indeces.i < n)
+            {
+                leftSet.Enqueue(costs[indeces.i], costs[indeces.i]);
+                indeces.i++;
+            }
+
+            return leftSet;
+        }
+
+        private PriorityQueue<int, int> CreateRightSet(int[] costs, int n, ref LRIndeces indeces)
+        {
+            PriorityQueue<int, int> q = new();
+            while (indeces.IsValid() && indeces.j > costs.Length - 1 - n)
+            {
+                q.Enqueue(costs[indeces.j], costs[indeces.j]);
+                indeces.j--;
+            }
+            return q;
+        }
+
+        public int GetFromLeft()
+        {
+            return DequeueEnqueueLeftSet(_costs, ref _indeces.i, _indeces.j, ref _left);
+        }
+        private int DequeueEnqueueLeftSet(int[] costs, ref int i, int j, ref PriorityQueue<int, int> set)
+        {
+            int ans = set.Dequeue();
+
+            if (i <= j)
+            {
+                set.Enqueue(costs[i], costs[i]);
+                i++;
+            }
+            return ans;
+        }
+
+        public int GetFromRight()
+        {
+            return DequeueEnqueueRightSet(_costs, _indeces.i, ref _indeces.j, ref _right);
+        }
+        private int DequeueEnqueueRightSet(int[] costs, int i, ref int j, ref PriorityQueue<int, int> set)
+        {
+            int ans = set.Dequeue();
+
+            if (i <= j)
+            {
+                set.Enqueue(costs[j], costs[j]);
+                j--;
+            }
+            return ans;
+        }
+
     }
-
-
     public long TotalCost(int[] costs, int k, int n)
     {
-        int i = 0;
-        PriorityQueue<int, int> leftSet = CreateLeftSet(costs, ref i, n);
-
-        int j = costs.Length - 1;
-        PriorityQueue<int, int> rightSet = CreateRightSet(costs, n, i, ref j);
+        DualQueues queues = new(costs, n);
 
         long total = 0;
         for (int m = 0; m < k; m++)
         {
-            if (leftSet.Count == 0 && rightSet.Count == 0)
+            if (queues.LeftCount == 0 && queues.RightCount == 0)
             {
                 break;
             }
 
-            if (leftSet.Count == 0 && rightSet.Count > 0)
+            if (queues.LeftCount == 0 && queues.RightCount > 0)
             {
-                total += DequeueEnqueueRightSet(costs, i, ref j, ref rightSet);
+                total += queues.GetFromRight();
                 continue;
             }
-            if (leftSet.Count > 0 && rightSet.Count == 0)
+            if (queues.LeftCount > 0 && queues.RightCount == 0)
             {
-                total += DequeueEnqueueLeftSet(costs, ref i, j, ref leftSet);
+                total += queues.GetFromLeft();
                 continue;
             }
-            if (leftSet.Count > 0 && rightSet.Count > 0)
+            if (queues.LeftCount > 0 && queues.RightCount > 0)
             {
-                if (leftSet.Peek() <= rightSet.Peek())
+                if (queues.LeftPeek() <= queues.RightPeek())
                 {
-                    total += DequeueEnqueueLeftSet(costs, ref i, j, ref leftSet);
+                    total += queues.GetFromLeft();
                     continue;
                 }
-                total += DequeueEnqueueRightSet(costs, i, ref j, ref rightSet);
+                total += queues.GetFromRight();
             }
         }
 
