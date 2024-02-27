@@ -1,98 +1,63 @@
 namespace LeetCodeSolutions;
 public class MaximumSubsequenceScoreSolution
 {
-
-    private class PriorityQueueWrapper
+    private class PairOfOperands
     {
-        private PriorityQueue<int[], int> _priorityQueue;
-        private int _sum;
-        private int _currentMax;
-        public PriorityQueueWrapper()
-        {
-            _priorityQueue = new();
-            _sum = 0;
-            _currentMax = -1;
-        }
-
-        public void Enqueue(int[] pair)
-        {
-            _sum += pair[1];
-            _priorityQueue.Enqueue(pair, pair[0]);
-            updateCurrentMax();
-        }
-
-        private void updateCurrentMax()
-        {
-            if (_priorityQueue.Count > 0)
-            {
-                _currentMax = MultiplyForCurrentMax();
-            }
-        }
-
-        public void EnqueueRange(int[][] pairs, int startIndx, int endIndx)
-        {
-            for (int i = startIndx; i < endIndx; i++)
-            {
-
-                Enqueue(pairs[i]);
-            }
-        }
-
-        public int[] Dequeue()
-        {
-            int[] pair = _priorityQueue.Dequeue();
-            _sum -= pair[1];
-            updateCurrentMax();
-
-            return pair;
-        }
-
-        public int Count => _priorityQueue.Count;
-
-        private int MultiplyForCurrentMax()
-        {
-            return _priorityQueue.Peek()[0] * _sum;
-        }
-
-        public int CurrentMax => _currentMax;
+        public int adder;
+        public int multiplier;
     }
-    private int[][] GetSortedPairs(int[] nums1, int[] nums2)
+    private PairOfOperands[] NumsDescendingByMultiplier(int[] nums1, int[] nums2)
     {
-        PriorityQueueWrapper pQueue = new();
-        for (int i = 0; i < nums1.Length; i++)
+        int arrLength = nums1.Length;
+        PairOfOperands[] sortedDescendingByMultiplier = new PairOfOperands[arrLength];
+        PriorityQueue<PairOfOperands, int> sortingHeap = new();
+
+        for (int i = 0; i < arrLength; i++)
         {
-            pQueue.Enqueue([nums2[i], nums1[i]]);
+            PairOfOperands p = new()
+            {
+                adder = nums1[i],
+                multiplier = nums2[i]
+            };
+            sortingHeap.Enqueue(p, p.multiplier);
         }
 
-        int[][] allPairs = new int[nums1.Length][];
-        int j = 0;
-
-        while (pQueue.Count > 0)
+        for (int j = arrLength - 1; j >= 0; j--)
         {
-            allPairs[j] = pQueue.Dequeue();
-            j++;
+            sortedDescendingByMultiplier[j] = sortingHeap.Dequeue();
         }
 
-        return allPairs;
+        return sortedDescendingByMultiplier;
     }
     public long MaxScore(int[] nums1, int[] nums2, int k)
     {
-        int[][] allPairs = GetSortedPairs(nums1, nums2);
-        PriorityQueueWrapper pQueue = new();
-        pQueue.EnqueueRange(allPairs, 0, k);
-        int max = pQueue.CurrentMax;
+        PairOfOperands[] sortedByMultiplier = NumsDescendingByMultiplier(nums1, nums2);
+        PriorityQueue<PairOfOperands, int> minAdders = new();
+        long maxSum = 0;
 
-        for (int p = k; p < nums1.Length; p++)
+
+
+        int minMultiplier = 0;
+
+        for (int i = 0; i < k; i++)
         {
-            pQueue.Dequeue();
-            pQueue.Enqueue(allPairs[p]);
-
-            if (pQueue.CurrentMax > max)
-            {
-                max = pQueue.CurrentMax;
-            }
+            PairOfOperands p = sortedByMultiplier[i];
+            minAdders.Enqueue(p, p.adder);
+            maxSum += p.adder;
+            minMultiplier = p.multiplier;
         }
 
-        return max;
+        long result = maxSum * minMultiplier;
+
+        for (int i = k; i < sortedByMultiplier.Length; i++)
+        {
+            PairOfOperands currentPair = sortedByMultiplier[i];
+            maxSum += currentPair.adder - minAdders.Dequeue().adder;
+            minMultiplier = currentPair.multiplier;
+            result = Math.Max(result, maxSum * minMultiplier);
+            minAdders.Enqueue(currentPair, currentPair.adder);
+        }
+
+        return result;
     }
 }
