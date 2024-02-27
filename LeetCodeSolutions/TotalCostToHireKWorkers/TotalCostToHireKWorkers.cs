@@ -5,7 +5,6 @@ public class TotalCostToHireKWorkersSolution
     public long TotalCost(int[] costs, int k, int n)
     {
         long total = 0;
-        //set up the two queues
         int i = 0;
         int j = costs.Length - 1;
         PriorityQueue<int, int> leftSet = new();
@@ -18,7 +17,7 @@ public class TotalCostToHireKWorkersSolution
 
         PriorityQueue<int, int> rightSet = new();
 
-        while (j > i && j > costs.Length - 1 - n)
+        while (j >= i && j > costs.Length - 1 - n)
         {
             rightSet.Enqueue(costs[j], costs[j]);
             j--;
