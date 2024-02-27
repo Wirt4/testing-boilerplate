@@ -30,4 +30,17 @@ public class MaximumSubsequenceScoreTests
     long actualAnswer = _solution.MaxScore(nums1, nums2, k);
     Assert.Equal(expectedAnswer, actualAnswer);
   }
+
+  [Fact]
+  public void LCCodeExample1()
+  {
+    int[] nums1 = [1, 3, 3, 2];
+    int[] nums2 = [2, 1, 3, 4];
+    int k = 3;
+    int expectedAnswer = 12;
+
+    long actualAnswer = _solution.MaxScore(nums1, nums2, k);
+    Assert.Equal(expectedAnswer, actualAnswer);
+  }
+
 }
