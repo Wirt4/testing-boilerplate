@@ -42,10 +42,10 @@ public class TotalCostToHireKWorkersSolution
 
     private class DualQueues
     {
-        private MinHeap _left;
-        private MinHeap _right;
-        private int[] _costs;
-        private LRIndeces _indeces;
+        private readonly MinHeap _left;
+        private readonly MinHeap _right;
+        private readonly int[] _costs;
+        private readonly LRIndeces _indeces;
 
         public DualQueues(int[] costs, int n)
         {
@@ -53,17 +53,6 @@ public class TotalCostToHireKWorkersSolution
             _indeces = new(costs.Length);
             _left = CreateLeftHeap(n);
             _right = CreateRightHeap(n);
-        }
-
-
-        public int LeftPeek()
-        {
-            return _left.Peek();
-        }
-
-        public int RightPeek()
-        {
-            return _right.Peek();
         }
 
         private MinHeap CreateLeftHeap(int n)
