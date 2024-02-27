@@ -38,6 +38,7 @@ public class MaximumSubsequenceScoreSolution
             sum -= removedPair[1];
 
             sum += allPairs[p][1];
+            pQueue.Enqueue(allPairs[p], allPairs[p][0]);
 
             int currentMax = sum * pQueue.Peek()[0];
 

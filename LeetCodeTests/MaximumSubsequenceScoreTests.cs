@@ -64,4 +64,19 @@ public class MaximumSubsequenceScoreTests
     TestFunction(p, expectedAnswer);
   }
 
+  [Fact]
+  public void LCCodeExample2()
+  {
+    Parameters p = new()
+    {
+      nums1 = [4, 2, 3, 1, 1],
+      nums2 = [7, 5, 10, 9, 6],
+      k = 1
+    };
+
+    int expectedAnswer = 30;
+
+    TestFunction(p, expectedAnswer);
+  }
+
 }
