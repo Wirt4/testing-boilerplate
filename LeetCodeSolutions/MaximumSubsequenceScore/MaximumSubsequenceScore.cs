@@ -5,27 +5,54 @@ public class MaximumSubsequenceScoreSolution
     private class PriorityQueueWrapper
     {
         private PriorityQueue<int[], int> _priorityQueue;
+        private int _sum;
+        private int _currentMax;
         public PriorityQueueWrapper()
         {
             _priorityQueue = new();
+            _sum = 0;
+            _currentMax = -1;
         }
 
         public void Enqueue(int[] pair)
         {
+            _sum += pair[1];
             _priorityQueue.Enqueue(pair, pair[0]);
+            if (_priorityQueue.Count > 0)
+            {
+                _currentMax = MultiplyForCurrentMax();
+            }
+        }
+
+        public void EnqueueRange(int[][] pairs, int startIndx, int endIndx)
+        {
+            for (int i = startIndx; i < endIndx; i++)
+            {
+
+                Enqueue(pairs[i]);
+            }
         }
 
         public int[] Dequeue()
         {
-            return _priorityQueue.Dequeue();
+            int[] pair = _priorityQueue.Dequeue();
+            _sum -= pair[1];
+            if (_priorityQueue.Count > 0)
+            {
+                _currentMax = MultiplyForCurrentMax();
+            }
+
+            return pair;
         }
 
         public int Count => _priorityQueue.Count;
 
-        public int[] Peek()
+        private int MultiplyForCurrentMax()
         {
-            return _priorityQueue.Peek();
+            return _priorityQueue.Peek()[0] * _sum;
         }
+
+        public int CurrentMax => _currentMax;
     }
     private int[][] GetSortedPairs(int[] nums1, int[] nums2)
     {
@@ -50,24 +77,20 @@ public class MaximumSubsequenceScoreSolution
     {
         int[][] allPairs = GetSortedPairs(nums1, nums2);
         PriorityQueueWrapper pQueue = new();
-        int sum = 0;
-
-        for (int m = 0; m < k; m++)
-        {
-            sum += allPairs[m][1];
-            pQueue.Enqueue(allPairs[m]);
-        }
-
-        int max = sum * pQueue.Peek()[0];
+        pQueue.EnqueueRange(allPairs, 0, k);
+        int max = pQueue.CurrentMax;
 
         for (int p = k; p < nums1.Length; p++)
         {
-            sum -= pQueue.Dequeue()[1];
-            sum += allPairs[p][1];
+            pQueue.Dequeue();
             pQueue.Enqueue(allPairs[p]);
-            int currentMax = sum * pQueue.Peek()[0];
-            max = currentMax > max ? currentMax : max;
+
+            if (pQueue.CurrentMax > max)
+            {
+                max = pQueue.CurrentMax;
+            }
         }
+
         return max;
     }
 }
