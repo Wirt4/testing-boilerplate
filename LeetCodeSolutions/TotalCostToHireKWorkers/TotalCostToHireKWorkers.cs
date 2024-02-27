@@ -2,35 +2,78 @@
 namespace LeetCodeSolutions;
 public class TotalCostToHireKWorkersSolution
 {
-    public long TotalCost(int[] costs, int hiringQuota, int selectionRange)
+    public long TotalCost(int[] costs, int k, int n)
     {
         long total = 0;
-        int frontIndex = 0;
-        int backIndex = costs.Length - 1;
-        PriorityQueue<int, int> leftPool = new();
-        PriorityQueue<int, int> rightPool = new();
+        //set up the two queues
+        int i = 0;
+        int j = costs.Length - 1;
+        PriorityQueue<int, int> leftSet = new();
 
-        for (int i = 0; i < selectionRange; i++)
+        while (i < n)
         {
-            leftPool.Enqueue(costs[frontIndex], costs[frontIndex]);
-            rightPool.Enqueue(costs[backIndex], costs[backIndex]);
-            frontIndex++;
-            backIndex--;
+            leftSet.Enqueue(costs[i], costs[i]);
+            i++;
         }
 
-        for (int i = 0; i < hiringQuota; i++)
+        PriorityQueue<int, int> rightSet = new();
+
+        while (j > i && j > costs.Length - 1 - n)
         {
-            if (leftPool.Peek() <= rightPool.Peek())
+            rightSet.Enqueue(costs[j], costs[j]);
+            j--;
+        }
+
+        for (int m = 0; m < k; m++)
+        {
+            if (leftSet.Count == 0 && rightSet.Count == 0)
             {
-                total += leftPool.Dequeue();
-                leftPool.Enqueue(costs[frontIndex], costs[frontIndex]);
-                frontIndex++;
+                break;
             }
-            else
+
+            if (leftSet.Count == 0 && rightSet.Count > 0)
             {
-                total += rightPool.Dequeue();
-                rightPool.Enqueue(costs[backIndex], costs[backIndex]);
-                backIndex--;
+                total += rightSet.Dequeue();
+
+                if (i <= j)
+                {
+                    rightSet.Enqueue(costs[j], costs[j]);
+                    j--;
+                }
+                continue;
+            }
+            if (leftSet.Count > 0 && rightSet.Count == 0)
+            {
+                total += leftSet.Dequeue();
+
+                if (i <= j)
+                {
+                    leftSet.Enqueue(costs[i], costs[i]);
+                    i++;
+                }
+                continue;
+            }
+            if (leftSet.Count > 0 && rightSet.Count > 0)
+            {
+                if (leftSet.Peek() <= rightSet.Peek())
+                {
+                    total += leftSet.Dequeue();
+
+                    if (i <= j)
+                    {
+                        leftSet.Enqueue(costs[i], costs[i]);
+                        i++;
+                    }
+                    continue;
+                }
+
+                total += rightSet.Dequeue();
+                if (i <= j)
+                {
+                    rightSet.Enqueue(costs[j], costs[j]);
+                    j--;
+                }
+
             }
         }
 

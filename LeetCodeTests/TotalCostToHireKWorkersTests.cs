@@ -41,7 +41,7 @@ public class TotalCostToHireKWorkersTests
     {
       costs = [17, 12, 10, 2, 7, 2, 11, 20, 8],
       hiringQuota = 3,
-      selectionRange = 2
+      selectionRange = 4
     };
 
     long desired = 11;
