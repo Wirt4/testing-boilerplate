@@ -1,10 +1,5 @@
 
-using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
-
 namespace LeetCodeSolutions;
-
-
 public class TotalCostToHireKWorkersSolution
 {
     private PriorityQueue<int, int> CreateLeftSet(int[] costs, ref int i, int n)
