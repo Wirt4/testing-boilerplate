@@ -10,7 +10,6 @@ public class MaximumSubsequenceScoreSolution
         }
 
         int[][] allPairs = new int[nums1.Length][];
-
         int j = 0;
 
         while (pQueue.Count > 0)
@@ -23,12 +22,8 @@ public class MaximumSubsequenceScoreSolution
     }
     public long MaxScore(int[] nums1, int[] nums2, int k)
     {
-
-
         int[][] allPairs = getSortedPairs(nums1, nums2);
         PriorityQueue<int[], int> pQueue = new();
-
-
         int sum = 0;
 
         for (int m = 0; m < k; m++)
@@ -43,23 +38,15 @@ public class MaximumSubsequenceScoreSolution
         {
             int[] removedPair = pQueue.Dequeue();
             sum -= removedPair[1];
-
             sum += allPairs[p][1];
             pQueue.Enqueue(allPairs[p], allPairs[p][0]);
-
             int currentMax = sum * pQueue.Peek()[0];
 
             if (currentMax > max)
             {
                 max = currentMax;
             }
-
-
         }
-
-        // now there are k pairs in the priority queue
-
-
         return max;
 
     }
