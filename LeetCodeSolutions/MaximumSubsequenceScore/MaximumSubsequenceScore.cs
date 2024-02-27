@@ -21,7 +21,6 @@ public class MaximumSubsequenceScoreSolution
         private long _sum = 0;
         private long _maxValue = 0;
         private int _capacity = capacity;
-
         private (long, int)[] _sortedByMultiplier = sorted;
 
         public long MaxProduct => _maxValue;
