@@ -27,23 +27,23 @@ public class MaximumSubsequenceScoreSolution
         PairOfOperands[] sortedByMultiplier = NumsDescendingByMultiplier(nums1, nums2);
         PriorityQueue<PairOfOperands, int> minAdders = new();
         long maxSum = 0;
+        long result = 0;
 
-        PairOfOperands current = new();
-
-        for (int i = 0; i < k; i++)
+        for (int i = 0; i < sortedByMultiplier.Length; i++)
         {
-            current = sortedByMultiplier[i];
+            PairOfOperands current = sortedByMultiplier[i];
             maxSum += current.adder;
-            minAdders.Enqueue(current, current.adder);
-        }
 
-        long result = maxSum * current.multiplier;
+            if (i >= k - 1)
+            {
+                if (i >= k)
+                {
+                    maxSum -= minAdders.Dequeue().adder;
+                }
 
-        for (int i = k; i < sortedByMultiplier.Length; i++)
-        {
-            current = sortedByMultiplier[i];
-            maxSum += current.adder - minAdders.Dequeue().adder;
-            result = Math.Max(result, maxSum * current.multiplier);
+                result = Math.Max(result, maxSum * current.multiplier);
+            }
+
             minAdders.Enqueue(current, current.adder);
         }
 
