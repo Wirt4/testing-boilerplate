@@ -8,41 +8,60 @@ public class MaximumSubsequenceScoreTests
     _solution = new();
   }
 
-  private void TestFunction(int[] nums1, int[] nums2, int k, int expectedAnswer)
+  private class Parameters
   {
-    Assert.Equal(expectedAnswer, _solution.MaxScore(nums1, nums2, k));
+    public int[] nums1;
+    public int[] nums2;
+    public int k;
+  }
+
+  private void TestFunction(Parameters p, int expectedAnswer)
+  {
+    Assert.Equal(expectedAnswer, _solution.MaxScore(p.nums1, p.nums2, p.k));
   }
   [Fact]
   public void MinimumValuesCase()
   {
-    int[] nums1 = [0];
-    int[] nums2 = [0];
-    int k = 1;
+    Parameters p = new()
+    {
+      nums1 = [0],
+      nums2 = [0],
+      k = 1,
+    };
+
     int expectedAnswer = 0;
 
-    TestFunction(nums1, nums2, k, expectedAnswer);
+    TestFunction(p, expectedAnswer);
   }
 
   [Fact]
   public void SmallNonZeroCase()
   {
-    int[] nums1 = [1, 2];
-    int[] nums2 = [1, 2];
-    int k = 2;
+    Parameters p = new()
+    {
+      nums1 = [1, 2],
+      nums2 = [1, 2],
+      k = 2,
+    };
+
     int expectedAnswer = 3;
 
-    TestFunction(nums1, nums2, k, expectedAnswer);
+    TestFunction(p, expectedAnswer);
   }
 
   [Fact]
   public void LCCodeExample1()
   {
-    int[] nums1 = [1, 3, 3, 2];
-    int[] nums2 = [2, 1, 3, 4];
-    int k = 3;
+    Parameters p = new()
+    {
+      nums1 = [1, 3, 3, 2],
+      nums2 = [2, 1, 3, 4],
+      k = 3
+    };
+
     int expectedAnswer = 12;
 
-    TestFunction(nums1, nums2, k, expectedAnswer);
+    TestFunction(p, expectedAnswer);
   }
 
 }
