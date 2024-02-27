@@ -14,10 +14,36 @@ public class TotalCostToHireKWorkersSolution
         }
     }
 
+    private class Heap
+    {
+        private PriorityQueue<int, int> _pq;
+        public Heap()
+        {
+            _pq = new();
+        }
+
+        public void Add(int value)
+        {
+            _pq.Enqueue(value, value);
+        }
+
+        public bool ContainsItems => _pq.Count > 0;
+
+        public int Peek()
+        {
+            return _pq.Peek();
+        }
+
+        public int Remove()
+        {
+            return _pq.Dequeue();
+        }
+    }
+
     private class DualQueues
     {
-        private PriorityQueue<int, int> _left;
-        private PriorityQueue<int, int> _right;
+        private Heap _left;
+        private Heap _right;
         private int[] _costs;
         private LRIndeces _indeces;
 
@@ -25,12 +51,12 @@ public class TotalCostToHireKWorkersSolution
         {
             _costs = costs;
             _indeces = new(costs.Length);
-            _left = CreateLeftSet(costs, n, ref _indeces);
-            _right = CreateRightSet(costs, n, ref _indeces);
+            _left = CreateLeftHeap(n);
+            _right = CreateRightHeap(n);
         }
 
-        public int LeftCount => _left.Count;
-        public int RightCount => _right.Count;
+        public bool LeftContainsItems => _left.ContainsItems;
+        public bool RightContainsItems => _right.ContainsItems;
 
         public int LeftPeek()
         {
@@ -42,59 +68,55 @@ public class TotalCostToHireKWorkersSolution
             return _right.Peek();
         }
 
-        private PriorityQueue<int, int> CreateLeftSet(int[] costs, int n, ref LRIndeces indeces)
+        private Heap CreateLeftHeap(int n)
         {
-            PriorityQueue<int, int> leftSet = new();
+            Heap leftSet = new();
 
-            while (indeces.i < n)
+            while (_indeces.i < n)
             {
-                leftSet.Enqueue(costs[indeces.i], costs[indeces.i]);
-                indeces.i++;
+                leftSet.Add(_costs[_indeces.i]);
+                _indeces.i++;
             }
 
             return leftSet;
         }
 
-        private PriorityQueue<int, int> CreateRightSet(int[] costs, int n, ref LRIndeces indeces)
+        private Heap CreateRightHeap(int n)
         {
-            PriorityQueue<int, int> q = new();
-            while (indeces.IsValid() && indeces.j > costs.Length - 1 - n)
+            Heap rightSet = new();
+
+            while (_indeces.IsValid() && _indeces.j > _costs.Length - 1 - n)
             {
-                q.Enqueue(costs[indeces.j], costs[indeces.j]);
-                indeces.j--;
+                rightSet.Add(_costs[_indeces.j]);
+                _indeces.j--;
             }
-            return q;
+
+            return rightSet;
         }
+
 
         public int GetFromLeft()
         {
-            return DequeueEnqueueLeftSet(_costs, ref _indeces.i, _indeces.j, ref _left);
-        }
-        private int DequeueEnqueueLeftSet(int[] costs, ref int i, int j, ref PriorityQueue<int, int> set)
-        {
-            int ans = set.Dequeue();
+            int ans = _left.Remove();
 
-            if (i <= j)
+            if (_indeces.IsValid())
             {
-                set.Enqueue(costs[i], costs[i]);
-                i++;
+                _left.Add(_costs[_indeces.i]);
+                _indeces.i++;
             }
             return ans;
         }
 
         public int GetFromRight()
         {
-            return DequeueEnqueueRightSet(_costs, _indeces.i, ref _indeces.j, ref _right);
-        }
-        private int DequeueEnqueueRightSet(int[] costs, int i, ref int j, ref PriorityQueue<int, int> set)
-        {
-            int ans = set.Dequeue();
+            int ans = _right.Remove();
 
-            if (i <= j)
+            if (_indeces.IsValid())
             {
-                set.Enqueue(costs[j], costs[j]);
-                j--;
+                _right.Add(_costs[_indeces.j]);
+                _indeces.j--;
             }
+
             return ans;
         }
 
@@ -102,32 +124,30 @@ public class TotalCostToHireKWorkersSolution
     public long TotalCost(int[] costs, int k, int n)
     {
         DualQueues queues = new(costs, n);
-
         long total = 0;
+
         for (int m = 0; m < k; m++)
         {
-            if (queues.LeftCount == 0 && queues.RightCount == 0)
+            if (queues.LeftContainsItems)
             {
-                break;
-            }
-
-            if (queues.LeftCount == 0 && queues.RightCount > 0)
-            {
-                total += queues.GetFromRight();
-                continue;
-            }
-            if (queues.LeftCount > 0 && queues.RightCount == 0)
-            {
-                total += queues.GetFromLeft();
-                continue;
-            }
-            if (queues.LeftCount > 0 && queues.RightCount > 0)
-            {
-                if (queues.LeftPeek() <= queues.RightPeek())
+                if (queues.RightContainsItems)
                 {
-                    total += queues.GetFromLeft();
+                    if (queues.LeftPeek() <= queues.RightPeek())
+                    {
+                        total += queues.GetFromLeft();
+                        continue;
+                    }
+
+                    total += queues.GetFromRight();
                     continue;
                 }
+
+                total += queues.GetFromLeft();
+                continue;
+
+            }
+            if (queues.RightContainsItems)
+            {
                 total += queues.GetFromRight();
             }
         }
