@@ -63,4 +63,20 @@ public class TotalCostToHireKWorkersTests
 
     TestIt(p, desired);
   }
+
+  [Fact]
+
+  public void BreakingCase1()
+  {
+    Parameters p = new()
+    {
+      costs = [17, 12],
+      hiringQuota = 1,
+      selectionRange = 1
+    };
+
+    long desired = 12;
+
+    TestIt(p, desired);
+  }
 }
