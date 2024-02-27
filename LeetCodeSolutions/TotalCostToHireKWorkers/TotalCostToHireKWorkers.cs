@@ -14,10 +14,10 @@ public class TotalCostToHireKWorkersSolution
         }
     }
 
-    private class Heap
+    private class MinHeap
     {
         private PriorityQueue<int, int> _pq;
-        public Heap()
+        public MinHeap()
         {
             _pq = new();
         }
@@ -42,8 +42,8 @@ public class TotalCostToHireKWorkersSolution
 
     private class DualQueues
     {
-        private Heap _left;
-        private Heap _right;
+        private MinHeap _left;
+        private MinHeap _right;
         private int[] _costs;
         private LRIndeces _indeces;
 
@@ -55,8 +55,6 @@ public class TotalCostToHireKWorkersSolution
             _right = CreateRightHeap(n);
         }
 
-        public bool LeftContainsItems => _left.ContainsItems;
-        public bool RightContainsItems => _right.ContainsItems;
 
         public int LeftPeek()
         {
@@ -68,9 +66,9 @@ public class TotalCostToHireKWorkersSolution
             return _right.Peek();
         }
 
-        private Heap CreateLeftHeap(int n)
+        private MinHeap CreateLeftHeap(int n)
         {
-            Heap leftSet = new();
+            MinHeap leftSet = new();
 
             while (_indeces.i < n)
             {
@@ -81,9 +79,9 @@ public class TotalCostToHireKWorkersSolution
             return leftSet;
         }
 
-        private Heap CreateRightHeap(int n)
+        private MinHeap CreateRightHeap(int n)
         {
-            Heap rightSet = new();
+            MinHeap rightSet = new();
 
             while (_indeces.IsValid() && _indeces.j > _costs.Length - 1 - n)
             {
@@ -95,7 +93,7 @@ public class TotalCostToHireKWorkersSolution
         }
 
 
-        public int GetFromLeft()
+        private int GetFromLeft()
         {
             int ans = _left.Remove();
 
@@ -107,7 +105,7 @@ public class TotalCostToHireKWorkersSolution
             return ans;
         }
 
-        public int GetFromRight()
+        private int GetFromRight()
         {
             int ans = _right.Remove();
 
@@ -120,6 +118,27 @@ public class TotalCostToHireKWorkersSolution
             return ans;
         }
 
+        public int GetNextSmallest()
+        {
+            if (_left.ContainsItems)
+            {
+                if (_right.ContainsItems)
+                {
+                    if (_left.Peek() <= _right.Peek())
+                    {
+                        return GetFromLeft();
+                    }
+                    return GetFromRight();
+                }
+                return GetFromLeft();
+            }
+            if (_right.ContainsItems)
+            {
+                return GetFromRight();
+            }
+            return 0;
+        }
+
     }
     public long TotalCost(int[] costs, int k, int n)
     {
@@ -128,28 +147,7 @@ public class TotalCostToHireKWorkersSolution
 
         for (int m = 0; m < k; m++)
         {
-            if (queues.LeftContainsItems)
-            {
-                if (queues.RightContainsItems)
-                {
-                    if (queues.LeftPeek() <= queues.RightPeek())
-                    {
-                        total += queues.GetFromLeft();
-                        continue;
-                    }
-
-                    total += queues.GetFromRight();
-                    continue;
-                }
-
-                total += queues.GetFromLeft();
-                continue;
-
-            }
-            if (queues.RightContainsItems)
-            {
-                total += queues.GetFromRight();
-            }
+            total += queues.GetNextSmallest();
         }
 
         return total;
