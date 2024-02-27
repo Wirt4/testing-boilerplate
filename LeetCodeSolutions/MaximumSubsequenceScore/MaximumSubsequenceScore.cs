@@ -36,11 +36,7 @@ public class MaximumSubsequenceScoreSolution
 
             if (i >= k - 1)
             {
-                if (i >= k)
-                {
-                    maxSum -= minAdders.Dequeue().adder;
-                }
-
+                maxSum -= i >= k ? minAdders.Dequeue().adder : 0;
                 result = Math.Max(result, maxSum * current.multiplier);
             }
 
