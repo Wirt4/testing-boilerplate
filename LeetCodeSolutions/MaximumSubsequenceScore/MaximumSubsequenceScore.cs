@@ -18,6 +18,11 @@ public class MaximumSubsequenceScoreSolution
         {
             _sum += pair[1];
             _priorityQueue.Enqueue(pair, pair[0]);
+            updateCurrentMax();
+        }
+
+        private void updateCurrentMax()
+        {
             if (_priorityQueue.Count > 0)
             {
                 _currentMax = MultiplyForCurrentMax();
@@ -37,10 +42,7 @@ public class MaximumSubsequenceScoreSolution
         {
             int[] pair = _priorityQueue.Dequeue();
             _sum -= pair[1];
-            if (_priorityQueue.Count > 0)
-            {
-                _currentMax = MultiplyForCurrentMax();
-            }
+            updateCurrentMax();
 
             return pair;
         }
