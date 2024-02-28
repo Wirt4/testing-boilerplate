@@ -1,4 +1,6 @@
 namespace Tests;
+
+using System.Reflection.Metadata.Ecma335;
 using LeetCodeSolutions;
 public class GuessNumberTests
 {
@@ -8,21 +10,37 @@ public class GuessNumberTests
     _solution = new();
   }
   [Fact]
-  public void LCExample1()
+  public void LCExample1CorrectGuess()
   {
-    int guess(int g)
+    Func<int, int> guess = CreateGuess(6);
+
+    Assert.Equal(6, _solution.GuessNumber(6));
+  }
+
+  [Fact]
+  public void LCExample2CorrectGuess()
+  {
+    Func<int, int> guess = CreateGuess(1);
+
+    Assert.Equal(1, _solution.GuessNumber(1));
+  }
+
+  private Func<int, int> CreateGuess(int targetValue)
+  {
+    Func<int, int> f = (int g) =>
     {
-      if (g == 6)
+      if (g == targetValue)
       {
-        return 6;
+        return targetValue;
       }
-      if (g > 6)
+      if (g > targetValue)
       {
         return -1;
       }
-      return 1;
-    }
 
-    Assert.Equal(6, _solution.GuessNumber(6));
+      return 1;
+    };
+
+    return f;
   }
 }
