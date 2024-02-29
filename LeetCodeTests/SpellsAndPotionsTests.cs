@@ -7,12 +7,41 @@ public class SpellsAndPotionsTests
   {
     _solution = new();
   }
+  private class Arguments
+  {
+    public int[] spells;
+    public int[] potions;
+    public long success;
+  };
+
+  private void TestCase(Arguments args, int[] desiredAnswer)
+  {
+    int[] actualAnswer = _solution.SuccessfulPairs(args.spells, args.potions, args.success);
+    Assert.Equal(desiredAnswer, actualAnswer);
+  }
   [Fact]
   public void ArrayOfOneCase1()
   {
-    int[] spells = [2];
-    int[] potions = [2];
-    long success = 3;
-    Assert.Equal([1], _solution.SuccessfulPairs(spells, potions, success));
+    Arguments args = new()
+    {
+      spells = [2],
+      potions = [2],
+      success = 3
+    };
+    int[] positionalSuccesses = [1];
+    TestCase(args, positionalSuccesses);
+  }
+
+  [Fact]
+  public void ArrayOfOneCase2()
+  {
+    Arguments args = new()
+    {
+      spells = [2],
+      potions = [2],
+      success = 6
+    };
+    int[] positionalSuccesses = [0];
+    TestCase(args, positionalSuccesses);
   }
 }
