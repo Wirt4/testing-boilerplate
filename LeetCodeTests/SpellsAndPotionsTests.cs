@@ -44,4 +44,17 @@ public class SpellsAndPotionsTests
     int[] positionalSuccesses = [0];
     TestCase(args, positionalSuccesses);
   }
+
+  [Fact]
+  public void LCExample1()
+  {
+    Arguments args = new()
+    {
+      spells = [5, 1, 3],
+      potions = [1, 2, 3, 4, 5],
+      success = 7
+    };
+    int[] positionalSuccesses = [4, 0, 3];
+    TestCase(args, positionalSuccesses);
+  }
 }
