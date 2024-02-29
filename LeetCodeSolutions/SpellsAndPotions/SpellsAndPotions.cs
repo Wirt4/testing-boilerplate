@@ -3,10 +3,22 @@ public class SpellsAndPotionsSolution
 {
     public int[] SuccessfulPairs(int[] spells, int[] potions, long success)
     {
-        if (spells[0] * potions[0] >= success)
+        int[] answer = new int[spells.Length];
+        for (int i = 0; i < spells.Length; i++)
         {
-            return [1];
+            int currentMatch = 0;
+            for (int j = 0; j < potions.Length; j++)
+            {
+                if (spells[i] * potions[j] >= success)
+                {
+                    currentMatch++;
+                }
+            }
+
+
+            answer[i] = currentMatch;
         }
-        return [0];
+
+        return answer;
     }
 }
