@@ -34,4 +34,14 @@ public class FindPeakElementTests
     int actualOutput = _solution.FindPeakElement(nums);
     Assert.Equal(actualOutput, desiredOutput);
   }
+
+  [Fact]
+  public void LeetCodeExample1()
+  {
+    int[] nums = [1, 2, 3, 1];
+    int desiredOutput = 2;
+
+    int actualOutput = _solution.FindPeakElement(nums);
+    Assert.Equal(actualOutput, desiredOutput);
+  }
 }
