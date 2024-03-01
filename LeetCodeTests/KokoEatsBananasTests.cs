@@ -46,4 +46,18 @@ public class KokoEatsBananasTests
     int result = 2;
     AssertAnswer(parameters, result);
   }
+
+  [Fact]
+  public void PilesOfLengthTwo1()
+  {
+
+    Parameters parameters = new()
+    {
+      piles = [4, 8],
+      h = 2
+    };
+
+    int result = 8;
+    AssertAnswer(parameters, result);
+  }
 }
