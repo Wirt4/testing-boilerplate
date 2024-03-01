@@ -18,27 +18,21 @@ public class SpellsAndPotionsSolution
         {
             while (i <= j)
             {
-                if (i == j)
-                {
-                    return i;
-                }
+                if (i == j) { return i; }
+
                 int m = (i + j) / 2;
 
                 if (potions[m] >= target)
                 {
-                    if (m == 0)
-                    {
-                        return m;
-                    }
-                    if (potions[m - 1] < target)
-                    {
-                        return m;
-                    }
+                    if (m == 0 || potions[m - 1] < target) { return m; }
+
                     j = m - 1;
                     continue;
                 }
+
                 i = m + 1;
             }
+
             return -1;
         }
 
@@ -51,10 +45,8 @@ public class SpellsAndPotionsSolution
         public int NumberOfMixes(int spell)
         {
             int index = Find(spell);
-            if (index == -1)
-            {
-                return 0;
-            }
+            if (index == -1) { return 0; }
+
             return potions.Length - index;
         }
     };
