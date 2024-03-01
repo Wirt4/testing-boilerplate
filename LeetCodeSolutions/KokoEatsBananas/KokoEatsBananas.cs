@@ -19,7 +19,7 @@ public class KokoEatsBananasSolution
     {
         if (piles.Length == 1)
         {
-            return piles[0] / h;
+            return (piles[0] + h - 1) / h;
         }
 
         (int min, int max) rates = new(piles[0], piles[0]);
