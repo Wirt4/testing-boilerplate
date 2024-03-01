@@ -14,11 +14,6 @@ public class SpellsAndPotionsSolution
             this.success = success;
         }
 
-        private long Query(int spell, int index)
-        {
-            return spell * potions[index];
-        }
-
         private int BinarySearch(decimal target, int i, int j)
         {
             while (i <= j)
