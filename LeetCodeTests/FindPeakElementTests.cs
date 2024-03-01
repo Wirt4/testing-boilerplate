@@ -54,6 +54,15 @@ public class FindPeakElementTests
 
     int actualOutput = _solution.FindPeakElement(nums);
     Assert.True(actualOutput == desiredOutput1 || actualOutput == desiredOutput2);
+  }
 
+  [Fact]
+  public void BreakingCase1()
+  {
+    int[] nums = [1, 2, 3];
+    int desiredOutput = 2;
+
+    int actualOutput = _solution.FindPeakElement(nums);
+    Assert.Equal(desiredOutput, actualOutput);
   }
 }
