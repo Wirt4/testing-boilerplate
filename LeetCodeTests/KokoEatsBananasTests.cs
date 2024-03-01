@@ -73,4 +73,57 @@ public class KokoEatsBananasTests
     int result = 3;
     AssertAnswer(parameters, result);
   }
+
+  [Fact]
+  public void LCExample1()
+  {
+    Parameters parameters = new()
+    {
+      piles = [3, 6, 7, 11],
+      h = 8
+    };
+
+    int result = 4;
+    AssertAnswer(parameters, result);
+  }
+
+
+  [Fact]
+  public void LCExample2()
+  {
+    Parameters parameters = new()
+    {
+      piles = [30, 11, 23, 4, 20],
+      h = 5
+    };
+
+    int result = 30;
+    AssertAnswer(parameters, result);
+  }
+
+  [Fact]
+  public void LCExample3()
+  {
+    Parameters parameters = new()
+    {
+      piles = [30, 11, 23, 4, 20],
+      h = 6
+    };
+
+    int result = 23;
+    AssertAnswer(parameters, result);
+  }
+
+  [Fact]
+  public void FailingTest1()
+  {
+    Parameters parameters = new()
+    {
+      piles = [312884470],
+      h = 312884469
+    };
+
+    int result = 2;
+    AssertAnswer(parameters, result);
+  }
 }
