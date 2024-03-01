@@ -14,7 +14,7 @@ public class SpellsAndPotionsSolution
             this.success = success;
         }
 
-        private int Find(int spell, int[] potions, long success)
+        private int Find(int spell)
         {
             //assumss potions is sorted
             int i = 0;
@@ -54,7 +54,7 @@ public class SpellsAndPotionsSolution
 
         public int NumberOfMixes(int spell)
         {
-            int index = Find(spell, potions, success);
+            int index = Find(spell);
             if (index == -1)
             {
                 return 0;
