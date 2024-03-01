@@ -19,7 +19,7 @@ public class SpellsAndPotionsSolution
             return spell * potions[index];
         }
 
-        private int BinarySearch(int spell, int i, int j)
+        private int BinarySearch(decimal target, int i, int j)
         {
             while (i <= j)
             {
@@ -28,14 +28,14 @@ public class SpellsAndPotionsSolution
                     return i;
                 }
                 int m = (i + j) / 2;
-                long query = Query(spell, m);
-                if (query >= success)
+
+                if (potions[m] >= target)
                 {
                     if (m == 0)
                     {
                         return m;
                     }
-                    if (Query(spell, m - 1) < success)
+                    if (potions[m - 1] < target)
                     {
                         return m;
                     }
@@ -49,7 +49,8 @@ public class SpellsAndPotionsSolution
 
         private int Find(int spell)
         {
-            return BinarySearch(spell, 0, potions.Length);
+            decimal target = (decimal)success / (decimal)spell;
+            return BinarySearch(target, 0, potions.Length);
         }
 
         public int NumberOfMixes(int spell)
