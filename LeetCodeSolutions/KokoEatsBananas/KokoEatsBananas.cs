@@ -5,7 +5,7 @@ public class KokoEatsBananasSolution
     {
         foreach (int pile in piles)
         {
-            h -= (pile + rate - 1) / rate;
+            h -= CelingDivide(pile, rate);
 
             if (h < 0)
             {
@@ -15,11 +15,16 @@ public class KokoEatsBananasSolution
 
         return true;
     }
+
+    private static int CelingDivide(int numerator, int divisor)
+    {
+        return (numerator + divisor - 1) / divisor;
+    }
     public int MinEatingSpeed(int[] piles, int h)
     {
         if (piles.Length == 1)
         {
-            return (piles[0] + h - 1) / h;
+            return CelingDivide(piles[0], h);
         }
 
         (int min, int max) rates = new(piles[0], piles[0]);
