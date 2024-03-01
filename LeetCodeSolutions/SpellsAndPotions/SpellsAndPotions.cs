@@ -31,7 +31,7 @@ public class SpellsAndPotionsSolution
                 long query = Query(spell, m);
                 if (query >= success)
                 {
-                    if (query == success || m == 0)
+                    if (m == 0)
                     {
                         return m;
                     }
