@@ -1,11 +1,19 @@
 namespace Tests;
 using LeetCodeSolutions;
- public class FindPeakElementTests {
+public class FindPeakElementTests
+{
   private FindPeakElementSolution _solution;
-  public FindPeakElementTests (){
-      _solution = new();
+  public FindPeakElementTests()
+  {
+    _solution = new();
   }
   [Fact]
-  public void Test1(){
+  public void ArrayOfOne()
+  {
+    int[] nums = [1];
+    int desiredOutput = 0;
+
+    int actualOutput = _solution.FindPeakElement(nums);
+    Assert.Equal(actualOutput, desiredOutput);
   }
 }
