@@ -1,4 +1,6 @@
 namespace Tests;
+
+using System.ComponentModel.Design;
 using LeetCodeSolutions;
 public class KokoEatsBananasTests
 {
@@ -7,19 +9,41 @@ public class KokoEatsBananasTests
   {
     _solution = new();
   }
-  [Fact]
-  public void PileOfOne1()
+
+  private class Parameters
   {
-    int[] piles = [1];
-    int h = 1;
-    Assert.Equal(1, _solution.MinEatingSpeed(piles, h));
+    public int[] piles;
+    public int h;
+  }
+  private void AssertAnswer(Parameters parameters, int desiredOutcome)
+  {
+    int actualOutcome = _solution.MinEatingSpeed(parameters.piles, parameters.h);
+    Assert.Equal(desiredOutcome, actualOutcome);
+  }
+  [Fact]
+  public void PilesOfLengthOne1()
+  {
+    Parameters parameters = new()
+    {
+      piles = [1],
+      h = 1
+    };
+
+    int result = 1;
+    AssertAnswer(parameters, result);
   }
 
   [Fact]
-  public void PileOfOne2()
+  public void PilesOfLengthOne2()
   {
-    int[] piles = [4];
-    int h = 2;
-    Assert.Equal(2, _solution.MinEatingSpeed(piles, h));
+
+    Parameters parameters = new()
+    {
+      piles = [4],
+      h = 2
+    };
+
+    int result = 2;
+    AssertAnswer(parameters, result);
   }
 }
