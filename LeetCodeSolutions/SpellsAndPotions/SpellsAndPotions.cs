@@ -41,6 +41,7 @@ public class SpellsAndPotionsSolution
     public int[] SuccessfulPairs(int[] spells, int[] potions, long success)
     {
         int[] answer = new int[spells.Length];
+        Array.Sort(potions);
         for (int i = 0; i < spells.Length; i++)
         {
             int matchIndex = Find(spells[i], potions, success);
