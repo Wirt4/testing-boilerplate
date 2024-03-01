@@ -1,5 +1,3 @@
-using System.Security.AccessControl;
-
 namespace LeetCodeSolutions;
 public class FindPeakElementSolution
 {
@@ -25,6 +23,7 @@ public class FindPeakElementSolution
         {
             return true;
         }
+
         return arr[ndx] > arr[ndx + 1];
     }
     public int FindPeakElement(int[] nums)
