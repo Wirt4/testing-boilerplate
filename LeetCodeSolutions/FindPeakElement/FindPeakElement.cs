@@ -44,7 +44,7 @@ public class FindPeakElementSolution
             }
 
             stack.Push(new(cursor.start, mid));
-            stack.Push(new(cursor.start, mid));
+            stack.Push(new(mid + 1, cursor.range));
         }
 
         return -1;
