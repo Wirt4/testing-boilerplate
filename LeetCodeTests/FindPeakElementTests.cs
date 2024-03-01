@@ -25,4 +25,13 @@ public class FindPeakElementTests
     int actualOutput = _solution.FindPeakElement(nums);
     Assert.Equal(actualOutput, desiredOutput);
   }
+  [Fact]
+  public void ArrayOfTwo2()
+  {
+    int[] nums = [2, 1];
+    int desiredOutput = 0;
+
+    int actualOutput = _solution.FindPeakElement(nums);
+    Assert.Equal(actualOutput, desiredOutput);
+  }
 }
