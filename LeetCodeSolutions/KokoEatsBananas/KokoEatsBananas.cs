@@ -22,11 +22,6 @@ public class KokoEatsBananasSolution
     }
     public int MinEatingSpeed(int[] piles, int h)
     {
-        if (piles.Length == 1)
-        {
-            return CelingDivide(piles[0], h);
-        }
-
         (int min, int max) rates = new(piles[0], piles[0]);
 
         foreach (int pile in piles)
@@ -39,6 +34,8 @@ public class KokoEatsBananasSolution
         {
             return rates.max;
         }
+
+        rates.min = CelingDivide(rates.min, h);
 
         while (rates.min < rates.max)
         {

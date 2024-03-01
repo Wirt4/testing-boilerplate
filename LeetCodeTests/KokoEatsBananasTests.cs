@@ -126,4 +126,17 @@ public class KokoEatsBananasTests
     int result = 2;
     AssertAnswer(parameters, result);
   }
+
+  [Fact]
+  public void RateLowerThanPileAmount()
+  {
+    Parameters parameters = new()
+    {
+      piles = [12, 12],
+      h = 24
+    };
+
+    int result = 1;
+    AssertAnswer(parameters, result);
+  }
 }
