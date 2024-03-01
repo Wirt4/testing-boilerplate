@@ -3,6 +3,6 @@ public class KokoEatsBananasSolution
 {
     public int MinEatingSpeed(int[] piles, int h)
     {
-        return 1;
+        return piles[0] / h;
     }
 }
