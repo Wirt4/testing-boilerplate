@@ -14,11 +14,13 @@ public class SpellsAndPotionsSolution
             this.success = success;
         }
 
-        private int Find(int spell)
+        private long Query(int spell, int index)
         {
-            //assumss potions is sorted
-            int i = 0;
-            int j = potions.Length;
+            return spell * potions[index];
+        }
+
+        private int BinarySearch(int spell, int i, int j)
+        {
             while (i <= j)
             {
                 if (i == j)
@@ -26,30 +28,28 @@ public class SpellsAndPotionsSolution
                     return i;
                 }
                 int m = (i + j) / 2;
-                long query = spell * potions[m];
-                if (query == success)
+                long query = Query(spell, m);
+                if (query >= success)
                 {
-                    return m;
-                }
-                if (query > success)
-                {
-                    if (m == 0)
+                    if (query == success || m == 0)
                     {
                         return m;
                     }
-                    long query2 = spell * potions[m - 1];
-                    if (query2 < success)
+                    if (Query(spell, m - 1) < success)
                     {
                         return m;
                     }
                     j = m - 1;
+                    continue;
                 }
-                else
-                {
-                    i = m + 1;
-                }
+                i = m + 1;
             }
             return -1;
+        }
+
+        private int Find(int spell)
+        {
+            return BinarySearch(spell, 0, potions.Length);
         }
 
         public int NumberOfMixes(int spell)
