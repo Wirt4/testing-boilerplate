@@ -1,32 +1,51 @@
 namespace LeetCodeSolutions;
 public class LetterCombinationOfPhoneNumberSolution
 {
-
-    private readonly Dictionary<char, char[]> characterValuesToNumbers = new()
+    private class QueueWrapper
     {
-        ['2'] = ['a', 'b', 'c'],
-        ['3'] = ['d', 'e', 'f'],
-        ['4'] = ['g', 'h', 'i'],
-        ['5'] = ['j', 'k', 'l'],
-        ['6'] = ['m', 'n', 'o'],
-        ['7'] = ['p', 'q', 'r', 's'],
-        ['8'] = ['t', 'u', 'v'],
-        ['9'] = ['w', 'x', 'y', 'z']
-    };
-
-    private void AddPermutations(char number, ref Queue<string> permutations)
-    {
-        foreach (char ch in characterValuesToNumbers[number])
+        private readonly Dictionary<char, char[]> characterValuesToNumbers;
+        public Queue<string> permutations;
+        public QueueWrapper()
         {
-            permutations.Enqueue(ch.ToString());
+            permutations = new();
+            characterValuesToNumbers = new()
+            {
+                ['2'] = ['a', 'b', 'c'],
+                ['3'] = ['d', 'e', 'f'],
+                ['4'] = ['g', 'h', 'i'],
+                ['5'] = ['j', 'k', 'l'],
+                ['6'] = ['m', 'n', 'o'],
+                ['7'] = ['p', 'q', 'r', 's'],
+                ['8'] = ['t', 'u', 'v'],
+                ['9'] = ['w', 'x', 'y', 'z']
+            };
+
+
         }
-    }
 
-    private void AddConcactedPermutations(string exisingPermutation, char number, ref Queue<string> permutations)
-    {
-        foreach (char ch in characterValuesToNumbers[number])
+        public void AddPermutations(char digit)
         {
-            permutations.Enqueue(exisingPermutation + ch.ToString());
+            char[] characters = characterValuesToNumbers[digit];
+
+            if (permutations.Count == 0)
+            {
+                foreach (char ch in characters)
+                {
+                    permutations.Enqueue(ch.ToString());
+                }
+                return;
+            }
+
+            int count = permutations.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                string prefix = permutations.Dequeue();
+                foreach (char ch in characters)
+                {
+                    permutations.Enqueue(prefix + ch.ToString());
+                }
+            }
         }
     }
     public IList<string> LetterCombinations(string digits)
@@ -36,19 +55,13 @@ public class LetterCombinationOfPhoneNumberSolution
             return [];
         }
 
-        Queue<string> permutations = new();
-        AddPermutations(digits[0], ref permutations);
+        QueueWrapper queueWrapper = new();
 
-        for (int i = 1; i < digits.Length; i++)
+        foreach (char digit in digits)
         {
-            int count = permutations.Count;
-            for (int j = 0; j < count; j++)
-            {
-                string currentPermutation = permutations.Dequeue();
-                AddConcactedPermutations(currentPermutation, digits[i], ref permutations);
-            }
+            queueWrapper.AddPermutations(digit);
         }
 
-        return [.. permutations];
+        return [.. queueWrapper.permutations];
     }
 }
