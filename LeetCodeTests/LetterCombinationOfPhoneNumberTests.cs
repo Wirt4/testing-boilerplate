@@ -17,4 +17,13 @@ public class LetterCombinationOfPhoneNumberTests
     IList<string> result = _solution.LetterCombinations(input);
     Assert.Equal(output, result);
   }
+
+  [Fact]
+  public void StringOfLength1Case1()
+  {
+    string input = "1";
+    IList<string> output = ["a", "b", "c"];
+    IList<string> result = _solution.LetterCombinations(input);
+    Assert.Equal(output, result);
+  }
 }
