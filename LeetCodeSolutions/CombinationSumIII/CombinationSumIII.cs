@@ -30,7 +30,6 @@ public class CombinationSumIIISolution
                 {
                     queue.Enqueue(permutation);
                 }
-
             }
         }
 
