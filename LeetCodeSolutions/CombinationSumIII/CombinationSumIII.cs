@@ -16,24 +16,19 @@ public class CombinationSumIIISolution
                 if (sum == n && permutation.Count == k)
                 {
                     answer.Add(permutation);
+                    continue;
                 }
-                else if (sum < n && permutation.Count < k)
+                if (sum < n && permutation.Count < k)
                 {
-
                     for (int j = permutation[permutation.Count - 1] + 1; j <= 9; j++)
                     {
-                        List<int> permutationCopy = new(permutation)
-                        {
-                            j
-                        };
+                        List<int> permutationCopy = new(permutation);
+                        permutationCopy.Add(j);
                         queue.Enqueue(permutationCopy);
                     }
                 }
             }
         }
-
-
-
         return answer;
     }
 }
