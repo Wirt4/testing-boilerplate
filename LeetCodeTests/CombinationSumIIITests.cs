@@ -51,4 +51,16 @@ public class CombinationSumIIITests
     IList<IList<int>> desired = [[1, 2]];
     TestParams(desired, parameters);
   }
+
+  [Fact]
+  public void LCExample1()
+  {
+    Parameters parameters = new()
+    {
+      k = 3,
+      n = 7
+    };
+    IList<IList<int>> desired = [[1, 2, 4]];
+    TestParams(desired, parameters);
+  }
 }
