@@ -5,7 +5,8 @@ public class CombinationSumIIISolution
     {
         Queue<List<int>> queue = new();
         IList<IList<int>> answer = [];
-        for (int digit = 1; digit <= 9; digit++)
+        int endRange = 9;
+        for (int digit = 1; digit <= endRange; digit++)
         {
             queue.Enqueue([digit]);
             int count = queue.Count;
@@ -20,7 +21,7 @@ public class CombinationSumIIISolution
                 }
                 if (sum < n && permutation.Count < k)
                 {
-                    for (int j = permutation[permutation.Count - 1] + 1; j <= 9; j++)
+                    for (int j = permutation[^1] + 1; j <= endRange; j++)
                     {
                         List<int> permutationCopy = new(permutation);
                         permutationCopy.Add(j);
