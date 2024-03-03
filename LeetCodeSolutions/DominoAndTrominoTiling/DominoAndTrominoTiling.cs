@@ -3,6 +3,19 @@ public class DominoAndTrominoTilingSolution
 {
     public int NumTilings(int n)
     {
-        return 1;
+        switch (n)
+        {
+            case 0:
+                return 0;
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            case 3:
+                return 5;
+            default:
+                return (NumTilings(n - 1) * 2) + NumTilings(n - 3);
+        }
+
     }
 }

@@ -24,4 +24,13 @@ public class DominoAndTrominoTilingTests
     int actual = _solution.NumTilings(n);
     Assert.Equal(desired, actual);
   }
+
+  [Fact]
+  public void LCExample1()
+  {
+    int n = 3;
+    int desired = 5;
+    int actual = _solution.NumTilings(n);
+    Assert.Equal(desired, actual);
+  }
 }
