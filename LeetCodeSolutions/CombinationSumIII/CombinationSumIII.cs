@@ -1,34 +1,33 @@
-using System.Globalization;
-
 namespace LeetCodeSolutions;
 public class CombinationSumIIISolution
 {
     public IList<IList<int>> CombinationSum3(int k, int n)
     {
-
-        //create the first array
         Queue<List<int>> queue = new();
         IList<IList<int>> answer = [];
         for (int digit = 1; digit <= 9; digit++)
         {
-            queue.Enqueue(new(digit));
+            queue.Enqueue([digit]);
             int count = queue.Count;
             for (int i = 0; i < count; i++)
             {
                 List<int> permutation = queue.Dequeue();
-                permutation.Add(digit);
                 int sum = permutation.Sum();
-                if (permutation.Count > k || sum > n)
-                {
-                    continue;
-                }
-                else if (permutation.Count == k && sum == n)
+                if (sum == n && permutation.Count == k)
                 {
                     answer.Add(permutation);
                 }
-                else
+                else if (sum < n && permutation.Count < k)
                 {
-                    queue.Enqueue(permutation);
+
+                    for (int j = permutation[permutation.Count - 1] + 1; j <= 9; j++)
+                    {
+                        List<int> permutationCopy = new(permutation)
+                        {
+                            j
+                        };
+                        queue.Enqueue(permutationCopy);
+                    }
                 }
             }
         }
