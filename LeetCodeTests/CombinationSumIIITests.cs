@@ -28,4 +28,14 @@ public class CombinationSumIIITests
 
     Assert.Equal(desired, actual);
   }
+  [Fact]
+  public void ArrayOfTwo1()
+  {
+    int k = 2;
+    int n = 3;
+    IList<IList<int>> desired = [[1, 2]];
+    IList<IList<int>> actual = _solution.CombinationSum3(k, n);
+
+    Assert.Equal(desired, actual);
+  }
 }
