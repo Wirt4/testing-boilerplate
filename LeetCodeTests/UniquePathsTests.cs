@@ -1,4 +1,6 @@
 namespace Tests;
+
+using System.Runtime.Serialization;
 using LeetCodeSolutions;
 public class UniquePathsTests
 {
@@ -7,22 +9,37 @@ public class UniquePathsTests
   {
     _solution = new();
   }
+  private class Arguments
+  {
+    public int m;
+    public int n;
+  }
+  private void TestUniquePaths(Arguments arguments, int expected)
+  {
+    int acutal = _solution.UniquePaths(arguments.m, arguments.n);
+    Assert.Equal(expected, acutal);
+  }
   [Fact]
   public void GridOfOne()
   {
-    int m = 1;
-    int n = 1;
+
+    Arguments args = new()
+    {
+      m = 1,
+      n = 1
+    };
     int expected = 1;
-    int acutal = _solution.UniquePaths(m, n);
-    Assert.Equal(expected, acutal);
+    TestUniquePaths(args, expected);
   }
   [Fact]
   public void LCExample1()
   {
-    int m = 3;
-    int n = 7;
+    Arguments args = new()
+    {
+      m = 3,
+      n = 7
+    };
     int expected = 28;
-    int acutal = _solution.UniquePaths(m, n);
-    Assert.Equal(expected, acutal);
+    TestUniquePaths(args, expected);
   }
 }
