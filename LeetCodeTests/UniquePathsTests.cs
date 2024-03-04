@@ -42,4 +42,17 @@ public class UniquePathsTests
     int expected = 28;
     TestUniquePaths(args, expected);
   }
+
+  [Fact]
+  public void LCExample2()
+  {
+    Arguments args = new()
+    {
+      m = 3,
+      n = 2
+    };
+    int expected = 3;
+    TestUniquePaths(args, expected);
+  }
+
 }

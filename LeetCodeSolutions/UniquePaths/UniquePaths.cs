@@ -3,34 +3,46 @@
 namespace LeetCodeSolutions;
 public class UniquePathsSolution
 {
-    public int UniquePaths(int m, int n)
+    private int[][] AllocateSpaceForPascalTable(int m, int n)
     {
-        int UniquePaths = 0;
-        Queue<int[]> queue = new();
-        queue.Enqueue([1, 1]);
-        while (queue.Count > 0)
+        int[][] table = new int[m][];
+        for (int i = 0; i < m; i++)
         {
-            int c = queue.Count;
-            for (int i = 0; i < c; i++)
+            table[i] = new int[n];
+        }
+        return table;
+    }
+
+    private void PopulateOnesOfPascalTable(ref int[][] table)
+    {
+
+        for (int i = 0; i < table.Length; i++)
+        {
+            table[i][0] = 1;
+
+        }
+        for (int i = 0; i < table[0].Length; i++)
+        {
+            table[0][i] = 1;
+        }
+    }
+
+    private void PopulateTableWithSums(ref int[][] table)
+    {
+        for (int i = 1; i < table.Length; i++)
+        {
+            for (int j = 1; j < table[0].Length; j++)
             {
-                int[] current = queue.Dequeue();
-                if (m == current[0] && n == current[1])
-                {
-                    UniquePaths++;
-                }
-
-                if (current[0] < m)
-                {
-                    queue.Enqueue([current[0] + 1, current[1]]);
-                }
-
-                if (current[1] < n)
-                {
-                    queue.Enqueue([current[0], current[1] + 1]);
-                }
+                table[i][j] = table[i - 1][j] + table[i][j - 1];
             }
         }
+    }
 
-        return UniquePaths;
+    public int UniquePaths(int m, int n)
+    {
+        int[][] table = AllocateSpaceForPascalTable(m, n);
+        PopulateOnesOfPascalTable(ref table);
+        PopulateTableWithSums(ref table);
+        return table[m - 1][n - 1];
     }
 }
