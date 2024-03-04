@@ -1,13 +1,11 @@
-using System.Runtime.CompilerServices;
-
 namespace LeetCodeSolutions;
 public class LongestCommonSubsequenceSolution
 {
     private class DynamicProgrammingTable
     {
         private int[][] _table;
-        private string _a;
-        private string _b;
+        private readonly string _a;
+        private readonly string _b;
         public DynamicProgrammingTable(string a, string b)
         {
             _a = a;
