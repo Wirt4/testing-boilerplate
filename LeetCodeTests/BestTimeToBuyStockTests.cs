@@ -54,4 +54,15 @@ public class BestTimeToBuyStockTests
     int expected = 8;
     TestFunction(parameters, expected);
   }
+  [Fact]
+  public void LCExample2()
+  {
+    Parameters parameters = new()
+    {
+      prices = [1, 3, 7, 5, 10, 3],
+      fee = 3
+    };
+    int expected = 6;
+    TestFunction(parameters, expected);
+  }
 }
