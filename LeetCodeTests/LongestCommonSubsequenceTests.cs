@@ -28,4 +28,23 @@ public class LongestCommonSubsequenceTests
   {
     Assert.Equal(1, _solution.LongestCommonSubsequence("fh", "fg"));
   }
+
+  [Fact]
+  public void LCExample1()
+  {
+    Assert.Equal(3, _solution.LongestCommonSubsequence("abcde", "ace"));
+  }
+
+  [Fact]
+  public void LCExample2()
+  {
+    Assert.Equal(3, _solution.LongestCommonSubsequence("abc", "abc"));
+  }
+
+
+  [Fact]
+  public void LCExample0()
+  {
+    Assert.Equal(0, _solution.LongestCommonSubsequence("abc", "def"));
+  }
 }
