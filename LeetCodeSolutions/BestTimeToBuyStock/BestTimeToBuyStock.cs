@@ -3,6 +3,6 @@ public class BestTimeToBuyStockSolution
 {
     public int MaxProfit(int[] prices, int fee)
     {
-        return 5;
+        return prices[1] - prices[0] - fee;
     }
 }
