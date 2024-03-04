@@ -15,15 +15,14 @@ public class UniquePathsSolution
 
     private void PopulateOnesOfPascalTable(ref int[][] table)
     {
-
         for (int i = 0; i < table.Length; i++)
         {
             table[i][0] = 1;
 
         }
-        for (int i = 0; i < table[0].Length; i++)
+        for (int j = 0; j < table[0].Length; j++)
         {
-            table[0][i] = 1;
+            table[0][j] = 1;
         }
     }
 
