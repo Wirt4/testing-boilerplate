@@ -33,4 +33,13 @@ public class DominoAndTrominoTilingTests
     int actual = _solution.NumTilings(n);
     Assert.Equal(desired, actual);
   }
+
+  [Fact]
+  public void BreakingCase1()
+  {
+    int n = 30;
+    int desired = 312342182;
+    int actual = _solution.NumTilings(n);
+    Assert.Equal(desired, actual);
+  }
 }
