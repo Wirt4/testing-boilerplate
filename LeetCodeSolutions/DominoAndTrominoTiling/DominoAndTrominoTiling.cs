@@ -1,33 +1,48 @@
 namespace LeetCodeSolutions;
 public class DominoAndTrominoTilingSolution
 {
+    private class TileTracker
+    {
+        private int[] dynamicArray;
+        private readonly int originalLength;
+        private readonly double mod;
+        public TileTracker()
+        {
+            dynamicArray = [1, 1, 2];
+            originalLength = dynamicArray.Length;
+            mod = Math.Pow(10, 9) + 7;
+        }
+
+        private void ExpandDynamicArray(int n)
+        {
+            int[] temp = new int[n + 1];
+            for (int i = 0; i < dynamicArray.Length; i++)
+            {
+                temp[i] = dynamicArray[i];
+            }
+            dynamicArray = temp;
+        }
+        private void FillDynamicArray()
+        {
+            for (int i = originalLength; i < dynamicArray.Length; i++)
+            {
+                dynamicArray[i] = (int)((2.0 * dynamicArray[i - 1] + dynamicArray[i - 3]) % mod);
+            }
+        }
+
+        public int NumberOfTilings(int n)
+        {
+            if (n >= originalLength)
+            {
+                ExpandDynamicArray(n);
+                FillDynamicArray();
+            }
+            return dynamicArray[n];
+        }
+    }
     public int NumTilings(int n)
     {
-        Dictionary<int, int> memos = new();
-        return NumTilingsMemoed(n, ref memos);
-    }
-    public int NumTilingsMemoed(int n, ref Dictionary<int, int> memos)
-    {
-        if (memos.TryGetValue(n, out int value))
-        {
-            return value;
-        }
-        switch (n)
-        {
-            case 0:
-                memos.Add(0, 0);
-                return 0;
-            case 1:
-                memos.Add(1, 1);
-                return 1;
-            case 2:
-                memos.Add(2, 2);
-                return 2;
-            case 3:
-                memos.Add(3, 5);
-                return 5;
-            default:
-                return (NumTilingsMemoed(n - 1, ref memos) * 2) + NumTilingsMemoed(n - 3, ref memos);
-        }
+        TileTracker tracker = new();
+        return tracker.NumberOfTilings(n);
     }
 }
