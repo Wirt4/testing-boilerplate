@@ -1,46 +1,53 @@
+using System.Runtime.CompilerServices;
+
 namespace LeetCodeSolutions;
 public class LongestCommonSubsequenceSolution
 {
-    public int LongestCommonSubsequence(string text1, string text2)
+    private class DynamicProgrammingTable
     {
-        //create an array 
-        int[][] lengthTable = new int[text1.Length + 1][];
-        for (int i = 0; i < lengthTable.Length; i++)
+        private int[][] _table;
+        private string _a;
+        private string _b;
+        public DynamicProgrammingTable(string a, string b)
         {
-            //allocate the slots
-            lengthTable[i] = new int[text2.Length + 1];
+            _a = a;
+            _b = b;
+            AllocateTableSpace(a.Length, b.Length);
+            PopulateTableValues();
         }
-        // start at the back
-        for (int ndx1 = text1.Length; ndx1 >= 0; ndx1--)
+        private void AllocateTableSpace(int iLength, int bLength)
         {
-            for (int ndx2 = text2.Length; ndx2 >= 0; ndx2--)
+            _table = new int[iLength + 1][];
+            for (int i = 0; i < _table.Length; i++)
             {
-                if (ndx1 >= text1.Length || ndx2 >= text2.Length)
-                {
-                    lengthTable[ndx1][ndx2] = 0;
-                    continue;
-                }
-                if (text1[ndx1] == text2[ndx2])
-                {
-                    lengthTable[ndx1][ndx2] = 1 + lengthTable[ndx1 + 1][ndx2 + 1];
-                    continue;
-                }
-                lengthTable[ndx1][ndx2] = Math.Max(lengthTable[ndx1 + 1][ndx2], lengthTable[ndx1][ndx2 + 1]);
+                _table[i] = new int[bLength + 1];
             }
         }
-        return lengthTable[0][0];
-    }
 
-    private int RecursiveSubproblem(ref string text1, ref string text2, int ndx1, int ndx2)
+        private void PopulateTableValues()
+        {
+            for (int ndxA = _a.Length; ndxA >= 0; ndxA--)
+            {
+                for (int ndxB = _b.Length; ndxB >= 0; ndxB--)
+                {
+                    _table[ndxA][ndxB] = CurrentLength(ndxA, ndxB);
+                }
+            }
+        }
+
+        private int CurrentLength(int ndxA, int ndxB)
+        {
+            if (ndxA >= _a.Length || ndxB >= _b.Length) { return 0; }
+
+            if (_a[ndxA] == _b[ndxB]) { return 1 + _table[ndxA + 1][ndxB + 1]; }
+
+            return Math.Max(_table[ndxA + 1][ndxB], _table[ndxA][ndxB + 1]);
+        }
+        public int LongestCommonSubsequence => _table[0][0];
+    }
+    public int LongestCommonSubsequence(string text1, string text2)
     {
-        if (ndx1 >= text1.Length || ndx2 >= text2.Length)
-        {
-            return 0;
-        }
-        if (text1[ndx1] == text2[ndx2])
-        {
-            return 1 + RecursiveSubproblem(ref text1, ref text2, ndx1 + 1, ndx2 + 1);
-        }
-        return Math.Max(RecursiveSubproblem(ref text1, ref text2, ndx1, ndx2 + 1), RecursiveSubproblem(ref text1, ref text2, ndx1 + 1, ndx2));
+        DynamicProgrammingTable table = new(text1, text2);
+        return table.LongestCommonSubsequence;
     }
 }
