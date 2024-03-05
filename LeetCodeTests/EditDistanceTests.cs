@@ -7,16 +7,35 @@ public class EditDistanceTests
   {
     _solution = new();
   }
+  private class Parameters
+  {
+    public string word1;
+    public string word2;
+  }
+  private void TestMinDistance(Parameters parameters, int desiredOutcome)
+  {
+    int result = _solution.MinDistance(parameters.word1, parameters.word2);
+    Assert.Equal(desiredOutcome, result);
+  }
   [Fact]
   public void OnceCHarWordsAreSame()
   {
-    Assert.Equal(0, _solution.MinDistance("p", "p"));
+    Parameters parameters = new()
+    {
+      word1 = "p",
+      word2 = "p"
+    };
+    TestMinDistance(parameters, 0);
   }
 
   [Fact]
   public void OneCharWordOneIsEmpty()
   {
-    Assert.Equal(1, _solution.MinDistance("", "p"));
+    Parameters parameters = new()
+    {
+      word1 = "",
+      word2 = "p"
+    };
+    TestMinDistance(parameters, 1);
   }
 }
-
