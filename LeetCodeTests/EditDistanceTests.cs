@@ -38,4 +38,15 @@ public class EditDistanceTests
     };
     TestMinDistance(parameters, 1);
   }
+
+  [Fact]
+  public void LCExample1()
+  {
+    Parameters parameters = new()
+    {
+      word1 = "horse",
+      word2 = "ros"
+    };
+    TestMinDistance(parameters, 3);
+  }
 }
