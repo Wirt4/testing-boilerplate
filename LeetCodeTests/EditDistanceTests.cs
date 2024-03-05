@@ -8,8 +8,15 @@ public class EditDistanceTests
     _solution = new();
   }
   [Fact]
-  public void WordsAreSame()
+  public void OnceCHarWordsAreSame()
   {
-    Assert.Equal(0, _solution.MinDistance("pigs", "pigs"));
+    Assert.Equal(0, _solution.MinDistance("p", "p"));
+  }
+
+  [Fact]
+  public void OneCharWordOneIsEmpty()
+  {
+    Assert.Equal(1, _solution.MinDistance("", "p"));
   }
 }
+
