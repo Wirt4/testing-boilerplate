@@ -2,49 +2,77 @@ namespace Tests;
 using LeetCodeSolutions;
 public class LongestCommonSubsequenceTests
 {
-  private LongestCommonSubsequenceSolution _solution;
   public LongestCommonSubsequenceTests()
   {
-    _solution = new();
+
   }
+
+  private class Parameters
+  {
+
+    public Parameters(string text1, string text2)
+    {
+      this.text1 = text1;
+      this.text2 = text2;
+      _solution = new();
+    }
+    private string text1;
+    private LongestCommonSubsequenceSolution _solution;
+    public string text2;
+    public void AssertLongestCommonSubsequenceIs(int expectedAnswer)
+    {
+      int result = _solution.LongestCommonSubsequence(text1, text2);
+      Assert.Equal(expectedAnswer, result);
+    }
+  }
+
+
   [Fact]
   public void TextLengthsOfOne1()
   {
-    Assert.Equal(1, _solution.LongestCommonSubsequence("a", "a"));
+    Parameters parameters = new("a", "a");
+    parameters.AssertLongestCommonSubsequenceIs(1);
   }
+
   [Fact]
   public void TextLengthsOfOne2()
   {
-    Assert.Equal(0, _solution.LongestCommonSubsequence("a", "b"));
+    Parameters parameters = new("a", "b");
+    parameters.AssertLongestCommonSubsequenceIs(0);
   }
 
   [Fact]
   public void TextLengthsOfTwo1()
   {
-    Assert.Equal(2, _solution.LongestCommonSubsequence("fh", "fh"));
+    Parameters parameters = new("fh", "fh");
+    parameters.AssertLongestCommonSubsequenceIs(2);
   }
   [Fact]
   public void TextLengthsOfTwo2()
   {
-    Assert.Equal(1, _solution.LongestCommonSubsequence("fh", "fg"));
+    Parameters parameters = new("fh", "fg");
+    parameters.AssertLongestCommonSubsequenceIs(1);
   }
 
   [Fact]
   public void LCExample1()
   {
-    Assert.Equal(3, _solution.LongestCommonSubsequence("abcde", "ace"));
+    Parameters parameters = new("abcde", "ace");
+    parameters.AssertLongestCommonSubsequenceIs(3);
   }
 
   [Fact]
   public void LCExample2()
   {
-    Assert.Equal(3, _solution.LongestCommonSubsequence("abc", "abc"));
+    Parameters parameters = new("abc", "abc");
+    parameters.AssertLongestCommonSubsequenceIs(3);
   }
 
 
   [Fact]
   public void LCExample0()
   {
-    Assert.Equal(0, _solution.LongestCommonSubsequence("abc", "def"));
+    Parameters parameters = new("abc", "def");
+    parameters.AssertLongestCommonSubsequenceIs(0);
   }
 }
