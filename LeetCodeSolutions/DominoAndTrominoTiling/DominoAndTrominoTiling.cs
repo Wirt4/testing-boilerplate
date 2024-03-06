@@ -6,6 +6,7 @@ public class DominoAndTrominoTilingSolution
         private int[] dynamicArray;
         private readonly int originalLength;
         private readonly double mod;
+
         public TileTracker()
         {
             dynamicArray = [1, 1, 2];
@@ -22,6 +23,7 @@ public class DominoAndTrominoTilingSolution
             }
             dynamicArray = temp;
         }
+
         private void FillDynamicArray()
         {
             for (int i = originalLength; i < dynamicArray.Length; i++)
@@ -40,6 +42,7 @@ public class DominoAndTrominoTilingSolution
             return dynamicArray[n];
         }
     }
+
     public int NumTilings(int n)
     {
         TileTracker tracker = new();
