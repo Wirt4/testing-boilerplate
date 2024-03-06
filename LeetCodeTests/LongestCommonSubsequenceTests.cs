@@ -10,22 +10,24 @@ public class LongestCommonSubsequenceTests
   private class Parameters
   {
 
+    private string text1;
+    private string text2;
+    private LongestCommonSubsequenceSolution _solution;
+
     public Parameters(string text1, string text2)
     {
       this.text1 = text1;
       this.text2 = text2;
       _solution = new();
     }
-    private string text1;
-    private LongestCommonSubsequenceSolution _solution;
-    public string text2;
+
+
     public void AssertLongestCommonSubsequenceIs(int expectedAnswer)
     {
       int result = _solution.LongestCommonSubsequence(text1, text2);
       Assert.Equal(expectedAnswer, result);
     }
   }
-
 
   [Fact]
   public void TextLengthsOfOne1()
@@ -47,6 +49,7 @@ public class LongestCommonSubsequenceTests
     Parameters parameters = new("fh", "fh");
     parameters.AssertLongestCommonSubsequenceIs(2);
   }
+
   [Fact]
   public void TextLengthsOfTwo2()
   {
@@ -67,7 +70,6 @@ public class LongestCommonSubsequenceTests
     Parameters parameters = new("abc", "abc");
     parameters.AssertLongestCommonSubsequenceIs(3);
   }
-
 
   [Fact]
   public void LCExample0()
