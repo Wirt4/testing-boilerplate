@@ -3,87 +3,70 @@ using LeetCodeSolutions;
 public class CombinationSumIIITests
 {
   private CombinationSumIIISolution _solution;
-  public CombinationSumIIITests()
+
+  private class TestWrapper
   {
-    _solution = new();
+    private int k;
+    private int n;
+    private CombinationSumIIISolution _solution;
+    public TestWrapper(int k, int n)
+    {
+      this.k = k;
+      this.n = n;
+      _solution = new();
+    }
+
+    public void AssertOutputEqualTo(IList<IList<int>> expectedAnswer)
+    {
+      IList<IList<int>> actual = _solution.CombinationSum3(k, n);
+      Assert.Equal(expectedAnswer, actual);
+    }
   }
-  private class Parameters
-  {
-    public int k;
-    public int n;
-  }
-  private void TestParams(IList<IList<int>> desired, Parameters parameters)
-  {
-    IList<IList<int>> actual = _solution.CombinationSum3(parameters.k, parameters.n);
-    Assert.Equal(desired, actual);
-  }
+
   [Fact]
   public void ArrayOfOne1()
   {
-    Parameters parameters = new()
-    {
-      k = 1,
-      n = 1
-    };
+    TestWrapper wrapper = new(1, 1);
     IList<IList<int>> desired = [[1]];
-    TestParams(desired, parameters);
+    wrapper.AssertOutputEqualTo(desired);
   }
 
   [Fact]
   public void ArrayOfOne2()
   {
-    Parameters parameters = new()
-    {
-      k = 1,
-      n = 7
-    };
+    TestWrapper wrapper = new(1, 7);
     IList<IList<int>> desired = [[7]];
-    TestParams(desired, parameters);
+    wrapper.AssertOutputEqualTo(desired);
   }
+
   [Fact]
   public void ArrayOfTwo1()
   {
-    Parameters parameters = new()
-    {
-      k = 2,
-      n = 3
-    };
+    TestWrapper wrapper = new(2, 3);
     IList<IList<int>> desired = [[1, 2]];
-    TestParams(desired, parameters);
+    wrapper.AssertOutputEqualTo(desired);
   }
 
   [Fact]
   public void LCExample1()
   {
-    Parameters parameters = new()
-    {
-      k = 3,
-      n = 7
-    };
+    TestWrapper wrapper = new(3, 7);
     IList<IList<int>> desired = [[1, 2, 4]];
-    TestParams(desired, parameters);
+    wrapper.AssertOutputEqualTo(desired);
   }
 
   [Fact]
   public void LCExample2()
   {
-    Parameters parameters = new()
-    {
-      k = 3,
-      n = 9
-    };
+    TestWrapper wrapper = new(3, 9);
     IList<IList<int>> desired = [[1, 2, 6], [1, 3, 5], [2, 3, 4]];
-    TestParams(desired, parameters);
+    wrapper.AssertOutputEqualTo(desired);
   }
   [Fact]
   public void LCExample3()
   {
-    Parameters parameters = new()
-    {
-      k = 4,
-      n = 1
-    };
+    TestWrapper wrapper = new(4, 1);
     IList<IList<int>> desired = [];
-    TestParams(desired, parameters);
+    wrapper.AssertOutputEqualTo(desired);
   }
 }
