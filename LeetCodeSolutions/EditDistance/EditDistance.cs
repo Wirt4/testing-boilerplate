@@ -34,7 +34,7 @@ public class EditDistanceSolution
 
             for (int i = 0; i < string2.Length; i++)
             {
-                LevenshteinTable[i][0] = i;
+                LevenshteinTable[0][i] = i;
             }
 
             return LevenshteinTable;
