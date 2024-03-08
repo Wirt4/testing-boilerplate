@@ -41,4 +41,11 @@ public class EditDistanceTests
     MinDistanceWrapper tester = new("horse", "ros");
     tester.AssertMinDistanceIsEqualTo(3);
   }
+
+  [Fact]
+  public void LCExample2()
+  {
+    MinDistanceWrapper tester = new("intention", "execution");
+    tester.AssertMinDistanceIsEqualTo(5);
+  }
 }
