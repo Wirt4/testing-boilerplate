@@ -1,44 +1,44 @@
+using System.Globalization;
+
 namespace LeetCodeSolutions;
 public class EditDistanceSolution
 {
-    public int[][] GenerateBlankTable(string word1, string word2)
-    {
-        int[][] table = new int[word2.Length + 1][];
-        for (int i = 0; i <= word2.Length; i++)
-        {
-            table[i] = new int[word1.Length + 1];
-        }
 
-        for (int i = 0; i <= word2.Length; i++)
-        {
-            table[i][0] = i;
-        }
 
-        for (int i = 0; i <= word1.Length; i++)
-        {
-            table[0][i] = i;
-        }
-        return table;
-    }
     public int MinDistance(string word1, string word2)
     {
-        // create a table
-        int[][] EditDistanceTable = new int[word1.Length + 1][];
-        for (int i = 0; i <= word1.Length; i++)
+        word1 = " " + word1;
+        word2 = " " + word2;
+        int[][] LevenshteinTable = new int[word1.Length][];
+        for (int i = 0; i < word1.Length; i++)
         {
-            EditDistanceTable[i] = new int[word2.Length + 1];
+            LevenshteinTable[i] = new int[word2.Length];
+            LevenshteinTable[i][0] = i;
         }
 
-        //initialize the border values
-        for (int i = 0; i < EditDistanceTable.Length; i++)
+        for (int i = 0; i < word2.Length; i++)
         {
-            EditDistanceTable[i][0] = i;
+            LevenshteinTable[0][i] = i;
         }
 
-        for (int i = 0; i < EditDistanceTable[0].Length; i++)
+        for (int i = 1; i < word1.Length; i++)
         {
-            EditDistanceTable[0][i] = i;
+            for (int j = 1; j < word2.Length; j++)
+            {
+                int previousCost = LevenshteinTable[i - 1][j - 1];
+                if (word1[i] == word2[j])
+                {
+                    LevenshteinTable[i][j] = previousCost;
+                    continue;
+                }
+                int previousInsertionCost = LevenshteinTable[i][j - 1];
+                int previousDeletionCost = LevenshteinTable[i - 1][j];
+                LevenshteinTable[i][j] = Math.Min(previousCost, Math.Min(previousInsertionCost, previousDeletionCost)) + 1;
+            }
         }
-        return -1;
+
+
+        return LevenshteinTable[word1.Length - 1][word2.Length - 1];
+
     }
 }
