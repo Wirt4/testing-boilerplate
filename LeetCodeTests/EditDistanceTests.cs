@@ -2,51 +2,43 @@ namespace Tests;
 using LeetCodeSolutions;
 public class EditDistanceTests
 {
-  private EditDistanceSolution _solution;
-  public EditDistanceTests()
+  private class MinDistanceWrapper
   {
-    _solution = new();
+    private string word1;
+    private string word2;
+    private EditDistanceSolution _solution;
+    public MinDistanceWrapper(string word1, string word2)
+    {
+      this.word1 = word1;
+      this.word2 = word2;
+      _solution = new();
+    }
+
+    public void AssertMinDistanceIsEqualTo(int desiredOutcome)
+    {
+      int result = _solution.MinDistance(word1, word2);
+      Assert.Equal(desiredOutcome, result);
+    }
   }
-  private class Parameters
-  {
-    public string word1;
-    public string word2;
-  }
-  private void TestMinDistance(Parameters parameters, int desiredOutcome)
-  {
-    int result = _solution.MinDistance(parameters.word1, parameters.word2);
-    Assert.Equal(desiredOutcome, result);
-  }
+
   [Fact]
   public void OnceCharWordsAreSame()
   {
-    Parameters parameters = new()
-    {
-      word1 = "p",
-      word2 = "p"
-    };
-    TestMinDistance(parameters, 0);
+    MinDistanceWrapper tester = new("p", "p");
+    tester.AssertMinDistanceIsEqualTo(0);
   }
 
   [Fact]
   public void OneCharWordOneIsEmpty()
   {
-    Parameters parameters = new()
-    {
-      word1 = "",
-      word2 = "p"
-    };
-    TestMinDistance(parameters, 1);
+    MinDistanceWrapper tester = new("", "p");
+    tester.AssertMinDistanceIsEqualTo(1);
   }
 
   [Fact]
   public void LCExample1()
   {
-    Parameters parameters = new()
-    {
-      word1 = "horse",
-      word2 = "ros"
-    };
-    TestMinDistance(parameters, 3);
+    MinDistanceWrapper tester = new("horse", "ros");
+    tester.AssertMinDistanceIsEqualTo(3);
   }
 }

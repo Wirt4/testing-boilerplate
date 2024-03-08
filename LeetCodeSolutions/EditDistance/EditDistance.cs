@@ -37,8 +37,6 @@ public class EditDistanceSolution
             }
         }
 
-
         return LevenshteinTable[word1.Length - 1][word2.Length - 1];
-
     }
 }
