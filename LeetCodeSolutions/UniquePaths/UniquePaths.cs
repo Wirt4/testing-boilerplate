@@ -5,21 +5,26 @@ using System.ComponentModel;
 namespace LeetCodeSolutions;
 public class UniquePathsSolution
 {
-
-
     private class PascalTriangle
     {
-        public int[][] table;
+        private int[][] table;
+        private readonly int m;
+        private readonly int n;
         public PascalTriangle(int m, int n)
         {
+            this.m = m;
+            this.n = n;
+
             table = new int[m][];
             for (int i = 0; i < m; i++)
             {
                 table[i] = new int[n];
             }
+
+            PopulateOnesOfPascalTable();
         }
 
-        public void PopulateOnesOfPascalTable()
+        private void PopulateOnesOfPascalTable()
         {
             for (int i = 0; i < table.Length; i++)
             {
@@ -42,14 +47,15 @@ public class UniquePathsSolution
                 }
             }
         }
+
+        public int FinalTableCell => table[m - 1][n - 1];
     }
 
 
     public int UniquePaths(int m, int n)
     {
         PascalTriangle table = new(m, n);
-        table.PopulateOnesOfPascalTable();
         table.PopulateTableWithSums();
-        return table.table[m - 1][n - 1];
+        return table.FinalTableCell;
     }
 }
