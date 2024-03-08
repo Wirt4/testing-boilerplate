@@ -48,4 +48,10 @@ public class EditDistanceTests
     MinDistanceWrapper tester = new("intention", "execution");
     tester.AssertMinDistanceIsEqualTo(5);
   }
+  [Fact]
+  public void BreakingCase1()
+  {
+    MinDistanceWrapper tester = new("a", "ab");
+    tester.AssertMinDistanceIsEqualTo(1);
+  }
 }
