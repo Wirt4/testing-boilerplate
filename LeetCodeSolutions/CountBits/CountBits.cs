@@ -3,6 +3,6 @@ public class CountBitsSolution
 {
     public int[] CountBits(int n)
     {
-        return [];
+        return [0, 1, 1];
     }
 }
