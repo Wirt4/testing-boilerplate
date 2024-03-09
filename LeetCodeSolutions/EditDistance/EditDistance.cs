@@ -46,17 +46,22 @@ public class EditDistanceSolution
             {
                 for (int j = 1; j < string2.Length; j++)
                 {
-                    int previousCost = table[i - 1][j - 1];
-                    if (string1[i] == string2[j])
-                    {
-                        table[i][j] = previousCost;
-                        continue;
-                    }
-                    int previousInsertionCost = table[i][j - 1];
-                    int previousDeletionCost = table[i - 1][j];
-                    table[i][j] = Math.Min(previousCost, Math.Min(previousInsertionCost, previousDeletionCost)) + 1;
+                    table[i][j] = CalculateMinimum(i, j);
                 }
             }
+        }
+
+        private int CalculateMinimum(int i, int j)
+        {
+            int previousCost = table[i - 1][j - 1];
+            if (string1[i] == string2[j])
+            {
+                return previousCost;
+
+            }
+            int previousInsertionCost = table[i][j - 1];
+            int previousDeletionCost = table[i - 1][j];
+            return Math.Min(previousCost, Math.Min(previousInsertionCost, previousDeletionCost)) + 1;
         }
 
         public int LastCell => table[string1.Length - 1][string2.Length - 1];
