@@ -51,17 +51,20 @@ public class EditDistanceSolution
             }
         }
 
-        private int CalculateMinimum(int i, int j)
+        private int CalculateMinimum(int ndxI, int ndxJ)
         {
-            int previousCost = table[i - 1][j - 1];
-            if (string1[i] == string2[j])
+            int previousCost = table[ndxI - 1][ndxJ - 1];
+            if (string1[ndxI] == string2[ndxJ])
             {
                 return previousCost;
 
             }
-            int previousInsertionCost = table[i][j - 1];
-            int previousDeletionCost = table[i - 1][j];
-            return Math.Min(previousCost, Math.Min(previousInsertionCost, previousDeletionCost)) + 1;
+
+            int previousInsertionCost = table[ndxI][ndxJ - 1];
+            int previousDeletionCost = table[ndxI - 1][ndxJ];
+            int minimum = Math.Min(previousCost, Math.Min(previousInsertionCost, previousDeletionCost));
+
+            return minimum + 1;
         }
 
         public int LastCell => table[string1.Length - 1][string2.Length - 1];
