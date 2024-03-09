@@ -8,14 +8,7 @@ public class CountBitsSolution
         int[] arr = new int[n + 1];
         for (int i = 0; i <= n; i++)
         {
-            int j = i;
-            int count = 0;
-            while (j > 0)
-            {
-                if (j % 2 == 1) { count++; }
-                j /= 2;
-            }
-            arr[i] = count;
+            arr[i] = arr[i / 2] + i % 2;
         }
         return arr;
     }
