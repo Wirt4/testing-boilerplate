@@ -9,7 +9,7 @@ public class CountBitsTests
   }
 
   [Fact]
-  public void Test1()
+  public void LCExample1()
   {
     Assert.Equal([0, 1, 1], _solution.CountBits(2));
   }
