@@ -20,11 +20,18 @@ public class SingleNumberTests
       Assert.Equal(expectedAnswer, output);
     }
   }
+
   [Fact]
   public void MinimumCase1()
   {
     SingleNumberTester singleNumber = new([2, 2, 1]);
     singleNumber.AssertSingleNumberOutputEquals(1);
+  }
 
+  [Fact]
+  public void MinimumCase2()
+  {
+    SingleNumberTester singleNumber = new([2, 1, 1]);
+    singleNumber.AssertSingleNumberOutputEquals(2);
   }
 }
