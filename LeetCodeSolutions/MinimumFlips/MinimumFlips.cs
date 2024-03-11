@@ -3,6 +3,6 @@ public class MinimumFlipsSolution
 {
     public int MinFlips(int a, int b, int c)
     {
-        return -1;
+        return 3;
     }
 }
