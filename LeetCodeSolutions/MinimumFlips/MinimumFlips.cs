@@ -2,34 +2,48 @@ namespace LeetCodeSolutions;
 public class MinimumFlipsSolution
 {
 
+    private class BitwiseInt(int n)
+    {
+        int _n = n;
+        public bool IsNull()
+        {
+            return _n == 0;
+        }
+
+        public void ShiftLeft()
+        {
+            _n /= 2;
+        }
+
+        public int LSB => _n % 2;
+    }
     public int MinFlips(int a, int b, int c)
     {
         int bits = 0;
-        while (a != 0 && b != 0 && c != 0)
+        BitwiseInt bA = new(a);
+        BitwiseInt bB = new(b);
+        BitwiseInt bC = new(c);
+        while (!bA.IsNull() && !bB.IsNull() && !bC.IsNull())
         {
-            //get the least significant bits of all three
-            int aBit = a % 2;
-            int bBit = b % 2;
-            int cBit = c % 2;
 
-            switch (cBit)
+            switch (bC.LSB)
             {
                 case 0:
-                    bits += aBit;
-                    bits += bBit;
+                    bits += bA.LSB;
+                    bits += bB.LSB;
                     break;
                 case 1:
                     //only case where need to set a bit here, an OR between to nulls
-                    if (aBit == 0 && bBit == 0)
+                    if (bA.LSB == 0 && bB.LSB == 0)
                     {
                         bits++;
                     }
                     break;
             }
             //shift the least significant bits
-            a /= 2;
-            b /= 2;
-            c /= 2;
+            bA.ShiftLeft();
+            bB.ShiftLeft();
+            bC.ShiftLeft();
         }
 
         return bits;
