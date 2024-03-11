@@ -34,4 +34,14 @@ public class ImplementTrieTests
     _Trie.Insert("word");
     Assert.False(_Trie.StartsWith("he"));
   }
+  [Fact]
+  public void LCExample1()
+  {
+    Trie _Trie = new();
+    _Trie.Insert("apple");
+    Assert.True(_Trie.Search("apple"));
+    Assert.False(_Trie.Search("app"));
+    _Trie.Insert("app");
+    Assert.True(_Trie.Search("app"));
+  }
 }
