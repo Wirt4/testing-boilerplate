@@ -17,33 +17,46 @@ public class MinimumFlipsSolution
 
         public int LSB => _n % 2;
     }
+
+    private class Parameters(int a, int b, int c)
+    {
+        public BitwiseInt A = new(a);
+        public BitwiseInt B = new(b);
+        public BitwiseInt C = new BitwiseInt(c);
+
+        public void ShiftAll()
+        {
+            A.ShiftLeft();
+            B.ShiftLeft();
+            C.ShiftLeft();
+        }
+
+        public int SumOfLSBsOfAandB()
+        {
+            return A.LSB + B.LSB;
+        }
+
+    }
     public int MinFlips(int a, int b, int c)
     {
         int bits = 0;
-        BitwiseInt bA = new(a);
-        BitwiseInt bB = new(b);
-        BitwiseInt bC = new(c);
-        while (!bA.IsNull() && !bB.IsNull() && !bC.IsNull())
+        Parameters nums = new(a, b, c);
+
+        while (!nums.A.IsNull() && !nums.B.IsNull() && !nums.C.IsNull())
         {
 
-            switch (bC.LSB)
+            if (nums.C.LSB == 0)
             {
-                case 0:
-                    bits += bA.LSB;
-                    bits += bB.LSB;
-                    break;
-                case 1:
-                    //only case where need to set a bit here, an OR between to nulls
-                    if (bA.LSB == 0 && bB.LSB == 0)
-                    {
-                        bits++;
-                    }
-                    break;
+
+                bits += nums.SumOfLSBsOfAandB();
+
             }
-            //shift the least significant bits
-            bA.ShiftLeft();
-            bB.ShiftLeft();
-            bC.ShiftLeft();
+            else if (nums.SumOfLSBsOfAandB() == 0)
+            {
+                bits++;
+            }
+
+            nums.ShiftAll();
         }
 
         return bits;
