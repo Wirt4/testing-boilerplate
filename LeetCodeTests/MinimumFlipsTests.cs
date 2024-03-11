@@ -20,7 +20,7 @@ public class MinimumFlipsTests
     public void AssertOutputIsEqualTo(int expectedOutput)
     {
       int actual = solution.MinFlips(a, b, c);
-      Assert.Equal(actual, expectedOutput);
+      Assert.Equal(expectedOutput, actual);
     }
   }
   [Fact]
