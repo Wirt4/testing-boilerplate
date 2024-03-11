@@ -1,5 +1,3 @@
-using System.ComponentModel.Design.Serialization;
-
 namespace LeetCodeSolutions;
 
 
@@ -7,13 +5,13 @@ public class Trie
 {
     private class TrieNode
     {
-        public TrieNode?[] children = new TrieNode[26];
+
+        public Dictionary<char, TrieNode> children;
         public bool EndOfWord;
         public TrieNode()
         {
             EndOfWord = false;
-            for (int i = 0; i < 26; i++)
-                children[i] = null;
+            children = [];
         }
     }
 
@@ -26,39 +24,43 @@ public class Trie
     public void Insert(string word)
     {
         TrieNode cursor = trieRoot;
-        for (int treeLevel = 0; treeLevel < word.Length; treeLevel++)
+        foreach (char ch in word)
         {
-            int ndx = word[treeLevel] - 'a';
-            if (cursor.children[ndx] == null)
+            if (!cursor.children.ContainsKey(ch))
             {
-                cursor.children[ndx] = new();
+                cursor.children.Add(ch, new());
             }
-            cursor = cursor.children[ndx];
-            if (treeLevel == word.Length - 1)
-            {
-                cursor.EndOfWord = true;
-            }
+            cursor = cursor.children[ch];
         }
-
+        cursor.EndOfWord = true;
     }
 
     public bool Search(string word)
     {
         TrieNode searchNode = trieRoot;
-        for (int treeLevel = 0; treeLevel < word.Length; treeLevel++)
+        foreach (char ch in word)
         {
-            int ndx = word[treeLevel] - 'a';
-            if (searchNode.children[ndx] == null)
+            if (!searchNode.children.ContainsKey(ch))
             {
                 return false;
             }
-            searchNode = searchNode.children[ndx];
+            searchNode = searchNode.children[ch];
         }
+
         return searchNode.EndOfWord;
     }
 
     public bool StartsWith(string prefix)
     {
-        return false;
+        TrieNode cursor = trieRoot;
+        foreach (char ch in prefix)
+        {
+            if (!cursor.children.ContainsKey(ch))
+            {
+                return false;
+            }
+            cursor = cursor.children[ch];
+        }
+        return true;
     }
 }
