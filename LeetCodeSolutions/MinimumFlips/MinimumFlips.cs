@@ -22,7 +22,7 @@ public class MinimumFlipsSolution
     {
         public BitwiseInt A = new(a);
         public BitwiseInt B = new(b);
-        public BitwiseInt C = new BitwiseInt(c);
+        public BitwiseInt C = new(c);
 
         public void ShiftAll()
         {
@@ -41,24 +41,18 @@ public class MinimumFlipsSolution
     {
         int bits = 0;
         Parameters nums = new(a, b, c);
-
         while (!nums.A.IsNull() && !nums.B.IsNull() && !nums.C.IsNull())
         {
-
             if (nums.C.LSB == 0)
             {
-
                 bits += nums.SumOfLSBsOfAandB();
-
             }
             else if (nums.SumOfLSBsOfAandB() == 0)
             {
                 bits++;
             }
-
             nums.ShiftAll();
         }
-
         return bits;
     }
 }
