@@ -43,4 +43,10 @@ public class MinimumFlipsTests
     MinFlipsTest test = new(1, 2, 3);
     test.AssertOutputIsEqualTo(0);
   }
+  [Fact]
+  public void BreakingCase1()
+  {
+    MinFlipsTest test = new(8, 3, 5);
+    test.AssertOutputIsEqualTo(3);
+  }
 }
