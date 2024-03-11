@@ -15,19 +15,8 @@ public class MinimumFlipsSolution
             switch (cBit)
             {
                 case 0:
-                    //no change needed
-                    if (aBit == 0 && bBit == 0)
-                    {
-                        continue;
-                    }
-                    //one bit is zero, set the other one to zero to make result of OR Zero
-                    if (aBit == 0 || bBit == 0)
-                    {
-                        bits += 1;
-                        continue;
-                    }
-                    //default case: clear both bits
-                    bits += 2;
+                    bits += aBit;
+                    bits += bBit;
                     break;
                 case 1:
                     //only case where need to set a bit here, an OR between to nulls
