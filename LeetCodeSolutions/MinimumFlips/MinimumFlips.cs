@@ -15,7 +15,7 @@ public class MinimumFlipsSolution
             _n /= 2;
         }
 
-        public int LSB => _n % 2;
+        public uint LSB => (uint)_n % 2;
     }
 
     private class Parameters(int a, int b, int c)
@@ -31,27 +31,33 @@ public class MinimumFlipsSolution
             C.ShiftLeft();
         }
 
-        public int SumOfLSBsOfAandB()
-        {
-            return A.LSB + B.LSB;
-        }
-
     }
     public int MinFlips(int a, int b, int c)
     {
         int bits = 0;
-        Parameters nums = new(a, b, c);
-        while (!nums.A.IsNull() && !nums.B.IsNull() && !nums.C.IsNull())
+        while (a > 0 || b > 0 || c > 0)
         {
-            if (nums.C.LSB == 0)
+            int aBit = a % 2;
+            int bBit = b % 2;
+            int cBit = c % 2;
+            int diff = aBit | bBit;
+
+            if (diff != cBit)
             {
-                bits += nums.SumOfLSBsOfAandB();
+                if (cBit == 0)
+                {
+                    bits += aBit + bBit;
+                }
+                else if (cBit == 1)
+                {
+                    bits++;
+                }
+
             }
-            else if (nums.SumOfLSBsOfAandB() == 0)
-            {
-                bits++;
-            }
-            nums.ShiftAll();
+
+            a /= 2;
+            b /= 2;
+            c /= 2;
         }
         return bits;
     }
