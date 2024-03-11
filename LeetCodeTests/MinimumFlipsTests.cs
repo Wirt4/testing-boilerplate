@@ -29,4 +29,11 @@ public class MinimumFlipsTests
     MinFlipsTest test = new(2, 6, 5);
     test.AssertOutputIsEqualTo(3);
   }
+
+  [Fact]
+  public void LCExample2()
+  {
+    MinFlipsTest test = new(4, 2, 7);
+    test.AssertOutputIsEqualTo(1);
+  }
 }
