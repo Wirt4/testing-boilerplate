@@ -1,11 +1,15 @@
 namespace Tests;
+
+using System.Diagnostics.CodeAnalysis;
 using LeetCodeSolutions;
- public class ImplementTrieTests {
-  private ImplementTrieSolution _solution;
-  public ImplementTrieTests (){
-      _solution = new();
-  }
+public class ImplementTrieTests
+{
+  private ImplementTrieSolution _Trie;
   [Fact]
-  public void Test1(){
+  public void SearchWordTrue()
+  {
+    _Trie = new();
+    _Trie.Insert("word");
+    Assert.True(_Trie.Search("word"));
   }
 }
