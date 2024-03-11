@@ -12,4 +12,12 @@ public class ImplementTrieTests
     _Trie.Insert("word");
     Assert.True(_Trie.Search("word"));
   }
+
+  [Fact]
+  public void SearchWordFalse()
+  {
+    _Trie = new();
+    _Trie.Insert("word");
+    Assert.False(_Trie.Search("bird"));
+  }
 }
