@@ -8,7 +8,7 @@ public class ImplementTrieSolution
 
     public bool Search(string word)
     {
-        return false;
+        return true;
     }
 
     public bool StartsWith(string prefix)
