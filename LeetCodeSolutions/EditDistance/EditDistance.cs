@@ -4,21 +4,20 @@ public class EditDistanceSolution
 
     private class LevenshteinTable
     {
-        private string string1;
-        private string string2
-        ;
-        private int[][] table;
+        private readonly string string1;
+        private readonly string string2;
+        private readonly int[][] table;
         public LevenshteinTable(string word1, string word2)
         {
-            string1 = AddLeadingSpacte(word1);
-            string2 = AddLeadingSpacte(word2);
+            string1 = AddLeadingSpace(word1);
+            string2 = AddLeadingSpace(word2);
             table = InitializeTableSize();
         }
 
         /**
             the base case will always be an empty string, so adding a space the beginning to simulate that
         **/
-        private string AddLeadingSpacte(string s)
+        private static string AddLeadingSpace(string s)
         {
             return " " + s;
         }
@@ -46,17 +45,18 @@ public class EditDistanceSolution
             {
                 for (int j = 1; j < string2.Length; j++)
                 {
-                    table[i][j] = CalculateMinimum(i, j);
+                    SetMinimum(i, j);
                 }
             }
         }
 
-        private int CalculateMinimum(int ndxI, int ndxJ)
+        private void SetMinimum(int ndxI, int ndxJ)
         {
             int previousCost = table[ndxI - 1][ndxJ - 1];
             if (string1[ndxI] == string2[ndxJ])
             {
-                return previousCost;
+                table[ndxI][ndxJ] = previousCost;
+                return;
 
             }
 
@@ -64,7 +64,7 @@ public class EditDistanceSolution
             int previousDeletionCost = table[ndxI - 1][ndxJ];
             int minimum = Math.Min(previousCost, Math.Min(previousInsertionCost, previousDeletionCost));
 
-            return minimum + 1;
+            table[ndxI][ndxJ] = minimum + 1;
         }
 
         public int LastCell => table[string1.Length - 1][string2.Length - 1];
