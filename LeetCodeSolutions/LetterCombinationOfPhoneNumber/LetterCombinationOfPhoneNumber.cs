@@ -19,14 +19,11 @@ public class LetterCombinationOfPhoneNumberSolution
                 ['8'] = ['t', 'u', 'v'],
                 ['9'] = ['w', 'x', 'y', 'z']
             };
-
-
         }
 
         public void AddPermutations(char digit)
         {
             char[] characters = characterValuesToNumbers[digit];
-
             if (permutations.Count == 0)
             {
                 foreach (char ch in characters)
@@ -35,9 +32,7 @@ public class LetterCombinationOfPhoneNumberSolution
                 }
                 return;
             }
-
             int count = permutations.Count;
-
             for (int i = 0; i < count; i++)
             {
                 string prefix = permutations.Dequeue();
@@ -59,14 +54,11 @@ public class LetterCombinationOfPhoneNumberSolution
         {
             return [];
         }
-
         QueueWrapper queueWrapper = new();
-
         foreach (char digit in digits)
         {
             queueWrapper.AddPermutations(digit);
         }
-
         return queueWrapper.Permutations();
     }
 }
