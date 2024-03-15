@@ -2,11 +2,13 @@ namespace Tests;
 using LeetCodeSolutions;
 public class EditDistanceTests
 {
+
   private class MinDistanceWrapper
   {
     private string word1;
     private string word2;
     private EditDistanceSolution _solution;
+
     public MinDistanceWrapper(string word1, string word2)
     {
       this.word1 = word1;
@@ -48,6 +50,7 @@ public class EditDistanceTests
     MinDistanceWrapper tester = new("intention", "execution");
     tester.AssertMinDistanceIsEqualTo(5);
   }
+
   [Fact]
   public void BreakingCase1()
   {
