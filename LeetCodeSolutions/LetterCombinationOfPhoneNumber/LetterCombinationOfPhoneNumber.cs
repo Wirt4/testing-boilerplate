@@ -4,7 +4,7 @@ public class LetterCombinationOfPhoneNumberSolution
     private class QueueWrapper
     {
         private readonly Dictionary<char, char[]> characterValuesToNumbers;
-        public Queue<string> permutations;
+        private Queue<string> permutations;
         public QueueWrapper()
         {
             permutations = new();
@@ -47,6 +47,11 @@ public class LetterCombinationOfPhoneNumberSolution
                 }
             }
         }
+
+        public IList<string> Permutations()
+        {
+            return [.. permutations];
+        }
     }
     public IList<string> LetterCombinations(string digits)
     {
@@ -62,6 +67,6 @@ public class LetterCombinationOfPhoneNumberSolution
             queueWrapper.AddPermutations(digit);
         }
 
-        return [.. queueWrapper.permutations];
+        return queueWrapper.Permutations();
     }
 }
