@@ -1,4 +1,4 @@
-72. Edit Distance
+# Edit Distance
 
 Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
 
@@ -10,20 +10,20 @@ You have the following three operations permitted on a word:
 
  
 
-Example 1:
+**Example 1:**
 
 Input: word1 = "horse", word2 = "ros"
 Output: 3
-Explanation: 
+__Explanation:__ 
 horse -> rorse (replace 'h' with 'r')
 rorse -> rose (remove 'r')
 rose -> ros (remove 'e')
 
-Example 2:
+**Example 2:**
 
 Input: word1 = "intention", word2 = "execution"
 Output: 5
-Explanation: 
+__Explanation:__ 
 intention -> inention (remove 't')
 inention -> enention (replace 'i' with 'e')
 enention -> exention (replace 'n' with 'x')
@@ -32,7 +32,7 @@ exection -> execution (insert 'u')
 
  
 
-Constraints:
+**Constraints:**
 
     0 <= word1.length, word2.length <= 500
     word1 and word2 consist of lowercase English letters.
