@@ -36,9 +36,11 @@ public class KokoEatsBananasSolution
             if (IsViableRate(m, piles, h))
             {
                 rates.max = m;
-                continue;
             }
-            rates.min = m + 1;
+            else
+            {
+                rates.min = m + 1;
+            }
         }
         return rates.min;
     }
