@@ -5,9 +5,9 @@ public class EditDistanceTests
 
   private class MinDistanceWrapper
   {
-    private string word1;
-    private string word2;
-    private EditDistanceSolution _solution;
+    private readonly string word1;
+    private readonly string word2;
+    private readonly EditDistanceSolution _solution;
 
     public MinDistanceWrapper(string word1, string word2)
     {
