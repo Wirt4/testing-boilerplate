@@ -6,37 +6,31 @@ public class EditDistanceSolution
     {
         private readonly string string1;
         private readonly string string2;
-        private readonly int[][] table;
+        private int[][]? table;
         public LevenshteinTable(string word1, string word2)
         {
-            string1 = AddLeadingSpace(word1);
-            string2 = AddLeadingSpace(word2);
-            table = InitializeTableSize();
+            string1 = AddSpaceForBaseCase(word1);
+            string2 = AddSpaceForBaseCase(word2);
+            InitializeTable();
         }
 
-        /**
-            the base case will always be an empty string, so adding a space the beginning to simulate that
-        **/
-        private static string AddLeadingSpace(string s)
+        private static string AddSpaceForBaseCase(string s)
         {
             return " " + s;
         }
 
-        private int[][] InitializeTableSize()
+        private void InitializeTable()
         {
-            int[][] LevenshteinTable = new int[string1.Length][];
+            table = new int[string1.Length][];
             for (int i = 0; i < string1.Length; i++)
             {
-                LevenshteinTable[i] = new int[string2.Length];
-                LevenshteinTable[i][0] = i;
+                table[i] = new int[string2.Length];
+                table[i][0] = i;
             }
-
             for (int i = 0; i < string2.Length; i++)
             {
-                LevenshteinTable[0][i] = i;
+                table[0][i] = i;
             }
-
-            return LevenshteinTable;
         }
 
         public void CalculateSubProblems()
@@ -59,15 +53,13 @@ public class EditDistanceSolution
                 return;
 
             }
-
             int previousInsertionCost = table[ndxI][ndxJ - 1];
             int previousDeletionCost = table[ndxI - 1][ndxJ];
             int minimum = Math.Min(previousCost, Math.Min(previousInsertionCost, previousDeletionCost));
-
             table[ndxI][ndxJ] = minimum + 1;
         }
 
-        public int LastCell => table[string1.Length - 1][string2.Length - 1];
+        public int LastCell => table != null ? table[string1.Length - 1][string2.Length - 1] : -1;
     }
 
     public int MinDistance(string word1, string word2)
@@ -76,10 +68,8 @@ public class EditDistanceSolution
         {
             return word2.Length;
         }
-
         LevenshteinTable table = new(word1, word2);
         table.CalculateSubProblems();
-
         return table.LastCell;
     }
 }
