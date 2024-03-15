@@ -1,142 +1,89 @@
 namespace Tests;
-
-using System.ComponentModel.Design;
 using LeetCodeSolutions;
 public class KokoEatsBananasTests
 {
   private KokoEatsBananasSolution _solution;
-  public KokoEatsBananasTests()
-  {
-    _solution = new();
-  }
 
-  private class Parameters
+
+  private class TestWrapper
   {
-    public int[] piles;
-    public int h;
-  }
-  private void AssertAnswer(Parameters parameters, int desiredOutcome)
-  {
-    int actualOutcome = _solution.MinEatingSpeed(parameters.piles, parameters.h);
-    Assert.Equal(desiredOutcome, actualOutcome);
+    public TestWrapper(int[] piles, int h)
+    {
+      this.piles = piles;
+      this.h = h;
+      _solution = new();
+    }
+    private KokoEatsBananasSolution _solution;
+    private int[] piles;
+    private int h;
+
+    public void AssertAnswer(int desiredOutcome)
+    {
+      int actualOutcome = _solution.MinEatingSpeed(piles, h);
+      Assert.Equal(desiredOutcome, actualOutcome);
+    }
   }
   [Fact]
   public void PilesOfLengthOne1()
   {
-    Parameters parameters = new()
-    {
-      piles = [1],
-      h = 1
-    };
-
-    int result = 1;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([1], 1);
+    parameters.AssertAnswer(1);
   }
 
   [Fact]
   public void PilesOfLengthOne2()
   {
-
-    Parameters parameters = new()
-    {
-      piles = [4],
-      h = 2
-    };
-
-    int result = 2;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([4], 2);
+    parameters.AssertAnswer(2);
   }
 
   [Fact]
   public void PilesOfLengthTwo1()
   {
-
-    Parameters parameters = new()
-    {
-      piles = [4, 8],
-      h = 2
-    };
-
-    int result = 8;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([4, 8], 2);
+    parameters.AssertAnswer(8);
   }
+
   [Fact]
   public void PilesOfLengthTwo2()
   {
-
-    Parameters parameters = new()
-    {
-      piles = [3, 6],
-      h = 3
-    };
-
-    int result = 3;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([3, 6], 3);
+    parameters.AssertAnswer(3);
   }
 
   [Fact]
   public void LCExample1()
   {
-    Parameters parameters = new()
-    {
-      piles = [3, 6, 7, 11],
-      h = 8
-    };
-
-    int result = 4;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([3, 6, 7, 11], 8);
+    parameters.AssertAnswer(4);
   }
 
 
   [Fact]
   public void LCExample2()
   {
-    Parameters parameters = new()
-    {
-      piles = [30, 11, 23, 4, 20],
-      h = 5
-    };
-
-    int result = 30;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([30, 11, 23, 4, 20], 5);
+    parameters.AssertAnswer(30);
   }
 
   [Fact]
   public void LCExample3()
   {
-    Parameters parameters = new()
-    {
-      piles = [30, 11, 23, 4, 20],
-      h = 6
-    };
-
-    int result = 23;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([30, 11, 23, 4, 20], 6);
+    parameters.AssertAnswer(23);
   }
 
   [Fact]
   public void FailingTest1()
   {
-    Parameters parameters = new()
-    {
-      piles = [312884470],
-      h = 312884469
-    };
-
-    int result = 2;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([312884470], 312884469);
+    parameters.AssertAnswer(2);
   }
 
   [Fact]
   public void RateLowerThanPileAmount()
   {
-    Parameters parameters = new()
-    {
-      piles = [12, 12],
-      h = 24
-    };
-
-    int result = 1;
-    AssertAnswer(parameters, result);
+    TestWrapper parameters = new([12, 12], 24);
+    parameters.AssertAnswer(1);
   }
 }
