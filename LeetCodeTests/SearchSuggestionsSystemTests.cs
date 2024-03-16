@@ -32,6 +32,15 @@ public class SearchSuggestionsSystemTests
   }
 
   [Fact]
+  public void LCExample1SubProblem()
+  {
+
+    SearchSuggestionsSystemSolution.SearchTrie searchTrie = new();
+    searchTrie.InsertAll(["mobile", "mouse", "moneypot", "monitor", "mousepad"]);
+    Assert.Equal(["mouse", "mousepad"], searchTrie.Matches("mous"));
+  }
+
+  [Fact]
   public void LCExample2()
   {
     string[] products = ["havana"];
