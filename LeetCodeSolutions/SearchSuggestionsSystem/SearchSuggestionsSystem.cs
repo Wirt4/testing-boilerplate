@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 namespace LeetCodeSolutions;
 public class SearchSuggestionsSystemSolution
 {
@@ -17,9 +15,10 @@ public class SearchSuggestionsSystemSolution
     public class SearchTrie
     {
         private readonly Node root;
-        public SearchTrie()
+        public SearchTrie(string[] products)
         {
             root = new();
+            InsertAll(products);
         }
 
         public void InsertAll(string[] products)
@@ -58,7 +57,6 @@ public class SearchSuggestionsSystemSolution
             Stack<Node> nodeStack = new();
             stringStack.Push(prefix);
             nodeStack.Push(cur);
-
             while (stringStack.Count > 0)
             {
                 string curString = stringStack.Pop();
@@ -75,7 +73,6 @@ public class SearchSuggestionsSystemSolution
                         nodeStack.Push(cur.Children[c]);
                     }
                 }
-
             }
             IList<string> answer = [];
             int i = 0;
@@ -89,19 +86,14 @@ public class SearchSuggestionsSystemSolution
     }
     public IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
     {
-        SearchTrie searchTrie = new();
-
-        searchTrie.InsertAll(products);
-
+        SearchTrie searchTrie = new(products);
         IList<IList<string>> answer = [];
-
         string query = "";
         for (int i = 0; i < searchWord.Length; i++)
         {
             query += searchWord[i];
             answer.Add(searchTrie.Matches(query));
         }
-
         return answer;
     }
 }

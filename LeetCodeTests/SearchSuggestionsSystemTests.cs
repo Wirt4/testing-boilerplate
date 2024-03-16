@@ -34,9 +34,7 @@ public class SearchSuggestionsSystemTests
   [Fact]
   public void LCExample1SubProblem()
   {
-
-    SearchSuggestionsSystemSolution.SearchTrie searchTrie = new();
-    searchTrie.InsertAll(["mobile", "mouse", "moneypot", "monitor", "mousepad"]);
+    SearchSuggestionsSystemSolution.SearchTrie searchTrie = new(["mobile", "mouse", "moneypot", "monitor", "mousepad"]);
     Assert.Equal(["mouse", "mousepad"], searchTrie.Matches("mous"));
   }
 
