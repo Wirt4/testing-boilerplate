@@ -37,26 +37,40 @@ public class SearchSuggestionsSystemSolution
             }
             cur.StringEnd = true;
         }
-        public IList<string> Matches(string prefix)
+
+        private Node? GetEndOfPrefix(string prefix)
         {
-            PriorityQueue<string, string> matches = new();
             Node cur = root;
             foreach (char c in prefix)
             {
                 if (cur.Children[c] == null)
                 {
-                    return [];
+                    return null;
                 }
                 cur = cur.Children[c];
             }
-            Stack<string> stringStack = new();
-            Stack<Node> nodeStack = new();
-            stringStack.Push(prefix);
-            nodeStack.Push(cur);
+            return cur;
+        }
+
+        private IList<string> FirstThree(ref PriorityQueue<string, string> pq)
+        {
+            IList<string> ans = [];
+            int i = 0;
+            while (pq.Count > 0 && i < 3)
+            {
+                ans.Add(pq.Dequeue());
+                i++;
+            }
+            return ans;
+        }
+
+        private PriorityQueue<string, string> MatchesFromQueues(Stack<string> stringStack, Stack<Node> nodeStack)
+        {
+            PriorityQueue<string, string> matches = new();
             while (stringStack.Count > 0)
             {
                 string curString = stringStack.Pop();
-                cur = nodeStack.Pop();
+                Node cur = nodeStack.Pop();
                 if (cur.StringEnd)
                 {
                     matches.Enqueue(curString, curString);
@@ -70,14 +84,22 @@ public class SearchSuggestionsSystemSolution
                     }
                 }
             }
-            IList<string> answer = [];
-            int i = 0;
-            while (matches.Count > 0 && i < 3)
+            return matches;
+        }
+        public IList<string> Matches(string prefix)
+        {
+            Node? cur = GetEndOfPrefix(prefix);
+            if (cur == null)
             {
-                answer.Add(matches.Dequeue());
-                i++;
+                return [];
             }
-            return answer;
+
+            Stack<string> stringStack = new();
+            Stack<Node> nodeStack = new();
+            stringStack.Push(prefix);
+            nodeStack.Push(cur);
+            PriorityQueue<string, string> matches = MatchesFromQueues(stringStack, nodeStack);
+            return FirstThree(ref matches);
         }
     }
     public IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
