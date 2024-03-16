@@ -1,4 +1,4 @@
-208. Implement Trie (Prefix Tree)
+# Implement Trie (Prefix Tree)
 
 A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
 
@@ -11,7 +11,7 @@ Implement the Trie class:
 
  
 
-Example 1:
+**Example 1:**
 
 Input
 ["Trie", "insert", "search", "search", "startsWith", "insert", "search"]
@@ -19,7 +19,7 @@ Input
 Output
 [null, null, true, false, true, null, true]
 
-Explanation
+__Explanation__
 Trie trie = new Trie();
 trie.insert("apple");
 trie.search("apple");   // return True
