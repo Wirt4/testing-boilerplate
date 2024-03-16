@@ -50,6 +50,7 @@ public class Trie
         return searchNode.EndOfWord;
     }
 
+
     public bool StartsWith(string prefix)
     {
         TrieNode cursor = trieRoot;
