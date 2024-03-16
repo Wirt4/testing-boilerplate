@@ -16,7 +16,7 @@ public class NonOverlappingIntervalsSolution
 
     private int Partition(ref int[][] intervals, int low, int high)
     {
-        int pivot = intervals[high][0]; //TODO: do a best of three pick
+        int pivot = intervals[high][0];
         int i = low - 1;
         for (int j = low; j < high; j++)
         {

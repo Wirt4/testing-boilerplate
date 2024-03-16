@@ -41,4 +41,11 @@ public class NonOverlappingIntervalsTests
     TestWrapper test = new([[1, 2], [2, 3], [3, 4], [1, 3]]);
     test.AssertAnswerIsEqualTo(1);
   }
+
+  [Fact]
+  public void BreakingCase1()
+  {
+    TestWrapper test = new([[1, 100], [11, 22], [1, 11], [2, 12]]);
+    test.AssertAnswerIsEqualTo(2);
+  }
 }
