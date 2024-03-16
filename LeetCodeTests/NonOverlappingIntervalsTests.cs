@@ -26,4 +26,11 @@ public class NonOverlappingIntervalsTests
     TestWrapper test = new([[1, 2], [1, 2]]);
     test.AssertAnswerIsEqualTo(1);
   }
+
+  [Fact]
+  public void LCExample2()
+  {
+    TestWrapper test = new([[1, 2], [1, 2], [1, 2]]);
+    test.AssertAnswerIsEqualTo(2);
+  }
 }
