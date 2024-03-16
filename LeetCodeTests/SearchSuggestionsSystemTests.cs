@@ -21,12 +21,22 @@ public class SearchSuggestionsSystemTests
       Assert.Equal(expected, answer);
     }
   }
+
   [Fact]
   public void LCExample1()
   {
     string[] products = ["mobile", "mouse", "moneypot", "monitor", "mousepad"];
     TestWrapper test = new(products, "mouse");
     IList<IList<string>> output = [["mobile", "moneypot", "monitor"], ["mobile", "moneypot", "monitor"], ["mouse", "mousepad"], ["mouse", "mousepad"], ["mouse", "mousepad"]];
+    test.AssertAnswerIsEqualTo(output);
+  }
+
+  [Fact]
+  public void LCExample2()
+  {
+    string[] products = ["havana"];
+    TestWrapper test = new(products, "havana");
+    IList<IList<string>> output = [["havana"], ["havana"], ["havana"], ["havana"], ["havana"], ["havana"]];
     test.AssertAnswerIsEqualTo(output);
   }
 }
