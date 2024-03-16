@@ -48,4 +48,12 @@ public class NonOverlappingIntervalsTests
     TestWrapper test = new([[1, 100], [11, 22], [1, 11], [2, 12]]);
     test.AssertAnswerIsEqualTo(2);
   }
+
+  [Fact]
+  public void BreakingCase2()
+  {
+    int[][] intervals = [[-52, 31], [-73, -26], [82, 97], [-65, -11], [-62, -49], [95, 99], [58, 95], [-31, 49], [66, 98], [-63, 2], [30, 47], [-40, -26]];
+    TestWrapper test = new(intervals);
+    test.AssertAnswerIsEqualTo(7);
+  }
 }
