@@ -18,16 +18,12 @@ public class SearchSuggestionsSystemSolution
         public SearchTrie(string[] products)
         {
             root = new();
-            InsertAll(products);
-        }
-
-        public void InsertAll(string[] products)
-        {
             foreach (string product in products)
             {
                 Insert(product);
             }
         }
+
         private void Insert(string word)
         {
             Node cur = root;
