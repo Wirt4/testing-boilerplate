@@ -10,7 +10,8 @@ public class NonOverlappingIntervalsSolution
 
         int pivot = Partition(ref intervals, low, high);
 
-
+        Sort(ref intervals, low, pivot - 1);
+        Sort(ref intervals, pivot + 1, high);
     }
 
     private int Partition(ref int[][] intervals, int low, int high)
@@ -27,7 +28,7 @@ public class NonOverlappingIntervalsSolution
         }
         i++;
         Swap(ref intervals, i, high);
-        return -1;
+        return i;
     }
 
     private void Swap(ref int[][] intervals, int i, int j)
@@ -39,14 +40,19 @@ public class NonOverlappingIntervalsSolution
     public int EraseOverlapIntervals(int[][] intervals)
     {
         Sort(ref intervals, 0, intervals.Length - 1);
-        int c = 0;
-        for (int i = 1; i < intervals.Length; i++)
+        HashSet<int> removed = new();
+        int i = 0;
+        for (int j = 1; j < intervals.Length; j++)
         {
-            if (intervals[i][0] <= intervals[i - 1][1])
+            if (!removed.Contains(i) && intervals[i][1] > intervals[j][0])
             {
-                c++;
+                removed.Add(j);
+            }
+            else
+            {
+                i = j;
             }
         }
-        return c;
+        return removed.Count;
     }
 }
