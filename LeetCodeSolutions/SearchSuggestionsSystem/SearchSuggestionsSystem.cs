@@ -89,9 +89,9 @@ public class SearchSuggestionsSystemSolution
         SearchTrie searchTrie = new(products);
         IList<IList<string>> answer = [];
         string query = "";
-        for (int i = 0; i < searchWord.Length; i++)
+        foreach (char c in searchWord)
         {
-            query += searchWord[i];
+            query += c;
             answer.Add(searchTrie.Matches(query));
         }
         return answer;
