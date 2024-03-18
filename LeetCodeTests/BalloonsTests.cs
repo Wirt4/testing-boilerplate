@@ -40,4 +40,18 @@ public class BalloonsTests
     TestWrapper test = new([[10, 16], [2, 8], [1, 6], [7, 12]]);
     test.AssertAnswerEqualTo(2);
   }
+
+  [Fact]
+  public void LCExample2()
+  {
+    TestWrapper test = new([[1, 2], [3, 4], [5, 6], [7, 8]]);
+    test.AssertAnswerEqualTo(4);
+  }
+
+  [Fact]
+  public void LCExample3()
+  {
+    TestWrapper test = new([[1, 2], [2, 3], [3, 4], [4, 5]]);
+    test.AssertAnswerEqualTo(2);
+  }
 }
