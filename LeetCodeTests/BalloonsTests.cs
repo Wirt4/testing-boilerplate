@@ -31,7 +31,13 @@ public class BalloonsTests
   public void ArrayOfTwoOverLap()
   {
     TestWrapper test = new([[1, 4], [3, 5]]);
-    test.AssertAnswerEqualTo(3);
+    test.AssertAnswerEqualTo(1);
+  }
 
+  [Fact]
+  public void LCExample1()
+  {
+    TestWrapper test = new([[10, 16], [2, 8], [1, 6], [7, 12]]);
+    test.AssertAnswerEqualTo(2);
   }
 }
