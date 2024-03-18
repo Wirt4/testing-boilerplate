@@ -31,29 +31,27 @@ public class NonOverlappingIntervalsSolution
         return i;
     }
 
-    private void Swap(ref int[][] intervals, int i, int j)
+    private static void Swap(ref int[][] intervals, int i, int j)
     {
-        int[] temp = intervals[i];
-        intervals[i] = intervals[j];
-        intervals[j] = temp;
+        (intervals[j], intervals[i]) = (intervals[i], intervals[j]);
     }
     public int EraseOverlapIntervals(int[][] intervals)
     {
         Sort(ref intervals, 0, intervals.Length - 1);
-        HashSet<int> removed = new();
+        int count = 0;
         int i = 0;
         for (int j = 1; j < intervals.Length; j++)
         {
-            if (!removed.Contains(i) && intervals[i][1] > intervals[j][0])
+            if (intervals[i][1] > intervals[j][0])
             {
 
-                removed.Add(j);
+                count++;
             }
             else
             {
                 i = j;
             }
         }
-        return removed.Count;
+        return count;
     }
 }
