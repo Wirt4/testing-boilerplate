@@ -46,11 +46,9 @@ public class NonOverlappingIntervalsSolution
             {
 
                 count++;
+                continue;
             }
-            else
-            {
-                i = j;
-            }
+            i = j;
         }
         return count;
     }
