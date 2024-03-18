@@ -27,22 +27,18 @@ public class BalloonsSolution
         SortByColumn<int>(points, 1);
         int arrows = 0;
         int i = 0;
-        int lastIndex = points.Length - 1;
 
         while (i < points.Length)
         {
-            if (i == lastIndex || !Overlaps(ref points, i, i + 1))
+            int j = i + 1;
+            while (j < points.Length && Overlaps(ref points, i, j))
             {
-                arrows++;
-                i++;
-                continue;
+                j++;
             }
-
-            i = AdvancePastOverlappingBalloons(ref points, i);
+            i = j;
             arrows++;
-
-
         }
+
         return arrows;
     }
 }
