@@ -54,4 +54,11 @@ public class BalloonsTests
     TestWrapper test = new([[1, 2], [2, 3], [3, 4], [4, 5]]);
     test.AssertAnswerEqualTo(2);
   }
+  [Fact]
+  public void BreakingCase1()
+  {
+    TestWrapper test = new([[-1, 1], [0, 1], [2, 3], [1, 2]]);
+    test.AssertAnswerEqualTo(2);
+  }
+
 }
