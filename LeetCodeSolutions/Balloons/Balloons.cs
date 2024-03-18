@@ -12,7 +12,7 @@ public class BalloonsSolution
         return points[i][1] >= points[j][0];
     }
 
-    private int AdvancePastOverlappingBalloons(ref int[][] points, int i)
+    private static int AdvancePastOverlappingBalloons(ref int[][] points, int i)
     {
         int j = i + 1;
         while (j < points.Length && Overlaps(ref points, i, j))
