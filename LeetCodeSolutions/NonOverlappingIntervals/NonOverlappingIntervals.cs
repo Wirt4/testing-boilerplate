@@ -16,11 +16,11 @@ public class NonOverlappingIntervalsSolution
 
     private int Partition(ref int[][] intervals, int low, int high)
     {
-        int[] pivot = intervals[high];
+        int pivot = intervals[high][1];
         int i = low - 1;
         for (int j = low; j < high; j++)
         {
-            if (intervals[j][1] < pivot[1])
+            if (intervals[j][1] < pivot)
             {
                 i++;
                 Swap(ref intervals, i, j);
