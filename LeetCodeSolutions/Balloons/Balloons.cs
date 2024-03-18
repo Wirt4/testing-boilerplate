@@ -11,24 +11,27 @@ public class BalloonsSolution
         SortByColumn<int>(points, 1);
         int arrows = 0;
         int i = 0;
+        int lastIndex = points.Length - 1;
+
         while (i < points.Length)
         {
-            if (i == points.Length - 1 || points[i][1] < points[i + 1][0])
+            int j = i + 1;
+            if (i == lastIndex || points[i][1] < points[j][0])
             {
                 arrows++;
                 i++;
                 continue;
             }
 
-            int j = i + 1;
             while (j < points.Length && points[i][1] >= points[j][0])
             {
                 j++;
             }
+
             arrows++;
-            if (j == points.Length - 1)
+            if (j == lastIndex)
             {
-                break;
+                return arrows;
             }
             i = j;
 
