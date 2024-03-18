@@ -20,7 +20,7 @@ public class NonOverlappingIntervalsSolution
         int i = low - 1;
         for (int j = low; j < high; j++)
         {
-            if (intervals[j][0] < pivot[0] || (intervals[j][0] == pivot[0] && intervals[j][1] <= pivot[1]))
+            if (intervals[j][1] < pivot[1])
             {
                 i++;
                 Swap(ref intervals, i, j);
@@ -46,6 +46,7 @@ public class NonOverlappingIntervalsSolution
         {
             if (!removed.Contains(i) && intervals[i][1] > intervals[j][0])
             {
+
                 removed.Add(j);
             }
             else
