@@ -1,25 +1,25 @@
 namespace LeetCodeSolutions;
 public class NonOverlappingIntervalsSolution
 {
-    private void Sort(ref int[][] intervals, int low, int high)
+    private void Sort(ref int[][] intervals, int lowIndex, int highIndex)
     {
-        if (low >= high || low < 0)
+        if (lowIndex >= highIndex || lowIndex < 0)
         {
             return;
         }
 
-        int pivot = Partition(ref intervals, low, high);
+        int pivotIndex = Partition(ref intervals, lowIndex, highIndex);
 
-        Sort(ref intervals, low, pivot - 1);
-        Sort(ref intervals, pivot + 1, high);
+        Sort(ref intervals, lowIndex, pivotIndex - 1);
+        Sort(ref intervals, pivotIndex + 1, highIndex);
     }
 
-    private int GetMedian(ref int[][] intervals, int low, int high)
+    private int GetMedianIndex(ref int[][] intervals, int lowIndex, int highIndex)
     {
         Random rand = new();
-        int ndx1 = rand.Next(low, high + 1);
-        int ndx2 = rand.Next(low, high + 1);
-        int ndx3 = rand.Next(low, high + 1);
+        int ndx1 = rand.Next(lowIndex, highIndex + 1);
+        int ndx2 = rand.Next(lowIndex, highIndex + 1);
+        int ndx3 = rand.Next(lowIndex, highIndex + 1);
         int a = intervals[ndx1][1];
         int b = intervals[ndx2][1];
         int c = intervals[ndx3][1];
@@ -37,7 +37,7 @@ public class NonOverlappingIntervalsSolution
 
     private int Partition(ref int[][] intervals, int low, int high)
     {
-        int pivotIndex = GetMedian(ref intervals, low, high);
+        int pivotIndex = GetMedianIndex(ref intervals, low, high);
         int pivot = intervals[pivotIndex][1];
         Swap(ref intervals, pivotIndex, high);
 
@@ -59,16 +59,21 @@ public class NonOverlappingIntervalsSolution
     {
         (intervals[j], intervals[i]) = (intervals[i], intervals[j]);
     }
+
+    private static void AltSort<T>(T[][] data, int col)
+    {
+        Comparer<T> comparer = Comparer<T>.Default;
+        Array.Sort<T[]>(data, (x, y) => comparer.Compare(x[col], y[col]));
+    }
     public int EraseOverlapIntervals(int[][] intervals)
     {
-        Sort(ref intervals, 0, intervals.Length - 1);
+        AltSort<int>(intervals, 1);
         int count = 0;
         int i = 0;
         for (int j = 1; j < intervals.Length; j++)
         {
             if (intervals[i][1] > intervals[j][0])
             {
-
                 count++;
                 continue;
             }
