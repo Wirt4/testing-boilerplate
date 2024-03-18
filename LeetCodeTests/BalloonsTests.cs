@@ -20,4 +20,11 @@ public class BalloonsTests
     test.AssertAnswerEqualTo(1);
 
   }
+  [Fact]
+  public void ArrayOfTwoNoOverLap()
+  {
+    TestWrapper test = new([[1, 2], [4, 5]]);
+    test.AssertAnswerEqualTo(2);
+
+  }
 }
