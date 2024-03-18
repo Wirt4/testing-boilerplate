@@ -14,9 +14,33 @@ public class NonOverlappingIntervalsSolution
         Sort(ref intervals, pivot + 1, high);
     }
 
+    private int GetMedian(ref int[][] intervals, int low, int high)
+    {
+        Random rand = new();
+        int ndx1 = rand.Next(low, high + 1);
+        int ndx2 = rand.Next(low, high + 1);
+        int ndx3 = rand.Next(low, high + 1);
+        int a = intervals[ndx1][1];
+        int b = intervals[ndx2][1];
+        int c = intervals[ndx3][1];
+        int median = Math.Max(Math.Min(a, b), Math.Min(Math.Max(a, b), c));
+        if (median == a)
+        {
+            return ndx1;
+        }
+        if (median == b)
+        {
+            return ndx2;
+        }
+        return ndx3;
+    }
+
     private int Partition(ref int[][] intervals, int low, int high)
     {
-        int pivot = intervals[high][1];
+        int pivotIndex = GetMedian(ref intervals, low, high);
+        int pivot = intervals[pivotIndex][1];
+        Swap(ref intervals, pivotIndex, high);
+
         int i = low - 1;
         for (int j = low; j < high; j++)
         {
