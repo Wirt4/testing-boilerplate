@@ -27,4 +27,11 @@ public class BalloonsTests
     test.AssertAnswerEqualTo(2);
 
   }
+  [Fact]
+  public void ArrayOfTwoOverLap()
+  {
+    TestWrapper test = new([[1, 4], [3, 5]]);
+    test.AssertAnswerEqualTo(3);
+
+  }
 }
