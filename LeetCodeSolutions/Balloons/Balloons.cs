@@ -41,10 +41,6 @@ public class BalloonsSolution
             i = AdvancePastOverlappingBalloons(ref points, i);
             arrows++;
 
-            if (i == lastIndex)
-            {
-                break;
-            }
 
         }
         return arrows;
