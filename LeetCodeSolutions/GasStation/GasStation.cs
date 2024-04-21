@@ -39,19 +39,26 @@ public class GasStationSolution
     }
     public int CanCompleteCircuit(int[] gas, int[] cost)
     {
-        Stack<Trip> Trips = InitiateTrips(gas.Length);
-        while (Trips.Count > 0)
+        int current = 0;
+        int total = 0;
+        int diff;
+        int start = 0;
+        for (int i = 0; i < gas.Length; i++)
         {
-            Trip current = Trips.Pop();
-            if (current.MakeTrip(gas, cost))
+            diff = gas[i] - cost[i];
+            total += diff;
+            current += diff;
+            if (current < 0)
             {
-                if (current.Traversed)
-                {
-                    return current.Index;
-                }
-                Trips.Push(current);
+                start = i + 1;
+                current = 0;
             }
         }
-        return -1;
+        if (total < 0)
+        {
+            return -1;
+        }
+
+        return start;
     }
 }
