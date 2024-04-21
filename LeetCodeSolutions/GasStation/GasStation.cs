@@ -3,6 +3,6 @@ public class GasStationSolution
 {
     public int CanCompleteCircuit(int[] gas, int[] cost)
     {
-        return -1;
+        return gas[0] == cost[0] ? 0 : -1;
     }
 }

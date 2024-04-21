@@ -13,6 +13,11 @@ public class GasStationTests
   public void Test1()
   {
     Assert.Equal(-1, _solution.CanCompleteCircuit([0], [1]));
+  }
+  [Fact]
+  public void Test2()
+  {
+    Assert.Equal(0, _solution.CanCompleteCircuit([1], [1]));
 
   }
 }
