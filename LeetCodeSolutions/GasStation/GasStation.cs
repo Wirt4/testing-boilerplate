@@ -1,17 +1,11 @@
 namespace LeetCodeSolutions;
 public class GasStationSolution
 {
-    private class Trip
+    private class Trip(int startingIndex)
     {
-        public Trip(int startingIndex)
-        {
-            currentIndex = startingIndex;
-            this.startingIndex = startingIndex;
-            tank = 0;
-        }
-        private int currentIndex;
-        private int tank;
-        private int startingIndex;
+        private int currentIndex = startingIndex;
+        private int tank = 0;
+        private readonly int startingIndex = startingIndex;
         public int Index
         {
             get => currentIndex;
@@ -20,16 +14,17 @@ public class GasStationSolution
         {
             get => currentIndex == startingIndex;
         }
-        public void MakeTrip(int[] gas, int[] cost)
+        public bool MakeTrip(int[] gas, int[] cost)
         {
             int nextIndex = (currentIndex + 1) % gas.Length;
             tank += gas[currentIndex];
             if (tank < cost[nextIndex])
             {
-                throw new Exception("trip not possible");
+                return false;
             }
             tank -= cost[currentIndex];
             currentIndex = nextIndex;
+            return true;
         }
     }
 
@@ -48,19 +43,14 @@ public class GasStationSolution
         while (Trips.Count > 0)
         {
             Trip current = Trips.Pop();
-            try
+            if (current.MakeTrip(gas, cost))
             {
-                current.MakeTrip(gas, cost);
+                if (current.Traversed)
+                {
+                    return current.Index;
+                }
+                Trips.Push(current);
             }
-            catch
-            {
-                continue;
-            }
-            if (current.Traversed)
-            {
-                return current.Index;
-            }
-            Trips.Push(current);
         }
         return -1;
     }
