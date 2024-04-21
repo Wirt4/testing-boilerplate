@@ -34,4 +34,10 @@ public class GasStationTests
     Assert.Equal(-1, _solution.CanCompleteCircuit([2, 3, 4], [2, 3, 4]));
 
   }
+  [Fact]
+  public void Test5()
+  {
+    Assert.Equal(5, _solution.CanCompleteCircuit([5, 1, 2, 3, 4], [4, 4, 1, 5, 1]));
+
+  }
 }
