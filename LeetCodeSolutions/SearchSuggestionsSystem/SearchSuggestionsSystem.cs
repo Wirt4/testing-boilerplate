@@ -64,7 +64,7 @@ public class SearchSuggestionsSystemSolution
             return ans;
         }
 
-        private PriorityQueue<string, string> MatchesFromQueues(Stack<string> stringStack, Stack<Node> nodeStack)
+        private PriorityQueue<string, string> MatchesFromStacks(Stack<string> stringStack, Stack<Node> nodeStack)
         {
             PriorityQueue<string, string> matches = new();
             while (stringStack.Count > 0)
@@ -98,7 +98,6 @@ public class SearchSuggestionsSystemSolution
             Stack<Node> nodeStack = new();
             stringStack.Push(prefix);
             nodeStack.Push(cur);
-            PriorityQueue<string, string> matches = MatchesFromQueues(stringStack, nodeStack);
             return FirstThree(ref matches);
         }
     }
